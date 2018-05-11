@@ -1,0 +1,80 @@
+object frm_rel_aniver: Tfrm_rel_aniver
+  Left = 543
+  Top = 300
+  BorderStyle = bsToolWindow
+  Caption = 'Relat'#243'rio de Aniversariantes - Studio Atraente - vers'#227'o: 1.0'
+  ClientHeight = 107
+  ClientWidth = 233
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  KeyPreview = True
+  OldCreateOrder = False
+  Position = poScreenCenter
+  OnClose = FormClose
+  OnKeyPress = FormKeyPress
+  OnShow = FormShow
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Label1: TLabel
+    Left = 31
+    Top = 6
+    Width = 20
+    Height = 13
+    Caption = 'M'#202'S'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object frm_chama_relcli: TsBitBtn
+    Left = 25
+    Top = 54
+    Width = 93
+    Height = 41
+    Caption = 'OK'
+    TabOrder = 0
+    OnClick = frm_chama_relcliClick
+  end
+  object sButton1: TsButton
+    Left = 119
+    Top = 54
+    Width = 91
+    Height = 41
+    Caption = 'Cancelar'
+    TabOrder = 1
+    OnClick = sButton1Click
+  end
+  object mes: TEdit
+    Left = 27
+    Top = 21
+    Width = 30
+    Height = 24
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 2
+    OnExit = mesExit
+  end
+  object Edit1: TEdit
+    Left = 63
+    Top = 21
+    Width = 147
+    Height = 24
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 3
+  end
+end

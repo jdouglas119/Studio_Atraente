@@ -1,0 +1,38 @@
+unit un_msg;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls,
+  sLabel;
+
+type
+  Tfrm_msg = class(TForm)
+    Panel1: TPanel;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    BitBtn1: TBitBtn;
+    Label1: TLabel;
+    sLabel1: TsLabel;
+    procedure BitBtn1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_msg: Tfrm_msg;
+
+implementation
+
+{$R *.dfm}
+
+procedure Tfrm_msg.BitBtn1Click(Sender: TObject);
+begin
+   close;
+end;
+
+end.

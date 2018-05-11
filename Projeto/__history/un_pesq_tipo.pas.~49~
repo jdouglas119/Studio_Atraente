@@ -1,0 +1,183 @@
+{ ***************************************************
+  * Elaborado para: Studio Atraente                 *
+  * Modulo     : Tela de Consulta de Tipo Serviço   *
+  * Analista   : João Douglas                       *
+  * Elaboração : João Douglas                       *
+  * Ult Alt.   : 29/05/2017                         *
+  *************************************************** }
+
+unit un_pesq_tipo;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, sPanel, Vcl.StdCtrls,
+  sButton, Vcl.Grids, Vcl.DBGrids, Vcl.Buttons, Vcl.DBCtrls, Data.DB,
+  Data.Win.ADODB;
+
+type
+  Tfrm_pesq_tipo = class(TForm)
+    DBGrid1: TDBGrid;
+    sPanel1: TsPanel;
+    Edit1: TEdit;
+    sButton2: TsButton;
+    radio: TRadioGroup;
+    SpeedButton1: TSpeedButton;
+    DBRadio: TDBRadioGroup;
+    procedure FormShow(Sender: TObject);
+    procedure sButton2Click(Sender: TObject);
+    procedure radioClick(Sender: TObject);
+    procedure DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect;
+      DataCol: Integer; Column: TColumn; State: TGridDrawState);
+    procedure SpeedButton1Click(Sender: TObject);
+    procedure DBGrid1CellClick(Column: TColumn);
+    procedure Edit1Change(Sender: TObject);
+    procedure DBRadioClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    cod: integer;
+    { Public declarations }
+  end;
+
+var
+  frm_pesq_tipo: Tfrm_pesq_tipo;
+
+implementation
+
+uses un_dtstudio, un_orcamento, un_movservico;
+
+{$R *.dfm}
+
+procedure Tfrm_pesq_tipo.DBGrid1CellClick(Column: TColumn);
+begin
+  // chamando a tela cadastro de serviços
+  Case cod Of
+    1:Begin
+         dt_studio.tb_movestitens.Edit;
+         dt_studio.tb_correcaoest.Edit;
+         dt_studio.tb_comandas.Edit;
+         dt_studio.tb_correcaoestCOD_PROD.asstring :=dt_studio.tb_cadtiposervID_TIPO.asstring;
+         dt_studio.tb_correcaoestNOM_PROD.asstring :=dt_studio.tb_cadtiposervNOME_TIPO.asstring;
+         dt_studio.tb_movestitensCOD_PROD.asstring :=dt_studio.tb_cadtiposervID_TIPO.asstring;
+         dt_studio.tb_movestitensNOM_PROD.asstring :=dt_studio.tb_cadtiposervNOME_TIPO.asstring;
+         dt_studio.tb_movestitensQUANT.Value := 1;
+         dt_studio.tb_comandasID_CODSERV.asstring := dt_studio.tb_cadtiposervID_TIPO.asstring;
+         dt_studio.tb_comandasNOM_SERV.asstring := dt_studio.tb_cadtiposervNOME_TIPO.asstring;
+         dt_studio.tb_comandasVR_UNIT.asstring := dt_studio.tb_cadtiposervVR_SERVICO.asstring;
+         dt_studio.tb_comandasPERC_COMISSAO.asstring := dt_studio.tb_cadtiposervPERC_SERVICO.asstring;
+         dt_studio.tb_comandasQUANT.Value := 1;
+      end;
+   end;
+  frm_pesq_tipo.Close;
+end;
+
+procedure Tfrm_pesq_tipo.DBGrid1DrawColumnCell(Sender: TObject;
+  const Rect: TRect; DataCol: Integer; Column: TColumn; State: TGridDrawState);
+begin //Definindo a cor da fonte de acordo com a situação
+   if dt_studio.tb_cadtiposervsituacao.asstring = 'A' then
+       begin
+           dbgrid1.Canvas.Font.Color := clBlack;
+           dbgrid1.Canvas.Brush.Color := $00E6FFFF;
+       end
+       else
+       begin
+           dbgrid1.Canvas.Font.Color := clRed;
+           dbgrid1.Canvas.Brush.Color := $00E6FFFF;
+       end;
+       If odd(dt_studio.tb_cadtiposerv.RecNo) then  //Deixando o dbgrid zebrado
+       begin
+          dbgrid1.Canvas.Brush.Color:= clBlack;
+          dbgrid1.Canvas.Brush.Color:= $00FFF5EC;
+       end
+       else
+       begin
+          dbgrid1.Canvas.Brush.Color:= clBlack;
+          dbgrid1.Canvas.Brush.Color:= clWhite;
+       end;
+       dbgrid1.Canvas.FillRect(Rect);
+       dbgrid1.DefaultDrawDataCell(Rect, dbgrid1.columns[datacol].field, State);
+end;
+
+procedure Tfrm_pesq_tipo.DBRadioClick(Sender: TObject);
+var
+  Sql: string; // Pesquisando registros na tabela por Tipo e Nome
+begin
+   dt_studio.tb_cadtiposerv.close;
+   dt_studio.tb_cadtiposerv.Sql.Clear;
+   dt_studio.tb_cadtiposerv.Sql.Add('select * from CAD_TIPO');
+   if (dbradio.ItemIndex = 0) then
+       Sql := 'where DEPARTAMENTO = like ' + QuotedStr('%' + dbradio.Text + '%');
+{   else
+   if (radio.ItemIndex = 1) then
+       Sql := 'where TIPO like ' + QuotedStr('%' + Edit1.Text + '%')
+   else
+   if (radio.ItemIndex = 2) then
+       Sql := 'where NOME_TIPO like ' + QuotedStr('%' + Edit1.Text + '%');
+    dt_studio.tb_cadtiposerv.Sql.Add(Sql);
+    dt_studio.tb_cadtiposerv.Sql.Add('order by NOME_TIPO'); }
+    dt_studio.tb_cadtiposerv.open;
+end;
+
+procedure Tfrm_pesq_tipo.Edit1Change(Sender: TObject);
+var
+  Sql: string; // Pesquisando registros na tabela por Tipo e Nome
+begin
+   dt_studio.tb_cadtiposerv.close;
+   dt_studio.tb_cadtiposerv.Sql.Clear;
+   dt_studio.tb_cadtiposerv.Sql.Add('select * from CAD_TIPO');
+   if (radio.ItemIndex = 0) then
+       Sql := 'where DEPARTAMENTO like ' + QuotedStr('%' + Edit1.Text + '%')
+   else
+   if (radio.ItemIndex = 1) then
+       Sql := 'where TIPO like ' + QuotedStr('%' + Edit1.Text + '%')
+   else
+   if (radio.ItemIndex = 2) then
+       Sql := 'where NOME_TIPO like ' + QuotedStr('%' + Edit1.Text + '%');
+    dt_studio.tb_cadtiposerv.Sql.Add(Sql);
+    dt_studio.tb_cadtiposerv.Sql.Add('order by NOME_TIPO');
+    dt_studio.tb_cadtiposerv.open;
+end;
+
+procedure Tfrm_pesq_tipo.FormShow(Sender: TObject);
+begin //Abrindo as tabelas
+   edit1.SetFocus;
+   dt_studio.tb_correcaoest.open;
+   dt_studio.tb_comandas.open;
+   dt_studio.tb_movestitens.Open;
+   dt_studio.tb_cadtiposerv.Open;
+end;
+
+procedure Tfrm_pesq_tipo.radioClick(Sender: TObject);
+begin //Focando no edit
+   edit1.SetFocus;
+end;
+
+procedure Tfrm_pesq_tipo.sButton2Click(Sender: TObject);
+var
+  Sql: string; // Pesquisando registros na tabela por Tipo e Nome
+begin
+   dt_studio.tb_cadtiposerv.close;
+   dt_studio.tb_cadtiposerv.Sql.Clear;
+   dt_studio.tb_cadtiposerv.Sql.Add('select * from CAD_TIPO');
+   if (radio.ItemIndex = 0) then
+       Sql := 'where DEPARTAMENTO like ' + QuotedStr('%' + Edit1.Text + '%')
+   else
+   if (radio.ItemIndex = 1) then
+       Sql := 'where TIPO like ' + QuotedStr('%' + Edit1.Text + '%')
+   else
+   if (radio.ItemIndex = 2) then
+       Sql := 'where NOME_TIPO like ' + QuotedStr('%' + Edit1.Text + '%');
+   dt_studio.tb_cadtiposerv.Sql.Add(Sql);
+   dt_studio.tb_cadtiposerv.Sql.Add('order by NOME_TIPO');
+   dt_studio.tb_cadtiposerv.open;
+end;
+
+procedure Tfrm_pesq_tipo.SpeedButton1Click(Sender: TObject);
+begin //Fechando a tela
+   close;
+end;
+
+end.

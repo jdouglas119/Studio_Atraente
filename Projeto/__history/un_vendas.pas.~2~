@@ -1,0 +1,910 @@
+{ ***************************************************
+  * Elaborado para: Studio Atraente                 *
+  * Modulo     : Movimentação de Vendas             *
+  * Analista   : João Douglas                       *
+  * Elaboração : João Douglas                       *
+  * Ult Alt.   : 14/09/2016                         *
+  *************************************************** }
+
+unit un_vendas;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.DBCtrls, Vcl.Buttons,
+  Vcl.StdCtrls, sButton, Vcl.Mask, sPanel, Vcl.Grids, Vcl.DBGrids, Vcl.ComCtrls,
+  Data.DB, Data.Win.ADODB, frxClass, frxExportPDF;
+
+type
+  Tfrm_vendas = class(TForm)
+    GroupBox4: TGroupBox;
+    es_novo: TsButton;
+    es_editar: TsButton;
+    es_excluir: TsButton;
+    es_ok: TsButton;
+    es_cancel: TsButton;
+    es_sair: TsButton;
+    BitBtn2: TBitBtn;
+    nav_vendas: TDBNavigator;
+    Panel1: TPanel;
+    GroupBox1: TGroupBox;
+    Itens: TLabel;
+    DBNavigator1: TDBNavigator;
+    bt_itensnovo: TsButton;
+    bt_itensdelete: TsButton;
+    sPanel1: TsPanel;
+    Label1: TLabel;
+    Label2: TLabel;
+    Data: TDBEdit;
+    Label3: TLabel;
+    Label5: TLabel;
+    cod_vend: TDBEdit;
+    cod_cli: TDBEdit;
+    bt_veiculo: TSpeedButton;
+    bt_cliente: TBitBtn;
+    Label4: TLabel;
+    Label6: TLabel;
+    nom_vend: TDBEdit;
+    nom_cli: TDBEdit;
+    Panel2: TPanel;
+    Label7: TLabel;
+    cod_prod: TDBEdit;
+    Label8: TLabel;
+    nom_prod: TDBEdit;
+    Label9: TLabel;
+    quant: TDBEdit;
+    Label10: TLabel;
+    Label11: TLabel;
+    Label12: TLabel;
+    Label13: TLabel;
+    Label14: TLabel;
+    grid_vendas: TDBGrid;
+    StatusBar1: TStatusBar;
+    Label15: TLabel;
+    Panel6: TPanel;
+    Label16: TLabel;
+    Label19: TLabel;
+    Panel5: TPanel;
+    Label20: TLabel;
+    Label23: TLabel;
+    Panel4: TPanel;
+    Label24: TLabel;
+    Label21: TLabel;
+    Label22: TLabel;
+    Prod: TSpeedButton;
+    query_cli: TADOQuery;
+    query_cliID_CLI: TIntegerField;
+    query_cliNOM_CLI: TStringField;
+    query_cliCPF_CLI: TStringField;
+    query_cliEND_CLI: TStringField;
+    query_cliBAI_CLI: TStringField;
+    query_cliCEP_CLI: TStringField;
+    query_cliCID_CLI: TStringField;
+    query_cliTEL_CLI: TStringField;
+    query_cliCEL_CLI: TStringField;
+    query_cliDT_CAD: TDateTimeField;
+    query_cliEMAIL_CLI: TStringField;
+    query_cliNUM_CLI: TBCDField;
+    query_cliEST_CLI: TStringField;
+    query_cliCOMP_END: TStringField;
+    query_cliSITUACAO: TStringField;
+    query_prod: TADOQuery;
+    query_atend: TADOQuery;
+    query_atendID_FUNC: TIntegerField;
+    query_atendNOM_FUNC: TStringField;
+    query_atendEND_FUNC: TStringField;
+    query_atendBAI_FUNC: TStringField;
+    query_atendCEP_FUNC: TStringField;
+    query_atendCID_FUNC: TStringField;
+    query_atendAREA_FUNC: TStringField;
+    query_atendCOMISSAO_FUNC: TBCDField;
+    query_atendDT_CAD: TDateTimeField;
+    query_atendSITUACAO: TStringField;
+    query_atendNUM_FUNC: TBCDField;
+    query_atendUF: TStringField;
+    query_atendESTADO: TStringField;
+    query_atendCOMP_FUNC: TStringField;
+    query_atendTEL_FIXO: TStringField;
+    query_atendCEL_FUNC: TStringField;
+    query_atendCOD_EST: TIntegerField;
+    query_prodID_PROD: TIntegerField;
+    query_prodNOM_PROD: TStringField;
+    query_prodDT_CAD: TDateTimeField;
+    query_prodVR_CUSTO: TBCDField;
+    query_prodVR_VENDA: TBCDField;
+    query_prodQUANT_ESTOQUE: TBCDField;
+    query_prodSITUACAO: TStringField;
+    perc_desc: TDBEdit;
+    vr_unit: TDBEdit;
+    sub_total: TDBEdit;
+    vr_desc: TDBEdit;
+    total_geral: TDBEdit;
+    Label17: TLabel;
+    perc_comiss: TDBEdit;
+    Label18: TLabel;
+    vr_comiss: TDBEdit;
+    Timer1: TTimer;
+    id_venda: TDBEdit;
+    Label27: TLabel;
+    combo: TDBLookupComboBox;
+    query_cliDT_ANI: TDateTimeField;
+    radio: TRadioGroup;
+    Edit1: TEdit;
+    BitBtn3: TBitBtn;
+    Label28: TLabel;
+    obs: TDBMemo;
+    procedure grid_vendasDrawColumnCell(Sender: TObject; const Rect: TRect;
+      DataCol: Integer; Column: TColumn; State: TGridDrawState);
+    procedure es_novoClick(Sender: TObject);
+    procedure es_editarClick(Sender: TObject);
+    procedure es_excluirClick(Sender: TObject);
+    procedure es_okClick(Sender: TObject);
+    procedure es_cancelClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure es_sairClick(Sender: TObject);
+    procedure bt_clienteClick(Sender: TObject);
+    procedure bt_veiculoClick(Sender: TObject);
+    procedure bt_itensnovoClick(Sender: TObject);
+    procedure bt_itensdeleteClick(Sender: TObject);
+    procedure quantExit(Sender: TObject);
+    procedure perc_descExit(Sender: TObject);
+    procedure vr_descExit(Sender: TObject);
+    procedure ProdClick(Sender: TObject);
+    procedure cod_cliExit(Sender: TObject);
+    procedure cod_vendExit(Sender: TObject);
+    procedure FormKeyPress(Sender: TObject; var Key: Char);
+    procedure nav_vendasClick(Sender: TObject; Button: TNavigateBtn);
+    procedure grid_vendasCellClick(Column: TColumn);
+    procedure cod_prodExit(Sender: TObject);
+    procedure Timer1Timer(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure BitBtn2Click(Sender: TObject);
+    procedure radioClick(Sender: TObject);
+    procedure BitBtn3Click(Sender: TObject);
+    procedure obsExit(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_vendas: Tfrm_vendas;
+
+implementation
+
+uses un_dtstudio, un_pesq_cli, un_pesq_atend, un_pesq_tipo, un_pesq_prod,
+  un_relatorios, un_movcaixa;
+
+{$R *.dfm}
+
+procedure Tfrm_vendas.BitBtn2Click(Sender: TObject);
+begin
+// Chamando o layout do relatório e indexando por vencimento//
+  frm_relatorios.rel_comanda_vendas.clear;
+  frm_relatorios.rel_comanda_vendas.loadfromfile
+  ('\\statraente\projeto_studio atraente\relatorios\rel_comanda_vendas.fr3');
+  frm_relatorios.rel_comanda_vendas.ShowReport();
+end;
+
+procedure Tfrm_vendas.BitBtn3Click(Sender: TObject);
+var
+   sql : string;
+   total: Currency;
+   quantidade: Currency;
+   valor: Currency;
+   tot_comiss: Currency;
+   totalgeral: Currency;
+   desconto: Currency;
+   quantlinhas: Integer;
+begin
+   dt_studio.tb_vendas.close;
+   dt_studio.tb_vendas.Sql.Clear;
+   dt_studio.tb_vendas.Sql.Add('select * from MOV_VENDAS');
+   if (radio.ItemIndex = 0) then
+   Sql := 'where ID_VENDA like ' + QuotedStr('%' + Edit1.text + '%')
+   else if (radio.ItemIndex = 1) then
+   Sql := 'where NOM_CLI like ' + QuotedStr('%' + Edit1.text + '%');
+   dt_studio.tb_vendas.Sql.Add(Sql);
+   dt_studio.tb_vendas.Sql.Add('order by NOM_CLI');
+   dt_studio.tb_vendas.open;
+   dt_studio.tb_vendas_itens.first;
+   total := 0;
+   quantidade := 0;
+   tot_comiss := 0;
+   valor := 0;
+   valor := 0;
+   desconto := 0;
+   totalgeral := 0;
+   quantlinhas := 0;
+   dt_studio.tb_vendas_itens.DisableControls;
+  try
+    while not dt_studio.tb_vendas_itens.eof do
+    begin
+       tot_comiss := tot_comiss + dt_studio.tb_vendas_itens.FieldByName('VR_COMISSAO').AsCurrency;
+       total := total + dt_studio.tb_vendas_itens.FieldByName('TOTAL_GERAL').AsCurrency;
+       quantidade := quantidade + dt_studio.tb_vendas_itens.FieldByName('QUANTIDADE').AsCurrency;
+       valor := valor + dt_studio.tb_vendas_itens.FieldByName('VR_UNIT').AsCurrency;
+       totalgeral := totalgeral + dt_studio.tb_vendas_itens.FieldByName('SUB_TOTAL').AsCurrency;
+       desconto := desconto + dt_studio.tb_vendas_itens.FieldByName('VR_DESC').AsCurrency;
+       quantlinhas := grid_vendas.DataSource.DataSet.RecordCount;
+       dt_studio.tb_vendas_itens.Next;
+    end;
+    dt_studio.tb_vendas_itens.EnableControls;
+    Label22.Caption := FormatFloat('#,###,###,##0.00', total);
+    Label20.Caption := FormatFloat('#,###,###,##0.00', totalgeral);
+    Label24.Caption := FormatFloat('#,###,###,##0.00', desconto);
+    Label16.Caption := FormatFloat('#,0', quantlinhas);
+  finally
+ end;
+end;
+
+procedure Tfrm_vendas.bt_clienteClick(Sender: TObject);
+begin
+  // chamando a tela de pesquisa de fornecedores
+  frm_pesq_cli.cod := 2;
+  cod_vend.setfocus;
+  frm_pesq_cli.showmodal;
+end;
+
+procedure Tfrm_vendas.bt_itensdeleteClick(Sender: TObject);
+begin
+  // excluindo dados na tabela de itens
+   If Application.MessageBox('Confirma Exclusão?', 'Confirmar',
+   Mb_IconQuestion + MB_YesNo + MB_DefButton1) = IdYes Then
+   dt_studio.tb_vendas_itens.delete;
+end;
+
+procedure Tfrm_vendas.bt_itensnovoClick(Sender: TObject);
+begin
+   // inserindo dados na tabela de itens
+   dt_studio.tb_vendas_itens.edit;
+   dt_studio.tb_vendas_itens.append;
+   dt_studio.tb_vendas_itensCOD_PROD.asstring := '';
+   dt_studio.tb_vendas_itensNOM_PROD.asstring := '';
+   dt_studio.tb_vendas_itensQUANTIDADE.asstring := '1';
+   dt_studio.tb_vendas_itensVR_UNIT.asstring := '';
+   dt_studio.tb_vendas_itensSUB_TOTAL.asstring := '';
+   dt_studio.tb_vendas_itensPERC_DESC.asstring := '';
+   dt_studio.tb_vendas_itensVR_DESC.asstring := '';
+   dt_studio.tb_vendas_itensTOTAL_GERAL.asstring := '';
+   cod_prod.ReadOnly := false;
+   nom_prod.ReadOnly := true;
+   quant.ReadOnly := false;
+   vr_unit.ReadOnly := true;
+   sub_total.ReadOnly := true;
+   perc_desc.ReadOnly := false;
+   vr_desc.ReadOnly := false;
+   total_geral.ReadOnly := true;
+   grid_vendas.ReadOnly := false;
+   frm_pesq_prod.cod := 3;
+   cod_prod.setfocus;
+   frm_pesq_prod.showmodal;
+   dt_studio.tb_vendas_itensDATA.asstring := DateTimetoStr(now());
+end;
+
+procedure Tfrm_vendas.bt_veiculoClick(Sender: TObject);
+begin
+  // chamando a tela de pesquisa de fornecedores
+  frm_pesq_atend.cod := 2;
+  cod_prod.setfocus;
+  frm_pesq_atend.showmodal;
+end;
+
+procedure Tfrm_vendas.cod_cliExit(Sender: TObject);
+begin
+  // Comando para filtrar por codigo//
+  if query_cli.Locate('ID_CLI', cod_cli.text, [loPartialKey]) and
+  (Trim(query_cli.FieldByName('NOM_CLI').asstring) <> '') then
+  begin
+    nom_cli.text := query_cli.FieldByName('NOM_CLI').asstring;
+    cod_vend.setfocus;
+  end;
+  if query_cliSITUACAO.asstring = 'I' then
+  begin
+    showmessage('Desculpe Cliente Inativo !!!');
+    cod_cli.setfocus;
+  end;
+end;
+
+procedure Tfrm_vendas.cod_prodExit(Sender: TObject);
+begin
+  if query_prod.Locate('ID_PROD', cod_prod.text, [loPartialKey]) and
+    (Trim(query_prod.FieldByName('NOM_PROD').asstring) <> '') then
+  begin
+    nom_prod.text := query_prod.FieldByName('NOM_PROD').asstring;
+    quant.setfocus;
+  end;
+  if query_prodSITUACAO.asstring = 'I' then
+  begin
+    showmessage('Desculpe Produto Inativo !!!');
+    cod_prod.setfocus;
+  end;
+end;
+
+procedure Tfrm_vendas.cod_vendExit(Sender: TObject);
+begin
+  if query_atend.Locate('ID_FUNC', cod_vend.text, [loPartialKey]) and
+    (Trim(query_atend.FieldByName('NOM_FUNC').asstring) <> '') then
+  begin
+    nom_vend.text := query_atend.FieldByName('NOM_FUNC').asstring;
+    obs.setfocus;
+  end;
+  if query_atendSITUACAO.asstring = 'I' then
+  begin
+    showmessage('Desculpe Atendente Inativo !!!');
+    cod_vend.setfocus;
+  end;
+end;
+
+procedure Tfrm_vendas.nav_vendasClick(Sender: TObject; Button: TNavigateBtn);
+var
+  total: Currency;
+  quantidade: Currency;
+  valor: Currency;
+  tot_comiss: Currency;
+  totalgeral: Currency;
+  desconto: Currency;
+  quantlinhas: Integer;
+begin
+  dt_studio.tb_vendas_itens.first;
+  total := 0;
+  quantidade := 0;
+  tot_comiss := 0;
+  valor := 0;
+  valor := 0;
+  desconto := 0;
+  totalgeral := 0;
+  quantlinhas := 0;
+  dt_studio.tb_vendas_itens.DisableControls;
+  try
+    while not dt_studio.tb_vendas_itens.eof do
+    begin
+        tot_comiss := tot_comiss + dt_studio.tb_vendas_itens.FieldByName('VR_COMISSAO').AsCurrency;
+        total := total + dt_studio.tb_vendas_itens.FieldByName('TOTAL_GERAL').AsCurrency;
+        quantidade := quantidade + dt_studio.tb_vendas_itens.FieldByName('QUANTIDADE').AsCurrency;
+        valor := valor + dt_studio.tb_vendas_itens.FieldByName('VR_UNIT').AsCurrency;
+        totalgeral := totalgeral + dt_studio.tb_vendas_itens.FieldByName('SUB_TOTAL').AsCurrency;
+        desconto := desconto + dt_studio.tb_vendas_itens.FieldByName('VR_DESC').AsCurrency;
+        quantlinhas := grid_vendas.DataSource.DataSet.RecordCount;
+        dt_studio.tb_vendas_itens.Next;
+    end;
+    dt_studio.tb_vendas_itens.EnableControls;
+    Label22.Caption := FormatFloat('#,###,###,##0.00', total);
+    Label20.Caption := FormatFloat('#,###,###,##0.00', totalgeral);
+    Label24.Caption := FormatFloat('#,###,###,##0.00', desconto);
+    Label16.Caption := FormatFloat('#,0', quantlinhas);
+  finally
+  end;
+end;
+
+procedure Tfrm_vendas.obsExit(Sender: TObject);
+begin
+   es_ok.SetFocus;
+end;
+
+procedure Tfrm_vendas.es_cancelClick(Sender: TObject);
+begin
+   // Cancela registros na base de dados//
+   If Application.MessageBox('Confirma Cancelamento de Vendas? ', 'Confirmação',
+   Mb_IconQuestion + Mb_OkCancel + MB_DefButton1) = IdOk then
+   else
+   exit;
+   id_venda.ReadOnly := true;
+   Data.ReadOnly := true;
+   cod_cli.ReadOnly := true;
+   cod_vend.ReadOnly := true;
+   combo.ReadOnly:=true;
+   obs.ReadOnly := true;
+   nom_cli.ReadOnly := true;
+   nom_vend.ReadOnly := true;
+   nav_vendas.Enabled := true;
+   es_novo.Enabled := true;
+   es_editar.Enabled := true;
+   es_excluir.Enabled := true;
+   es_cancel.Enabled := false;
+   es_ok.Enabled := false;
+   es_sair.Enabled := true;
+   bt_itensnovo.Enabled := false;
+   bt_itensdelete.Enabled := false;
+   dt_studio.tb_vendas.cancel;
+   combo.setfocus;
+end;
+
+procedure Tfrm_vendas.es_editarClick(Sender: TObject);
+begin
+   // altera registros na base de dados//
+   If Application.MessageBox('Confirma Alteração de Vendas? ', 'Confirmação',
+   Mb_IconQuestion + Mb_OkCancel + MB_DefButton1) = IdOk then
+   else
+   exit;
+   id_venda.ReadOnly := true;
+   Data.ReadOnly := true;
+   cod_cli.ReadOnly := false;
+   obs.ReadOnly := false;
+   cod_vend.ReadOnly := false;
+   combo.ReadOnly:=false;
+   nom_cli.ReadOnly := true;
+   nom_vend.ReadOnly := true;
+   nav_vendas.Enabled := false;
+   es_novo.Enabled := false;
+   es_editar.Enabled := false;
+   es_excluir.Enabled := false;
+   es_cancel.Enabled := true;
+   es_ok.Enabled := true;
+   es_sair.Enabled := false;
+   bt_itensnovo.Enabled := true;
+   bt_itensdelete.Enabled := true;
+   dt_studio.tb_vendas.edit;
+   combo.setfocus;
+end;
+
+procedure Tfrm_vendas.es_excluirClick(Sender: TObject);
+begin
+  // excluindo registros na base de dados
+  If dt_studio.tb_vendas.RecordCount <> 0 then
+    If Application.MessageBox('Confirma Exclusão?', 'Confirmar',
+      Mb_IconQuestion + MB_YesNo + MB_DefButton1) = IdYes Then
+    begin
+      dt_studio.tb_vendas.delete;
+      combo.setfocus;
+    end;
+end;
+
+procedure Tfrm_vendas.es_novoClick(Sender: TObject);
+begin
+   // inluindo registros na base de dados//
+   if dt_studio.tb_movcaixaDT_CAIXA.asstring = '' then
+   begin
+     showmessage('ATENÇÃO! ABERTURA DO CAIXA AINDA NÃO FOI REALIZADA...!');
+     exit;
+   end
+   else
+   If Application.MessageBox('Confirma Inclusão de Vendas? ', 'Confirmação',
+   Mb_IconQuestion + Mb_OkCancel + MB_DefButton1) = IdOk then
+   else
+   exit;
+   id_venda.ReadOnly := true;
+   data.ReadOnly := true;
+   cod_cli.ReadOnly := false;
+   cod_vend.ReadOnly := false;
+   obs.ReadOnly := false;
+   nom_cli.ReadOnly := false;
+   combo.ReadOnly:=false;
+   nom_vend.ReadOnly := true;
+   nav_vendas.Enabled := false;
+   es_novo.Enabled := false;
+   es_editar.Enabled := false;
+   es_excluir.Enabled := false;
+   es_cancel.Enabled := true;
+   es_ok.Enabled := true;
+   es_sair.Enabled := false;
+   bt_itensnovo.Enabled := true;
+   bt_itensdelete.Enabled := true;
+   dt_studio.tb_vendas.append;
+   dt_studio.tb_vendasDATA.asstring := DateTimetoStr(now());
+   combo.setfocus;
+end;
+
+procedure Tfrm_vendas.es_okClick(Sender: TObject);
+begin
+    // Grava registros na base de dados//
+    If Application.MessageBox('Confirma Gravação de Vendas? ', 'Confirmação',
+    Mb_IconQuestion + Mb_OkCancel + MB_DefButton1) = IdOk then
+    else
+    exit;
+    id_venda.ReadOnly := true;
+    Data.ReadOnly := true;
+    cod_cli.ReadOnly := false;
+    obs.ReadOnly := true;
+    cod_vend.ReadOnly := false;
+    combo.ReadOnly:=true;
+    nom_cli.ReadOnly := true;
+    nom_vend.ReadOnly := true;
+    nav_vendas.Enabled := true;
+    es_novo.Enabled := true;
+    es_editar.Enabled := true;
+    es_excluir.Enabled := true;
+    es_cancel.Enabled := false;
+    es_ok.Enabled := false;
+    es_sair.Enabled := true;
+    bt_itensnovo.Enabled := true;
+    bt_itensdelete.Enabled := true;
+    dt_studio.tb_vendas.post;
+    bt_itensnovo.setfocus;
+end;
+
+procedure Tfrm_vendas.es_sairClick(Sender: TObject);
+begin
+   dt_studio.tb_vendas.close;
+   dt_studio.tb_cadatend.close;
+   dt_studio.tb_movcaixa.close;
+   dt_studio.tb_cadprod.close;
+   dt_studio.tb_vendas_itens.close;
+   query_cli.close;
+   query_prod.close;
+   query_atend.close;
+   close;
+end;
+
+procedure Tfrm_vendas.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+   Case Key of
+       VK_F2: //Comando para teclas de atalho//
+       begin
+          // inluindo registros na base de dados//
+          if dt_studio.tb_movcaixaDT_CAIXA.asstring = '' then
+            begin
+               showmessage('ATENÇÃO! ABERTURA DO CAIXA AINDA NÃO FOI REALIZADA...!');
+               exit;
+            end
+          else
+          If Application.MessageBox('Confirma Inclusão de Vendas? ', 'Confirmação',
+          Mb_IconQuestion + Mb_OkCancel + MB_DefButton1) = IdOk then
+          else
+          exit;
+          id_venda.ReadOnly := true;
+          Data.ReadOnly := true;
+          cod_cli.ReadOnly := false;
+          cod_vend.ReadOnly := false;
+          nom_cli.ReadOnly := false;
+          nom_vend.ReadOnly := true;
+          obs.ReadOnly := false;
+          es_novo.Enabled := false;
+          es_editar.Enabled := false;
+          es_excluir.Enabled := false;
+          es_cancel.Enabled := true;
+          es_ok.Enabled := true;
+          es_sair.Enabled := false;
+          bt_itensnovo.Enabled := true;
+          bt_itensdelete.Enabled := true;
+          dt_studio.tb_vendas.append;
+          dt_studio.tb_vendasDATA.asstring := DateTimetoStr(now());
+          combo.setfocus;
+       end;
+   end;
+   Case Key of
+       VK_F3: //Comando para teclas de atalho//
+       begin
+          // altera registros na base de dados//
+          If Application.MessageBox('Confirma Alteração de Vendas? ', 'Confirmação',
+          Mb_IconQuestion + Mb_OkCancel + MB_DefButton1) = IdOk then
+          else
+          exit;
+          id_venda.ReadOnly := true;
+          Data.ReadOnly := true;
+          cod_cli.ReadOnly := false;
+          cod_vend.ReadOnly := false;
+          nom_cli.ReadOnly := true;
+          obs.ReadOnly := false;
+          nom_vend.ReadOnly := true;
+          es_novo.Enabled := false;
+          es_editar.Enabled := false;
+          es_excluir.Enabled := false;
+          es_cancel.Enabled := true;
+          es_ok.Enabled := true;
+          es_sair.Enabled := false;
+          bt_itensnovo.Enabled := true;
+          bt_itensdelete.Enabled := true;
+          dt_studio.tb_vendas.edit;
+          combo.setfocus;
+       end;
+   end;
+   Case Key of
+       VK_F4: //Comando para teclas de atalho//
+       begin
+          // excluindo registros na base de dados
+          If dt_studio.tb_vendas.RecordCount <> 0 then
+          If Application.MessageBox('Confirma Exclusão?', 'Confirmar',
+          Mb_IconQuestion + MB_YesNo + MB_DefButton1) = IdYes Then
+          begin
+             dt_studio.tb_vendas.delete;
+             combo.setfocus;
+           end;
+       end;
+   end;
+   Case Key of
+       VK_F5: //Comando para teclas de atalho//
+       begin
+          // Cancela registros na base de dados//
+          If Application.MessageBox('Confirma Cancelamento de Vendas? ', 'Confirmação',
+          Mb_IconQuestion + Mb_OkCancel + MB_DefButton1) = IdOk then
+          else
+          exit;
+          id_venda.ReadOnly := true;
+          Data.ReadOnly := true;
+          cod_cli.ReadOnly := true;
+          cod_vend.ReadOnly := true;
+          obs.ReadOnly := true;
+          nom_cli.ReadOnly := true;
+          nom_vend.ReadOnly := true;
+          es_novo.Enabled := true;
+          es_editar.Enabled := true;
+          es_excluir.Enabled := true;
+          es_cancel.Enabled := false;
+          es_ok.Enabled := false;
+          es_sair.Enabled := true;
+          bt_itensnovo.Enabled := false;
+          bt_itensdelete.Enabled := false;
+          dt_studio.tb_vendas.cancel;
+          combo.setfocus;
+       end;
+   end;
+   Case Key of
+       VK_F6: //Comando para teclas de atalho//
+       begin
+          // Grava registros na base de dados//
+          If Application.MessageBox('Confirma Gravação de Vendas? ', 'Confirmação',
+          Mb_IconQuestion + Mb_OkCancel + MB_DefButton1) = IdOk then
+          else
+          exit;
+          id_venda.ReadOnly := true;
+          Data.ReadOnly := true;
+          cod_cli.ReadOnly := false;
+          cod_vend.ReadOnly := false;
+          nom_cli.ReadOnly := true;
+          nom_vend.ReadOnly := true;
+          obs.ReadOnly := true;
+          es_novo.Enabled := true;
+          es_editar.Enabled := true;
+          es_excluir.Enabled := true;
+          es_cancel.Enabled := false;
+          es_ok.Enabled := false;
+          es_sair.Enabled := true;
+          bt_itensnovo.Enabled := true;
+          bt_itensdelete.Enabled := true;
+          dt_studio.tb_vendas.post;
+          bt_itensnovo.setfocus;
+       end;
+   end;
+   Case Key of
+       VK_F9: //Comando para teclas de atalho//
+       begin
+          dt_studio.tb_vendas.close;
+          dt_studio.tb_formapag.close;
+          dt_studio.tb_cadatend.close;
+          dt_studio.tb_cadprod.close;
+          dt_studio.tb_vendas_itens.close;
+          query_cli.close;
+          query_prod.close;
+          query_atend.close;
+          close;
+       end;
+   end;
+   Case Key of
+       VK_F10: //Comando para teclas de atalho//
+       begin
+          // inserindo dados na tabela de itens
+          dt_studio.tb_vendas_itens.edit;
+          dt_studio.tb_vendas_itens.append;
+          dt_studio.tb_vendas_itensCOD_PROD.asstring := '';
+          dt_studio.tb_vendas_itensNOM_PROD.asstring := '';
+          dt_studio.tb_vendas_itensQUANTIDADE.asstring := '1';
+          dt_studio.tb_vendas_itensVR_UNIT.asstring := '';
+          dt_studio.tb_vendas_itensSUB_TOTAL.asstring := '';
+          dt_studio.tb_vendas_itensPERC_DESC.asstring := '';
+          dt_studio.tb_vendas_itensVR_DESC.asstring := '';
+          dt_studio.tb_vendas_itensTOTAL_GERAL.asstring := '';
+          cod_prod.ReadOnly := false;
+          nom_prod.ReadOnly := true;
+          quant.ReadOnly := false;
+          vr_unit.ReadOnly := true;
+          sub_total.ReadOnly := true;
+          perc_desc.ReadOnly := false;
+          vr_desc.ReadOnly := false;
+          total_geral.ReadOnly := true;
+          grid_vendas.ReadOnly := false;
+          frm_pesq_prod.cod := 3;
+          cod_prod.setfocus;
+          frm_pesq_prod.showmodal;
+       end;
+   end;
+   Case Key of
+       VK_F11: //Comando para teclas de atalho//
+       begin
+          // excluindo dados na tabela de itens
+          If Application.MessageBox('Confirma Exclusão?', 'Confirmar',
+          Mb_IconQuestion + MB_YesNo + MB_DefButton1) = IdYes Then
+          dt_studio.tb_vendas_itens.delete;
+       end;
+   end;
+end;
+
+procedure Tfrm_vendas.FormKeyPress(Sender: TObject; var Key: Char);
+begin
+  // usando a tecla [ENTER] para entrar com os dados
+  If Key = #13 Then
+    Selectnext(ActiveControl, true, true);
+end;
+
+procedure Tfrm_vendas.FormShow(Sender: TObject);
+var
+  total: Currency;
+  quantidade: Currency;
+  valor: Currency;
+  tot_comiss: Currency;
+  totalgeral: Currency;
+  desconto: Currency;
+  quantlinhas: Integer;
+begin
+   // abrindo a tabela de dados
+   cod_prod.ReadOnly := true;
+   nom_prod.ReadOnly := true;
+   quant.ReadOnly := true;
+   vr_unit.ReadOnly := true;
+   sub_total.ReadOnly := true;
+   perc_desc.ReadOnly := true;
+   vr_desc.ReadOnly := true;
+   total_geral.ReadOnly := true;
+   id_venda.ReadOnly := true;
+   Data.ReadOnly := true;
+   cod_cli.ReadOnly := true;
+   cod_vend.ReadOnly := true;
+   nom_cli.ReadOnly := true;
+   nom_vend.ReadOnly := true;
+   grid_vendas.ReadOnly := true;
+   es_novo.Enabled := true;
+   es_editar.Enabled := true;
+   es_excluir.Enabled := true;
+   es_cancel.Enabled := false;
+   es_ok.Enabled := false;
+   bt_itensnovo.Enabled := false;
+   bt_itensdelete.Enabled := false;
+   dt_studio.tb_vendas.open;
+   dt_studio.tb_vendas_itens.open;
+   dt_studio.tb_cadatend.open;
+   dt_studio.tb_movcaixa.open;
+   dt_studio.tb_formapag.open;
+   dt_studio.tb_cadprod.open;
+   query_cli.open;
+   query_prod.open;
+   query_atend.open;
+   total := 0;
+   quantidade := 0;
+   tot_comiss := 0;
+   valor := 0;
+   valor := 0;
+   desconto := 0;
+   totalgeral := 0;
+   quantlinhas := 0;
+  try
+     while not dt_studio.tb_vendas_itens.eof do
+     begin
+        tot_comiss := tot_comiss + dt_studio.tb_vendas_itens.FieldByName('VR_COMISSAO').AsCurrency;
+        total := total + dt_studio.tb_vendas_itens.FieldByName('TOTAL_GERAL').AsCurrency;
+        quantidade := quantidade + dt_studio.tb_vendas_itens.FieldByName('QUANTIDADE').AsCurrency;
+        valor := valor + dt_studio.tb_vendas_itens.FieldByName('VR_UNIT').AsCurrency;
+        totalgeral := totalgeral + dt_studio.tb_vendas_itens.FieldByName('SUB_TOTAL').AsCurrency;
+        desconto := desconto + dt_studio.tb_vendas_itens.FieldByName('VR_DESC').AsCurrency;
+        quantlinhas := grid_vendas.DataSource.DataSet.RecordCount;
+        dt_studio.tb_vendas_itens.Next;
+     end;
+    dt_studio.tb_vendas_itens.EnableControls;
+    Label22.Caption := FormatFloat('#,###,###,##0.00', total);
+    Label20.Caption := FormatFloat('#,###,###,##0.00', totalgeral);
+    Label24.Caption := FormatFloat('#,###,###,##0.00', desconto);
+    Label16.Caption := FormatFloat('#,0', quantlinhas);
+  finally
+  end;
+end;
+
+procedure Tfrm_vendas.grid_vendasCellClick(Column: TColumn);
+begin
+  bt_itensnovo.Enabled := true;
+  bt_itensdelete.Enabled := true;
+end;
+
+procedure Tfrm_vendas.grid_vendasDrawColumnCell(Sender: TObject;
+  const Rect: TRect; DataCol: Integer; Column: TColumn; State: TGridDrawState);
+begin
+  if (Column.Field.FieldName = 'ID_VENDA') then
+    grid_vendas.Canvas.Brush.Color := clSkyBlue;
+  grid_vendas.Canvas.FillRect(Rect);
+  grid_vendas.DefaultDrawDataCell(Rect, grid_vendas.columns[DataCol]
+    .Field, State);
+end;
+
+procedure Tfrm_vendas.perc_descExit(Sender: TObject);
+begin
+   dt_studio.tb_vendas_itensVR_DESC.Value :=
+   dt_studio.tb_vendas_itensSUB_TOTAL.Value *
+   (dt_studio.tb_vendas_itensPERC_DESC.Value) / 100;
+   vr_desc.setfocus;
+end;
+
+procedure Tfrm_vendas.ProdClick(Sender: TObject);
+begin // chamando a tela de pesquisa de produtos
+   frm_pesq_prod.cod := 3;
+   cod_prod.setfocus;
+   frm_pesq_prod.showmodal;
+end;
+
+procedure Tfrm_vendas.quantExit(Sender: TObject);
+begin
+   vr_desc.ReadOnly := false;
+   dt_studio.tb_vendas_itensSUB_TOTAL.Value :=
+   dt_studio.tb_vendas_itensVR_UNIT.Value *
+   dt_studio.tb_vendas_itensQUANTIDADE.Value;
+   perc_desc.setfocus;
+end;
+
+procedure Tfrm_vendas.radioClick(Sender: TObject);
+begin
+   Edit1.SetFocus;
+end;
+
+procedure Tfrm_vendas.Timer1Timer(Sender: TObject);
+begin
+  // label piscando no form
+  Itens.Visible := not Itens.Visible;
+end;
+
+procedure Tfrm_vendas.vr_descExit(Sender: TObject);
+var
+  total: Currency;
+  quant: Currency;
+  tot_comiss: Currency;
+  valor: Currency;
+  totalgeral: Currency;
+  desconto: Currency;
+  quantlinhas: Integer;
+begin
+   // rotina para calcular a quantidade e o vr. unitário
+   dt_studio.tb_cadprod.edit;
+   dt_studio.tb_vendas_itens.edit;
+   dt_studio.tb_cadprodQUANT_ESTOQUE.Value :=
+   dt_studio.tb_cadprodQUANT_ESTOQUE.Value -
+   dt_studio.tb_vendas_itensQUANTIDADE.Value;
+   dt_studio.tb_cadprod.post;
+   dt_studio.tb_cadprod.Next;
+   dt_studio.tb_vendas_itens.edit;
+   dt_studio.tb_vendas_itensSUB_TOTAL.Value :=
+   dt_studio.tb_vendas_itensVR_UNIT.Value *
+   dt_studio.tb_vendas_itensQUANTIDADE.Value;
+   dt_studio.tb_vendas_itensTOTAL_GERAL.Value :=
+   dt_studio.tb_vendas_itensSUB_TOTAL.Value -
+   dt_studio.tb_vendas_itensVR_DESC.Value;
+   dt_studio.tb_vendas_itensPERC_DESC.Value :=
+   dt_studio.tb_vendas_itensVR_DESC.Value / dt_studio.tb_vendas_itensSUB_TOTAL.
+   Value * 100;
+   dt_studio.tb_vendas_itensVR_COMISSAO.Value :=
+   dt_studio.tb_vendas_itensTOTAL_GERAL.Value *
+   dt_studio.tb_vendas_itensPERC_COMISSAO.Value / 100;
+   dt_studio.tb_vendas_itens.insert;
+   grid_vendas.DataSource.DataSet.first;
+   bt_itensnovo.setfocus;
+  // rotina para visualizar o total das colunas do grid
+   total := 0;
+   tot_comiss := 0;
+   quant := 0;
+   valor := 0;
+   valor := 0;
+   desconto := 0;
+   totalgeral := 0;
+   quantlinhas := 0;
+   dt_studio.tb_vendas_itens.DisableControls;
+  try
+    while not dt_studio.tb_vendas_itens.eof do
+    begin
+       tot_comiss := tot_comiss + dt_studio.tb_vendas_itens.FieldByName('VR_COMISSAO').AsCurrency;
+       total := total + dt_studio.tb_vendas_itens.FieldByName('TOTAL_GERAL').AsCurrency;
+       quant := quant + dt_studio.tb_vendas_itens.FieldByName('QUANTIDADE').AsCurrency;
+       valor := valor + dt_studio.tb_vendas_itens.FieldByName('VR_UNIT').AsCurrency;
+       totalgeral := totalgeral + dt_studio.tb_vendas_itens.FieldByName('SUB_TOTAL').AsCurrency;
+       desconto := desconto + dt_studio.tb_vendas_itens.FieldByName('VR_DESC').AsCurrency;
+       quantlinhas := grid_vendas.DataSource.DataSet.RecordCount;
+       dt_studio.tb_vendas_itens.Next;
+    end;
+    dt_studio.tb_vendas_itens.EnableControls;
+    Label22.Caption := FormatFloat('#,###,###,##0.00', total);
+    Label20.Caption := FormatFloat('#,###,###,##0.00', totalgeral);
+    Label24.Caption := FormatFloat('#,###,###,##0.00', desconto);
+    Label16.Caption := FormatFloat('#,0', quantlinhas);
+  finally
+ end;
+end;
+
+end.

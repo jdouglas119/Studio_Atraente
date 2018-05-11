@@ -1,0 +1,42 @@
+unit un_cadautorizador;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Grids, Vcl.DBGrids, Vcl.DBCtrls,
+  Vcl.StdCtrls, sButton, Vcl.ExtCtrls, sPanel, Vcl.Mask;
+
+type
+  Tfrm_cadauto = class(TForm)
+    Label1: TLabel;
+    DBEdit1: TDBEdit;
+    Label2: TLabel;
+    DBEdit2: TDBEdit;
+    Label3: TLabel;
+    DBEdit3: TDBEdit;
+    sPanel1: TsPanel;
+    novo: TsButton;
+    editar: TsButton;
+    excluir: TsButton;
+    nav_cli: TDBNavigator;
+    sair: TsButton;
+    gravar: TsButton;
+    cancelar: TsButton;
+    DBGrid1: TDBGrid;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_cadauto: Tfrm_cadauto;
+
+implementation
+
+uses un_dtstudio;
+
+{$R *.dfm}
+
+end.

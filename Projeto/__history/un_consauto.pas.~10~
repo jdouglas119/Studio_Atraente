@@ -1,0 +1,77 @@
+unit un_consauto;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Buttons, Vcl.Grids, Vcl.DBGrids,
+  Vcl.ExtCtrls, sPanel;
+
+type
+  Tfrm_consauto = class(TForm)
+    sPanel1: TsPanel;
+    DBGrid1: TDBGrid;
+    SpeedButton1: TSpeedButton;
+    procedure DBGrid1CellClick(Column: TColumn);
+    procedure SpeedButton1Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+  private
+    { Private declarations }
+  public
+   cod: integer;
+    { Public declarations }
+  end;
+
+var
+  frm_consauto: Tfrm_consauto;
+
+implementation
+
+uses un_dtstudio, un_aut_aposte, un_aut_itens, un_aut_retiradas, un_aut_servico;
+
+{$R *.dfm}
+
+procedure Tfrm_consauto.DBGrid1CellClick(Column: TColumn);
+begin// chamando a tela cadastro de serviços
+  Case cod Of
+    1:Begin
+        frm_aut_aposte.cod.text := dt_studio.tb_cadautoCOD_AUTORIZADOR.asstring;
+        frm_aut_aposte.nome.text := dt_studio.tb_cadautoAUTORIZADOR.asstring;
+        frm_aut_aposte.senha.setfocus;
+      end;
+    2:Begin
+        frm_aut_itens.cod.text := dt_studio.tb_cadautoCOD_AUTORIZADOR.asstring;
+        frm_aut_itens.nome.text := dt_studio.tb_cadautoAUTORIZADOR.asstring;
+        frm_aut_itens.senha.setfocus;
+      end;
+    3:Begin
+        frm_aut_retiradas.cod.text := dt_studio.tb_cadautoCOD_AUTORIZADOR.asstring;
+        frm_aut_retiradas.nome.text := dt_studio.tb_cadautoAUTORIZADOR.asstring;
+        frm_aut_retiradas.senha.setfocus;
+      end;
+    4:Begin
+        frm_aut_servico.cod.text := dt_studio.tb_cadautoCOD_AUTORIZADOR.asstring;
+        frm_aut_servico.nome.text := dt_studio.tb_cadautoAUTORIZADOR.asstring;
+        frm_aut_servico.senha.setfocus;
+      end;
+    5:Begin
+        frm_senha_aut.cod.text := dt_studio.tb_cadautoCOD_AUTORIZADOR.asstring;
+        frm_senha_aut.nome.text := dt_studio.tb_cadautoAUTORIZADOR.asstring;
+        frm_senha_aut.senha.setfocus;
+      end;
+    end;
+    frm_consauto.Close;
+end;
+
+procedure Tfrm_consauto.FormShow(Sender: TObject);
+begin
+   dt_studio.tb_cadauto.open;
+end;
+
+procedure Tfrm_consauto.SpeedButton1Click(Sender: TObject);
+begin
+   dt_studio.tb_cadauto.Close;
+   close;
+end;
+
+end.

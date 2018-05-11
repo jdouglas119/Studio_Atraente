@@ -1,0 +1,129 @@
+{***************************************************
+ * Elaborado para: Studio Atraente                 *
+ * Modulo     : Senha de Usuários                  *
+ * Analista   : João Douglas                       *
+ * Elaboração : João Douglas                       *
+ * Ult Alt.   : 30/03/2017                         *
+ ***************************************************}
+
+unit U_Senha;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, DBCtrls, StdCtrls, Buttons, Mask, DB, DBTables, ExtCtrls, jpeg,
+  IBX.IBCustomDataSet, IBX.IBDatabase, IBX.IBTable, IBX.IBQuery, Vcl.Themes,
+  Vcl.Styles, sBitBtn, sPanel, sSkinManager, sLabel, Vcl.ComCtrls;
+
+
+type
+  TFm_Senha = class(TForm)
+    Image1: TImage;
+    Label4: TLabel;
+    Label1: TLabel;
+    codigo: TEdit;
+    SpeedButton1: TSpeedButton;
+    nome: TEdit;
+    Label2: TLabel;
+    editsenha: TEdit;
+    sBitBtn1: TsBitBtn;
+    sBitBtn2: TsBitBtn;
+    Label3: TLabel;
+    Label5: TLabel;
+    StatusBar1: TStatusBar;
+    procedure BitBtn2Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure sBitBtn1Click(Sender: TObject);
+    procedure sBitBtn2Click(Sender: TObject);
+    procedure SpeedButton1Click(Sender: TObject);
+    procedure FormKeyPress(Sender: TObject; var Key: Char);
+  private
+     tentativas: Smallint;
+     { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Fm_Senha: TFm_Senha;
+
+implementation
+
+uses un_principal, un_dtstudio, un_cadusuarios, un_consusuario;
+
+{$R *.dfm}
+
+procedure TFm_Senha.BitBtn2Click(Sender: TObject);
+begin
+//fechando o formulário com o botão cancelar//
+  close;
+end;
+
+procedure TFm_Senha.FormKeyPress(Sender: TObject; var Key: Char);
+begin
+  If Key = #13 Then
+    Selectnext(ActiveControl, true, true);
+end;
+
+procedure TFm_Senha.FormShow(Sender: TObject);
+begin
+//abrindo a tabela na base de dados//
+   codigo.SetFocus;
+   dt_studio.tb_usuarios.open;
+   dt_studio.tb_usuarios.RecNo:=10;
+end;
+
+procedure TFm_Senha.sBitBtn1Click(Sender: TObject);
+Var
+   sql : String; //Variável de entrada//
+begin//login do sistema
+  If (nome.Text <> '') and (editsenha.Text = dt_studio.tb_usuariossenha.AsString) Then
+     begin
+        sql := 'select * from tbusuarios where usuarios = ' + QuotedStr(nome.Text);
+        sql := sql + ' and senha = ' + QuotedStr(editsenha.Text);
+        dt_studio.tb_usuarios.Active := True;
+        fm_senha.hide;
+        frm_principal.Showmodal;
+        fm_senha.Close;
+        if dt_studio.tb_usuariosNIVEL.value = '1' then
+          begin
+             frm_principal.Clientes1.Enabled := false;
+             frm_principal.Funcionios1.Enabled := false;
+          end
+        else
+        if dt_studio.tb_usuariosNIVEL.value = '2' then
+          begin
+             frm_principal.Clientes1.Enabled := true;
+             frm_principal.Funcionios1.Enabled := true;
+          end
+     end;
+     inc(tentativas); //tentativas de acesso ao sistema//
+     if tentativas < 3 then
+        begin
+            MessageDlg(Format('Tentativa %d de 3', [tentativas]), mtError, [mbOk], 0);
+        end
+     else
+         begin
+            MessageDlg(Format('%dª tentativa de acesso ao sistema.',
+            [tentativas]) + #13 + 'A aplicação será fechada você não tem acesso ao sistema!', mtError,[mbOk], 0);
+             ModalResult := mrCancel;
+             close;
+         end;
+         MessageDlg('Usuário não cadastrado ou senha inválida', mtInformation, [mbOK], 0);
+         editsenha.Text := '';
+end;
+
+procedure TFm_Senha.sBitBtn2Click(Sender: TObject);
+begin
+   close;
+end;
+
+procedure TFm_Senha.SpeedButton1Click(Sender: TObject);
+begin
+  frm_consusuario.cod := 1;
+  editsenha.SetFocus;
+  frm_consusuario.showmodal;
+end;
+
+end.

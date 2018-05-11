@@ -1,0 +1,808 @@
+object frm_cadatend: Tfrm_cadatend
+  Left = 326
+  Top = 127
+  BorderStyle = bsToolWindow
+  Caption = 'Cadastro de Atendentes - Studio Atraente - vers'#227'o: 1.0'
+  ClientHeight = 474
+  ClientWidth = 812
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  KeyPreview = True
+  OldCreateOrder = False
+  Position = poDesigned
+  OnKeyDown = FormKeyDown
+  OnKeyPress = FormKeyPress
+  OnShow = FormShow
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Label17: TLabel
+    Left = 11
+    Top = 432
+    Width = 30
+    Height = 13
+    Caption = 'Ativo'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object Label18: TLabel
+    Left = 86
+    Top = 432
+    Width = 41
+    Height = 13
+    Caption = 'Inativo'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object Label1: TLabel
+    Left = 160
+    Top = 46
+    Width = 44
+    Height = 13
+    Caption = 'ID_FUNC'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label2: TLabel
+    Left = 256
+    Top = 46
+    Width = 29
+    Height = 13
+    Caption = 'NOME'
+    FocusControl = nom_func
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label3: TLabel
+    Left = 658
+    Top = 46
+    Width = 74
+    Height = 13
+    Caption = 'DT_CADASTRO'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label4: TLabel
+    Left = 11
+    Top = 90
+    Width = 54
+    Height = 13
+    Caption = 'ENDERE'#199'O'
+    FocusControl = end_func
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label5: TLabel
+    Left = 117
+    Top = 133
+    Width = 39
+    Height = 13
+    Caption = 'BAIRRO'
+    FocusControl = bai_func
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label6: TLabel
+    Left = 11
+    Top = 131
+    Width = 19
+    Height = 13
+    Caption = 'CEP'
+    FocusControl = cep_func
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label7: TLabel
+    Left = 337
+    Top = 133
+    Width = 38
+    Height = 13
+    Caption = 'CIDADE'
+    FocusControl = cid_func
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label8: TLabel
+    Left = 591
+    Top = 132
+    Width = 27
+    Height = 13
+    Caption = 'AREA'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label9: TLabel
+    Left = 11
+    Top = 170
+    Width = 75
+    Height = 13
+    Caption = 'COMISSAO - %'
+    FocusControl = com_func
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label10: TLabel
+    Left = 459
+    Top = 90
+    Width = 43
+    Height = 13
+    Caption = 'N'#218'MERO'
+    FocusControl = numero
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label11: TLabel
+    Left = 542
+    Top = 133
+    Width = 13
+    Height = 13
+    Caption = 'UF'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label13: TLabel
+    Left = 540
+    Top = 90
+    Width = 75
+    Height = 13
+    Caption = 'COMPLEMENTO'
+    FocusControl = comp
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label14: TLabel
+    Left = 108
+    Top = 171
+    Width = 47
+    Height = 13
+    Caption = 'TEL_FIXO'
+    FocusControl = tel_func
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label15: TLabel
+    Left = 238
+    Top = 171
+    Width = 44
+    Height = 13
+    Caption = 'CELULAR'
+    FocusControl = cel_func
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label25: TLabel
+    Left = 553
+    Top = 46
+    Width = 61
+    Height = 13
+    Caption = 'DATA NASC.'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object sPanel1: TsPanel
+    Left = 8
+    Top = 5
+    Width = 796
+    Height = 35
+    BevelInner = bvLowered
+    Color = 13421568
+    ParentBackground = False
+    TabOrder = 15
+    object novo: TsButton
+      Left = 3
+      Top = 4
+      Width = 88
+      Height = 27
+      Caption = 'Novo'
+      TabOrder = 0
+      OnClick = novoClick
+    end
+    object editar: TsButton
+      Left = 91
+      Top = 4
+      Width = 88
+      Height = 27
+      Caption = 'Editar'
+      TabOrder = 1
+      OnClick = editarClick
+    end
+    object excluir: TsButton
+      Left = 179
+      Top = 4
+      Width = 88
+      Height = 27
+      Caption = 'Excluir'
+      TabOrder = 2
+      OnClick = excluirClick
+    end
+    object nav_atend: TDBNavigator
+      Left = 410
+      Top = 4
+      Width = 164
+      Height = 27
+      DataSource = dt_studio.ds_cadatend
+      VisibleButtons = [nbFirst, nbPrior, nbNext, nbLast]
+      Hints.Strings = (
+        'Inicio'
+        'Anterior'
+        'Posterior'
+        'Ultimo')
+      TabOrder = 3
+    end
+    object sair: TsButton
+      Left = 706
+      Top = 4
+      Width = 88
+      Height = 27
+      Caption = 'Sair'
+      TabOrder = 4
+      OnClick = sairClick
+    end
+  end
+  object Panel1: TPanel
+    Left = 44
+    Top = 434
+    Width = 23
+    Height = 11
+    Color = clBlack
+    ParentBackground = False
+    TabOrder = 16
+  end
+  object Panel2: TPanel
+    Left = 131
+    Top = 434
+    Width = 23
+    Height = 11
+    Color = clRed
+    ParentBackground = False
+    TabOrder = 17
+  end
+  object gravar: TsButton
+    Left = 624
+    Top = 423
+    Width = 88
+    Height = 27
+    Caption = 'OK'
+    TabOrder = 18
+    OnClick = gravarClick
+  end
+  object cancelar: TsButton
+    Left = 714
+    Top = 423
+    Width = 86
+    Height = 27
+    Caption = 'Cancelar'
+    TabOrder = 19
+    OnClick = cancelarClick
+  end
+  object StatusBar1: TStatusBar
+    Left = 0
+    Top = 455
+    Width = 812
+    Height = 19
+    Panels = <
+      item
+        Text = 
+          'F2 - Incluir  -  F3 - Alterar  -  F4 - Excluir  - F5 - Cancelar ' +
+          ' - F6 - Gravar  -  F9 - Sair'
+        Width = 50
+      end>
+  end
+  object Edit1: TEdit
+    Left = 8
+    Top = 214
+    Width = 794
+    Height = 21
+    BevelInner = bvLowered
+    BevelOuter = bvSpace
+    CharCase = ecUpperCase
+    TabOrder = 21
+  end
+  object sButton1: TsButton
+    Left = 722
+    Top = 182
+    Width = 78
+    Height = 27
+    Caption = 'Pesquisar'
+    TabOrder = 22
+    OnClick = sButton1Click
+  end
+  object radio1: TRadioGroup
+    Left = 372
+    Top = 174
+    Width = 344
+    Height = 36
+    Caption = 'Op'#231#245'es de Pesquisa'
+    Columns = 2
+    Items.Strings = (
+      'C'#243'digo'
+      'Nome')
+    TabOrder = 23
+    OnClick = radio1Click
+  end
+  object nom_func: TDBEdit
+    Left = 256
+    Top = 62
+    Width = 292
+    Height = 21
+    BevelInner = bvLowered
+    BevelOuter = bvSpace
+    CharCase = ecUpperCase
+    DataField = 'NOM_FUNC'
+    DataSource = dt_studio.ds_cadatend
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    ReadOnly = True
+    TabOrder = 1
+  end
+  object end_func: TDBEdit
+    Left = 11
+    Top = 106
+    Width = 443
+    Height = 21
+    BevelInner = bvLowered
+    BevelOuter = bvSpace
+    CharCase = ecUpperCase
+    DataField = 'END_FUNC'
+    DataSource = dt_studio.ds_cadatend
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    ReadOnly = True
+    TabOrder = 3
+  end
+  object bai_func: TDBEdit
+    Left = 117
+    Top = 148
+    Width = 216
+    Height = 21
+    BevelInner = bvLowered
+    BevelOuter = bvSpace
+    CharCase = ecUpperCase
+    DataField = 'BAI_FUNC'
+    DataSource = dt_studio.ds_cadatend
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    ReadOnly = True
+    TabOrder = 7
+  end
+  object cep_func: TDBEdit
+    Left = 11
+    Top = 147
+    Width = 101
+    Height = 21
+    BevelInner = bvLowered
+    BevelOuter = bvSpace
+    DataField = 'CEP_FUNC'
+    DataSource = dt_studio.ds_cadatend
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    ReadOnly = True
+    TabOrder = 6
+  end
+  object cid_func: TDBEdit
+    Left = 337
+    Top = 148
+    Width = 197
+    Height = 21
+    BevelInner = bvLowered
+    BevelOuter = bvSpace
+    CharCase = ecUpperCase
+    DataField = 'CID_FUNC'
+    DataSource = dt_studio.ds_cadatend
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    ReadOnly = True
+    TabOrder = 8
+  end
+  object com_func: TDBEdit
+    Left = 11
+    Top = 186
+    Width = 89
+    Height = 21
+    BevelInner = bvLowered
+    BevelOuter = bvSpace
+    DataField = 'COMISSAO_FUNC'
+    DataSource = dt_studio.ds_cadatend
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    ReadOnly = True
+    TabOrder = 11
+  end
+  object grid_func: TDBGrid
+    Left = 8
+    Top = 240
+    Width = 796
+    Height = 178
+    Color = clWhite
+    DataSource = dt_studio.ds_cadatend
+    DrawingStyle = gdsClassic
+    ReadOnly = True
+    TabOrder = 14
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -11
+    TitleFont.Name = 'Tahoma'
+    TitleFont.Style = []
+    OnDrawColumnCell = grid_funcDrawColumnCell
+    Columns = <
+      item
+        Expanded = False
+        FieldName = 'SITUACAO'
+        Width = 26
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'ID_FUNC'
+        Title.Caption = 'C'#211'DIGO'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'NOM_FUNC'
+        Title.Caption = 'NOME'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'DT_NASC'
+        Title.Caption = 'DATA_NASC'
+        Width = 73
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'DT_CAD'
+        Title.Caption = 'DT_CADASTRO'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'END_FUNC'
+        Title.Caption = 'ENDERE'#199'O'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'NUM_FUNC'
+        Title.Caption = 'N'#218'MERO'
+        Width = 55
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'COMP_FUNC'
+        Title.Caption = 'COMPLEMENTO'
+        Width = 152
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'CEP_FUNC'
+        Title.Caption = 'CEP'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'BAI_FUNC'
+        Title.Caption = 'BAIRRO'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'CID_FUNC'
+        Title.Caption = 'CIDADE'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'UF'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'AREA_FUNC'
+        Title.Caption = 'AREA'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'COMISSAO_FUNC'
+        Title.Caption = 'COMISS'#195'O'
+        Width = 61
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'TEL_FIXO'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'CEL_FUNC'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'ESTADO'
+        Visible = True
+      end>
+  end
+  object data: TDBEdit
+    Left = 656
+    Top = 62
+    Width = 146
+    Height = 21
+    BevelInner = bvLowered
+    BevelOuter = bvSpace
+    DataField = 'DT_CAD'
+    DataSource = dt_studio.ds_cadatend
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    ReadOnly = True
+    TabOrder = 24
+  end
+  object numero: TDBEdit
+    Left = 459
+    Top = 106
+    Width = 75
+    Height = 21
+    BevelInner = bvLowered
+    BevelOuter = bvSpace
+    DataField = 'NUM_FUNC'
+    DataSource = dt_studio.ds_cadatend
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 4
+  end
+  object comp: TDBEdit
+    Left = 540
+    Top = 106
+    Width = 262
+    Height = 21
+    BevelInner = bvLowered
+    BevelOuter = bvSpace
+    CharCase = ecUpperCase
+    DataField = 'COMP_FUNC'
+    DataSource = dt_studio.ds_cadatend
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    ReadOnly = True
+    TabOrder = 5
+  end
+  object uf: TDBLookupComboBox
+    Left = 540
+    Top = 148
+    Width = 43
+    Height = 21
+    BevelInner = bvNone
+    BevelOuter = bvNone
+    DataField = 'ESTADO'
+    DataSource = dt_studio.ds_cadatend
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    KeyField = 'SIGLA'
+    ListField = 'SIGLA'
+    ListSource = dt_studio.ds_cadestado
+    ParentFont = False
+    ReadOnly = True
+    TabOrder = 9
+  end
+  object area_func: TDBEdit
+    Left = 589
+    Top = 147
+    Width = 213
+    Height = 21
+    BevelInner = bvLowered
+    BevelOuter = bvSpace
+    CharCase = ecUpperCase
+    DataField = 'AREA_FUNC'
+    DataSource = dt_studio.ds_cadatend
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    ReadOnly = True
+    TabOrder = 10
+  end
+  object dbradio1: TDBRadioGroup
+    Left = 8
+    Top = 46
+    Width = 146
+    Height = 38
+    Columns = 2
+    DataField = 'SITUACAO'
+    DataSource = dt_studio.ds_cadatend
+    Items.Strings = (
+      'Ativo'
+      'Inativo')
+    TabOrder = 25
+    Values.Strings = (
+      'A'
+      'I')
+  end
+  object tel_func: TDBEdit
+    Left = 108
+    Top = 186
+    Width = 123
+    Height = 21
+    BevelInner = bvLowered
+    BevelOuter = bvSpace
+    DataField = 'TEL_FIXO'
+    DataSource = dt_studio.ds_cadatend
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    ReadOnly = True
+    TabOrder = 12
+  end
+  object cel_func: TDBEdit
+    Left = 237
+    Top = 186
+    Width = 123
+    Height = 21
+    BevelInner = bvLowered
+    BevelOuter = bvSpace
+    DataField = 'CEL_FUNC'
+    DataSource = dt_studio.ds_cadatend
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    ReadOnly = True
+    TabOrder = 13
+  end
+  object id_codigo: TDBEdit
+    Left = 160
+    Top = 62
+    Width = 92
+    Height = 21
+    BevelInner = bvLowered
+    BevelOuter = bvSpace
+    DataField = 'ID_FUNC'
+    DataSource = dt_studio.ds_cadatend
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    ReadOnly = True
+    TabOrder = 0
+  end
+  object dt_nasc: TDBEdit
+    Left = 553
+    Top = 62
+    Width = 99
+    Height = 21
+    BevelInner = bvLowered
+    BevelOuter = bvSpace
+    DataField = 'DT_NASC'
+    DataSource = dt_studio.ds_cadatend
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    ReadOnly = True
+    TabOrder = 2
+  end
+end

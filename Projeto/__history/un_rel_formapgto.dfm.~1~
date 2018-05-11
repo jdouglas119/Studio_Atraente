@@ -1,0 +1,34 @@
+object frm_forma: Tfrm_forma
+  Left = 550
+  Top = 283
+  BorderStyle = bsToolWindow
+  Caption = 'Relat'#243'rio de Forma de Pagamentos - Studio Atraente - vers'#227'o: 1.0'
+  ClientHeight = 115
+  ClientWidth = 294
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poDesigned
+  PixelsPerInch = 96
+  TextHeight = 13
+  object frm_chama_relcli: TsBitBtn
+    Left = 54
+    Top = 32
+    Width = 93
+    Height = 41
+    Caption = 'OK'
+    TabOrder = 0
+  end
+  object sButton1: TsButton
+    Left = 153
+    Top = 32
+    Width = 91
+    Height = 41
+    Caption = 'Cancelar'
+    TabOrder = 1
+  end
+end

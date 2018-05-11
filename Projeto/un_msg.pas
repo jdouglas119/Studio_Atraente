@@ -1,0 +1,46 @@
+{****************************************************
+  * Elaborado para: Studio Atraente                 *
+  * Modulo     : Tela Mensagem Número de Visitas    *
+  * Analista   : João Douglas                       *
+  * Elaboração : João Douglas                       *
+  * Ult Alt.   : 29/08/2017                         *
+****************************************************}
+
+unit un_msg;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls,
+  sLabel, sSkinManager, sPanel;
+
+type
+  Tfrm_msg = class(TForm)
+    Panel1: TPanel;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    BitBtn1: TBitBtn;
+    Label1: TLabel;
+    Label5: TLabel;
+    procedure BitBtn1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_msg: Tfrm_msg;
+
+implementation
+
+{$R *.dfm}
+
+procedure Tfrm_msg.BitBtn1Click(Sender: TObject);
+begin
+   close;
+end;
+
+end.

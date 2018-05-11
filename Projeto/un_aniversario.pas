@@ -1,0 +1,127 @@
+{ ***************************************************
+  * Elaborado para: Studio Atraente                 *
+  * Modulo     : Aniversariantes do Dia             *
+  * Analista   : João Douglas                       *
+  * Elaboração : João Douglas                       *
+  * Ult Alt.   : 19/12/2016                         *
+  *************************************************** }
+
+unit un_aniversario;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Imaging.jpeg,
+  Vcl.ExtCtrls, Vcl.Buttons, sButton;
+
+type
+  Tfrm_aniversariantes = class(TForm)
+    Panel1: TPanel;
+    Panel2: TPanel;
+    Image1: TImage;
+    Panel4: TPanel;
+    memo: TMemo;
+    Timer1: TTimer;
+    Label1: TLabel;
+    mes: TEdit;
+    Edit1: TEdit;
+    procedure FormShow(Sender: TObject);
+    procedure Timer1Timer(Sender: TObject);
+    procedure mesExit(Sender: TObject);
+    procedure FormKeyPress(Sender: TObject; var Key: Char);
+    procedure BitBtn1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_aniversariantes: Tfrm_aniversariantes;
+
+implementation
+
+{$R *.dfm}
+
+uses un_dtstudio;
+
+procedure Tfrm_aniversariantes.BitBtn1Click(Sender: TObject);
+begin
+   dt_studio.tb_cadcli.Close;
+   close;
+   memo.clear;
+end;
+
+procedure Tfrm_aniversariantes.FormKeyPress(Sender: TObject; var Key: Char);
+begin //Usando a tecla [ENTER]
+  If Key = #13 Then
+    Selectnext(ActiveControl, true, true);
+end;
+
+procedure Tfrm_aniversariantes.FormShow(Sender: TObject);
+begin //Focando o edit
+   mes.SetFocus;
+end;
+
+procedure Tfrm_aniversariantes.mesExit(Sender: TObject);
+begin //Mostrando o mês de acordo com a digitação
+   if mes.Text = '01' then
+      edit1.Text := 'JANEIRO';
+   if mes.Text = '02' then
+      edit1.Text := 'FEVEREIRO';
+   if mes.Text = '03' then
+      edit1.Text := 'MARÇO';
+   if mes.Text = '04' then
+      edit1.Text := 'ABRIL';
+   if mes.Text = '05' then
+      edit1.Text := 'MAIO';
+   if mes.Text = '06' then
+      edit1.Text := 'JUNHO';
+   if mes.Text = '07' then
+      edit1.Text := 'JULHO';
+   if mes.Text = '08' then
+      edit1.Text := 'AGOSTO';
+   if mes.Text = '09' then
+      edit1.Text := 'SETEMBRO';
+   if mes.Text = '10' then
+      edit1.Text := 'OUTUBRO';
+   if mes.Text = '11' then
+      edit1.Text := 'NOVEMBRO';
+   if mes.Text = '12' then
+      edit1.Text := 'DEZEMBRO';
+// Visualuzando Clientes Aniversariantes do Mês (RITCH EDIT)
+   dt_studio.tb_cadcli.sql.clear;
+   dt_studio.tb_cadcli.close;
+   dt_studio.tb_cadcli.sql.add('SELECT * FROM CAD_CLI');
+   dt_studio.tb_cadcli.sql.add('WHERE MONTH(DT_ANI)= :Mes');
+   dt_studio.tb_cadcli.sql.add('ORDER BY NOM_CLI ASC');
+   dt_studio.tb_cadcli.Parameters.ParamByName('Mes').value := mes.Text;
+   dt_studio.tb_cadcli.open;
+   if not dt_studio.tb_cadcli.IsEmpty then
+   begin
+      while not dt_studio.tb_cadcli.Eof do
+      begin
+         memo.Lines.Add(dt_studio.tb_cadcliNOM_CLI.value + ' - ' +
+         datetostr(dt_studio.tb_cadcliDT_ANI.value));
+         dt_studio.tb_cadcli.next;
+      end;
+   end
+   else
+   ShowMessage('MÊS INEXSISTENTE DIGITE O MÊS CORRETO!');
+   mes.setfocus;
+end;
+
+procedure Tfrm_aniversariantes.Timer1Timer(Sender: TObject);
+begin
+  // Visualiza uma imagem se o ritchedit estiver preechido, se estiver em branco não
+  // visualiza a imagem
+  if memo.Text = '' then
+   begin
+      image1.Visible := false;
+   end
+   else
+      image1.Visible := true;
+end;
+
+end.

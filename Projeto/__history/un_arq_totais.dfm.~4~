@@ -1,0 +1,135 @@
+object frm_arq_totais: Tfrm_arq_totais
+  Left = 387
+  Top = 210
+  BorderStyle = bsToolWindow
+  Caption = 'Arquivamento dos Totais Anual - Studio Atraente - vers'#227'o 1.0 '
+  ClientHeight = 388
+  ClientWidth = 777
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poDesigned
+  OnClose = FormClose
+  OnShow = FormShow
+  PixelsPerInch = 96
+  TextHeight = 13
+  object DBGrid1: TDBGrid
+    Left = 8
+    Top = 8
+    Width = 761
+    Height = 273
+    Color = 15794175
+    DataSource = dt_studio.ds_arquivo_totais
+    DrawingStyle = gdsClassic
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    ReadOnly = True
+    TabOrder = 0
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -11
+    TitleFont.Name = 'Tahoma'
+    TitleFont.Style = []
+    Columns = <
+      item
+        Expanded = False
+        FieldName = 'ANO'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'TOT_JAN'
+        Width = 96
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'TOT_FEV'
+        Width = 92
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'TOT_MAR'
+        Width = 97
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'TOT_ABR'
+        Width = 101
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'TOT_MAI'
+        Width = 104
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'TOT_JUN'
+        Width = 100
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'TOT_JUL'
+        Width = 106
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'TOT_AGO'
+        Width = 95
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'TOT_SET'
+        Width = 109
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'TOT_OUT'
+        Width = 111
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'TOT_NOV'
+        Width = 107
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'TOT_DEZ'
+        Width = 107
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'TOT_ANO'
+        Width = 123
+        Visible = True
+      end>
+  end
+  object sButton1: TsButton
+    Left = 368
+    Top = 360
+    Width = 75
+    Height = 25
+    Caption = 'Fechar'
+    TabOrder = 1
+    OnClick = sButton1Click
+  end
+end

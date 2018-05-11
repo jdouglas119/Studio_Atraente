@@ -1,0 +1,220 @@
+object frm_pesq_tipo: Tfrm_pesq_tipo
+  Left = 328
+  Top = 154
+  BorderStyle = bsToolWindow
+  Caption = 'Listagem dos Tipos de Servi'#231'os - Studio Atraente - vers'#227'o: 1.0'
+  ClientHeight = 400
+  ClientWidth = 786
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poDesigned
+  OnShow = FormShow
+  PixelsPerInch = 96
+  TextHeight = 13
+  object SpeedButton1: TSpeedButton
+    Left = 360
+    Top = 367
+    Width = 98
+    Height = 26
+    Caption = '&Fechar'
+    OnClick = SpeedButton1Click
+  end
+  object DBGrid1: TDBGrid
+    Left = 3
+    Top = 92
+    Width = 780
+    Height = 269
+    DataSource = ds_pesq
+    DrawingStyle = gdsClassic
+    FixedColor = 12713983
+    ReadOnly = True
+    TabOrder = 0
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -11
+    TitleFont.Name = 'Tahoma'
+    TitleFont.Style = []
+    OnCellClick = DBGrid1CellClick
+    OnDrawColumnCell = DBGrid1DrawColumnCell
+    Columns = <
+      item
+        Expanded = False
+        FieldName = 'TIPO'
+        Width = 34
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'SITUACAO'
+        Width = 32
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'ESTOQUE'
+        Width = 58
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'ID_TIPO'
+        Width = 51
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'DEPARTAMENTO'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'NOME_TIPO'
+        Width = 251
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'DT_CAD'
+        Width = 113
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'PERC_SERVICO'
+        Width = 87
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'VR_SERVICO'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'CUSTO'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'VR_VENDA'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'PERC_VENDA'
+        Visible = True
+      end>
+  end
+  object sPanel1: TsPanel
+    Left = 0
+    Top = 0
+    Width = 786
+    Height = 41
+    Align = alTop
+    Caption = 'CONSULTA OS TIPOS DE SERVI'#199'OS NO CADASTRO'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -19
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 1
+  end
+  object Edit1: TEdit
+    Left = 335
+    Top = 56
+    Width = 364
+    Height = 24
+    CharCase = ecUpperCase
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clMaroon
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 2
+    OnChange = Edit1Change
+  end
+  object sButton2: TsButton
+    Left = 705
+    Top = 51
+    Width = 73
+    Height = 29
+    Caption = 'Pesquisar'
+    TabOrder = 3
+    OnClick = sButton2Click
+  end
+  object radio: TRadioGroup
+    Left = 8
+    Top = 45
+    Width = 322
+    Height = 44
+    Caption = 'Tipo de Cadastro'
+    Columns = 3
+    ItemIndex = 0
+    Items.Strings = (
+      'Departamento'
+      'Tipo'
+      'Nome')
+    TabOrder = 4
+    OnClick = radioClick
+  end
+  object qry_pesq: TADOQuery
+    Connection = dt_studio.Conexao
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'SELECT * FROM CAD_TIPO ORDER BY DEPARTAMENTO')
+    Left = 384
+    Top = 200
+    object qry_pesqID_TIPO: TAutoIncField
+      FieldName = 'ID_TIPO'
+      ReadOnly = True
+    end
+    object qry_pesqNOME_TIPO: TStringField
+      FieldName = 'NOME_TIPO'
+      Size = 50
+    end
+    object qry_pesqDT_CAD: TDateTimeField
+      FieldName = 'DT_CAD'
+    end
+    object qry_pesqPERC_SERVICO: TBCDField
+      FieldName = 'PERC_SERVICO'
+      Precision = 18
+      Size = 0
+    end
+    object qry_pesqVR_SERVICO: TFloatField
+      FieldName = 'VR_SERVICO'
+    end
+    object qry_pesqSITUACAO: TStringField
+      FieldName = 'SITUACAO'
+      Size = 10
+    end
+    object qry_pesqCUSTO: TFloatField
+      FieldName = 'CUSTO'
+    end
+    object qry_pesqTIPO: TStringField
+      FieldName = 'TIPO'
+      Size = 10
+    end
+    object qry_pesqESTOQUE: TBCDField
+      FieldName = 'ESTOQUE'
+      Precision = 18
+      Size = 0
+    end
+    object qry_pesqDEPARTAMENTO: TStringField
+      FieldName = 'DEPARTAMENTO'
+      Size = 15
+    end
+  end
+  object ds_pesq: TDataSource
+    DataSet = qry_pesq
+    Left = 448
+    Top = 200
+  end
+end

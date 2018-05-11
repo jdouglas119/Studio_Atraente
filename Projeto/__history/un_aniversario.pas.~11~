@@ -1,0 +1,112 @@
+{ ***************************************************
+  * Elaborado para: Studio Atraente                 *
+  * Modulo     : Aniversariantes do Dia             *
+  * Analista   : João Douglas                       *
+  * Elaboração : João Douglas                       *
+  * Ult Alt.   : 27/09/2016                         *
+  *************************************************** }
+
+unit un_aniversario;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Imaging.jpeg,
+  Vcl.ExtCtrls, Vcl.Buttons;
+
+type
+  Tfrm_aniversariantes = class(TForm)
+    Panel1: TPanel;
+    Panel2: TPanel;
+    Image1: TImage;
+    Panel4: TPanel;
+    memo: TMemo;
+    Timer1: TTimer;
+    Label1: TLabel;
+    mes: TEdit;
+    SpeedButton1: TSpeedButton;
+    procedure FormShow(Sender: TObject);
+    procedure Timer1Timer(Sender: TObject);
+    procedure SpeedButton1Click(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_aniversariantes: Tfrm_aniversariantes;
+
+implementation
+
+{$R *.dfm}
+
+uses un_dtstudio;
+
+procedure Tfrm_aniversariantes.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+   dt_studio.tb_cadcli.Close;
+end;
+
+procedure Tfrm_aniversariantes.FormShow(Sender: TObject);
+begin
+{   with dt_studio do
+      dt_studio.sql_nivers1.open;
+      dt_studio.sql_nivers1.first;
+      while not dt_studio.sql_nivers1.eof do
+      begin
+         if (copy(datetostr(dt_studio.sql_nivers1DT_ANI.value),1,5) = copy(datetostr(date),1,5)) then
+            memo.Lines.Add(dt_studio.sql_nivers1NOM_CLI.value + ' - ' + datetostr(dt_studio.sql_nivers1DT_ANI.value));
+            dt_studio.sql_nivers1.next;
+      end;
+     // Visualuzando Colaboradores Aniversariantes do Dia (RITCH EDIT)
+   with dt_studio do
+      dt_studio.sql_nivers2.open;
+      dt_studio.sql_nivers2.first;
+      while not dt_studio.sql_nivers2.eof do
+      begin
+         if (copy(datetostr(dt_studio.sql_nivers2DT_NASC.value),1,5) = copy(datetostr(date),1,5)) then
+            memo1.Lines.Add(dt_studio.sql_nivers2NOM_FUNC.value + ' - ' + datetostr(dt_studio.sql_nivers2DT_NASC.value));
+            dt_studio.sql_nivers2.next;
+      end;}
+end;
+
+procedure Tfrm_aniversariantes.SpeedButton1Click(Sender: TObject);
+begin
+   // Visualuzando Clientes Aniversariantes do Dia (RITCH EDIT)
+   // Selecionando Registro na tabela
+    dt_studio.tb_cadcli.close;
+    dt_studio.tb_cadcli.sql.clear;
+    dt_studio.tb_cadcli.sql.add('SELECT * FROM CAD_CLI');
+    dt_studio.tb_cadcli.sql.add('WHERE MONTH(DT_ANI)= :Mes');
+    dt_studio.tb_cadcli.sql.add('ORDER BY NOM_CLI ASC');
+    dt_studio.tb_cadcli.Parameters.ParamByName('Mes').value := mes.Text;
+    memo.Lines.Add(dt_studio.tb_cadcliNOM_CLI.value + ' - ' + datetostr(dt_studio.tb_cadcliDT_ANI.value));
+    dt_studio.tb_cadcli.open;
+{    If dt_studio.tb_cadcli.RecordCount > 0 then
+    begin
+       memo.Lines.Add(dt_studio.tb_cadcliNOM_CLI.value + ' - ' + datetostr(dt_studio.tb_cadcliDT_ANI.value));
+       dt_studio.tb_cadcli.next;
+    end
+    else
+    If dt_studio.tb_cadcli.RecordCount < 0 then
+    ShowMessage('NENHUM ANIVERSARIANTE CADASTRADO NO MÊS');
+    mes.setfocus;}
+end;
+
+procedure Tfrm_aniversariantes.Timer1Timer(Sender: TObject);
+begin
+  // Visualiza uma imagem se o ritchedit estiver preechido, se estiver em branco não
+  // visualiza a imagem
+  if memo.Text = '' then
+   begin
+      image1.Visible := false;
+   end
+   else
+      image1.Visible := true;
+end;
+
+end.

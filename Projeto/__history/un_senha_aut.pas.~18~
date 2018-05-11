@@ -1,0 +1,98 @@
+{ ***************************************************
+  * Elaborado para: Studio Atraente                 *
+  * Modulo     : Senha de Autorização               *
+  * Analista   : João Douglas                       *
+  * Elaboração : João Douglas                       *
+  * Ult Alt.   : 10/01/2017                         *
+  *************************************************** }
+
+unit un_senha_aut;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, Vcl.Mask,
+  Vcl.DBCtrls, sBitBtn, sButton;
+
+type
+  Tfrm_senha_aut = class(TForm)
+    Label2: TLabel;
+    Edit1: TEdit;
+    Label1: TLabel;
+    BitBtn1: TBitBtn;
+    BitBtn2: TBitBtn;
+    login: TEdit;
+    procedure FormShow(Sender: TObject);
+    procedure FormKeyPress(Sender: TObject; var Key: Char);
+    procedure BitBtn1Click(Sender: TObject);
+    procedure BitBtn2Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_senha_aut: Tfrm_senha_aut;
+
+implementation
+
+uses un_dtstudio, un_rec_caixa;
+
+{$R *.dfm}
+
+procedure Tfrm_senha_aut.BitBtn1Click(Sender: TObject);
+begin
+   if (edit1.Text = 'BRAGA') and (login.Text = 'NEIDE') or (edit1.Text = 'STUDIO') and (login.Text = 'IARA') then
+      begin
+        dt_studio.tb_rec_caixa.Edit;
+        frm_rec_caixa.rec_cartao_cred.ReadOnly := false;
+        frm_rec_caixa.rec_cartao_deb.ReadOnly := false;
+        frm_rec_caixa.memo.ReadOnly := false;
+        frm_rec_caixa.dinheiro.ReadOnly := false;
+        frm_rec_caixa.vr_rec.ReadOnly := false;
+        frm_rec_caixa.troco.ReadOnly := false;
+        frm_rec_caixa.combo.ReadOnly := false;
+        frm_rec_caixa.combo.SetFocus;
+        frm_rec_caixa.es_ok.enabled := true;
+        frm_rec_caixa.cancelar.enabled := true;
+      end
+   else
+      begin
+         Showmessage('USUÁRIO E/OU SENHA INCORRETA!');
+         frm_rec_caixa.rec_cartao_cred.ReadOnly := true;
+         frm_rec_caixa.rec_cartao_deb.ReadOnly := true;
+         frm_rec_caixa.dinheiro.ReadOnly := true;
+         frm_rec_caixa.vr_rec.ReadOnly := true;
+         frm_rec_caixa.memo.ReadOnly := true;
+         frm_rec_caixa.troco.ReadOnly := true;
+         frm_rec_caixa.combo.ReadOnly := true;
+         frm_rec_caixa.combo.SetFocus;
+         frm_rec_caixa.es_ok.enabled := false;
+         frm_rec_caixa.cancelar.enabled := false;
+         edit1.Setfocus;
+         edit1.Text:='';
+         exit;
+      end;
+end;
+
+procedure Tfrm_senha_aut.BitBtn2Click(Sender: TObject);
+begin
+   close;
+end;
+
+procedure Tfrm_senha_aut.FormKeyPress(Sender: TObject; var Key: Char);
+begin // Comandos para a tecla [ENTER]//
+  If Key = #13 Then
+    Selectnext(ActiveControl, true, true);
+end;
+
+procedure Tfrm_senha_aut.FormShow(Sender: TObject);
+begin
+   edit1.Text := '';
+   login.Text := '';
+   login.SetFocus;
+end;
+
+end.

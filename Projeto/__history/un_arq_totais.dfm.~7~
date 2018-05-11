@@ -1,0 +1,565 @@
+object frm_arq_totais: Tfrm_arq_totais
+  Left = 341
+  Top = 148
+  BorderStyle = bsToolWindow
+  Caption = 'Arquivamento dos Totais Anual - Studio Atraente - vers'#227'o 1.0 '
+  ClientHeight = 452
+  ClientWidth = 777
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poDesigned
+  OnClose = FormClose
+  OnShow = FormShow
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Label1: TLabel
+    Left = 8
+    Top = 287
+    Width = 83
+    Height = 16
+    Caption = 'Total Janeiro'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object Label2: TLabel
+    Left = 160
+    Top = 287
+    Width = 97
+    Height = 16
+    Caption = 'Total Fevereiro'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object Label3: TLabel
+    Left = 310
+    Top = 287
+    Width = 76
+    Height = 16
+    Caption = 'Total Mar'#231'o'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object Label4: TLabel
+    Left = 461
+    Top = 287
+    Width = 66
+    Height = 16
+    Caption = 'Total Abril'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object Label5: TLabel
+    Left = 612
+    Top = 287
+    Width = 66
+    Height = 16
+    Caption = 'Total Maio'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object Label6: TLabel
+    Left = 8
+    Top = 341
+    Width = 74
+    Height = 16
+    Caption = 'Total Junho'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object Label7: TLabel
+    Left = 160
+    Top = 341
+    Width = 69
+    Height = 16
+    Caption = 'Total Julho'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object Label8: TLabel
+    Left = 310
+    Top = 341
+    Width = 83
+    Height = 16
+    Caption = 'Total Agosto'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object Label9: TLabel
+    Left = 461
+    Top = 341
+    Width = 99
+    Height = 16
+    Caption = 'Total Setembro'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object Label10: TLabel
+    Left = 612
+    Top = 341
+    Width = 89
+    Height = 16
+    Caption = 'Total Outubro'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object Label11: TLabel
+    Left = 8
+    Top = 392
+    Width = 101
+    Height = 16
+    Caption = 'Total Novembro'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object Label12: TLabel
+    Left = 159
+    Top = 392
+    Width = 101
+    Height = 16
+    Caption = 'Total Dezembro'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object Label13: TLabel
+    Left = 444
+    Top = 421
+    Width = 140
+    Height = 16
+    Caption = 'TOTAL ANUAL............:'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object DBGrid1: TDBGrid
+    Left = 8
+    Top = 8
+    Width = 761
+    Height = 273
+    Color = 15794175
+    DataSource = dt_studio.ds_arquivo_totais
+    DrawingStyle = gdsClassic
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    ReadOnly = True
+    TabOrder = 0
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -11
+    TitleFont.Name = 'Tahoma'
+    TitleFont.Style = []
+    OnCellClick = DBGrid1CellClick
+    Columns = <
+      item
+        Expanded = False
+        FieldName = 'ANO'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'TOT_JAN'
+        Width = 96
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'TOT_FEV'
+        Width = 92
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'TOT_MAR'
+        Width = 97
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'TOT_ABR'
+        Width = 101
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'TOT_MAI'
+        Width = 104
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'TOT_JUN'
+        Width = 100
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'TOT_JUL'
+        Width = 106
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'TOT_AGO'
+        Width = 95
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'TOT_SET'
+        Width = 109
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'TOT_OUT'
+        Width = 111
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'TOT_NOV'
+        Width = 107
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'TOT_DEZ'
+        Width = 107
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'TOT_ANO'
+        Width = 123
+        Visible = True
+      end>
+  end
+  object sButton1: TsButton
+    Left = 342
+    Top = 413
+    Width = 75
+    Height = 24
+    Caption = 'Fechar'
+    TabOrder = 1
+    OnClick = sButton1Click
+  end
+  object sPanel1: TsPanel
+    Left = 8
+    Top = 304
+    Width = 145
+    Height = 33
+    Alignment = taRightJustify
+    BevelInner = bvLowered
+    BevelKind = bkSoft
+    BevelOuter = bvNone
+    Caption = '0,00'
+    Color = clBlue
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -21
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentBackground = False
+    ParentFont = False
+    TabOrder = 2
+  end
+  object sPanel2: TsPanel
+    Left = 159
+    Top = 304
+    Width = 145
+    Height = 33
+    Alignment = taRightJustify
+    BevelInner = bvLowered
+    BevelKind = bkSoft
+    BevelOuter = bvNone
+    Caption = '0,00'
+    Color = clBlue
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -21
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentBackground = False
+    ParentFont = False
+    TabOrder = 3
+  end
+  object sPanel3: TsPanel
+    Left = 310
+    Top = 304
+    Width = 145
+    Height = 33
+    Alignment = taRightJustify
+    BevelInner = bvLowered
+    BevelKind = bkSoft
+    BevelOuter = bvNone
+    Caption = '0,00'
+    Color = clBlue
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -21
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentBackground = False
+    ParentFont = False
+    TabOrder = 4
+  end
+  object sPanel4: TsPanel
+    Left = 461
+    Top = 304
+    Width = 145
+    Height = 33
+    Alignment = taRightJustify
+    BevelInner = bvLowered
+    BevelKind = bkSoft
+    BevelOuter = bvNone
+    Caption = '0,00'
+    Color = clBlue
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -21
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentBackground = False
+    ParentFont = False
+    TabOrder = 5
+  end
+  object sPanel5: TsPanel
+    Left = 612
+    Top = 304
+    Width = 145
+    Height = 33
+    Alignment = taRightJustify
+    BevelInner = bvLowered
+    BevelKind = bkSoft
+    BevelOuter = bvNone
+    Caption = '0,00'
+    Color = clBlue
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -21
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentBackground = False
+    ParentFont = False
+    TabOrder = 6
+  end
+  object sPanel6: TsPanel
+    Left = 8
+    Top = 358
+    Width = 145
+    Height = 33
+    Alignment = taRightJustify
+    BevelInner = bvLowered
+    BevelKind = bkSoft
+    BevelOuter = bvNone
+    Caption = '0,00'
+    Color = clBlue
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -21
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentBackground = False
+    ParentFont = False
+    TabOrder = 7
+  end
+  object sPanel7: TsPanel
+    Left = 159
+    Top = 358
+    Width = 145
+    Height = 33
+    Alignment = taRightJustify
+    BevelInner = bvLowered
+    BevelKind = bkSoft
+    BevelOuter = bvNone
+    Caption = '0,00'
+    Color = clBlue
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -21
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentBackground = False
+    ParentFont = False
+    TabOrder = 8
+  end
+  object sPanel8: TsPanel
+    Left = 310
+    Top = 358
+    Width = 145
+    Height = 33
+    Alignment = taRightJustify
+    BevelInner = bvLowered
+    BevelKind = bkSoft
+    BevelOuter = bvNone
+    Caption = '0,00'
+    Color = clBlue
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -21
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentBackground = False
+    ParentFont = False
+    TabOrder = 9
+  end
+  object sPanel9: TsPanel
+    Left = 461
+    Top = 358
+    Width = 145
+    Height = 33
+    Alignment = taRightJustify
+    BevelInner = bvLowered
+    BevelKind = bkSoft
+    BevelOuter = bvNone
+    Caption = '0,00'
+    Color = clBlue
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -21
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentBackground = False
+    ParentFont = False
+    TabOrder = 10
+  end
+  object sPanel10: TsPanel
+    Left = 612
+    Top = 358
+    Width = 145
+    Height = 33
+    Alignment = taRightJustify
+    BevelInner = bvLowered
+    BevelKind = bkSoft
+    BevelOuter = bvNone
+    Caption = '0,00'
+    Color = clBlue
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -21
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentBackground = False
+    ParentFont = False
+    TabOrder = 11
+  end
+  object sPanel11: TsPanel
+    Left = 8
+    Top = 409
+    Width = 145
+    Height = 33
+    Alignment = taRightJustify
+    BevelInner = bvLowered
+    BevelKind = bkSoft
+    BevelOuter = bvNone
+    Caption = '0,00'
+    Color = clBlue
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -21
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentBackground = False
+    ParentFont = False
+    TabOrder = 12
+  end
+  object sPanel12: TsPanel
+    Left = 159
+    Top = 409
+    Width = 145
+    Height = 33
+    Alignment = taRightJustify
+    BevelInner = bvLowered
+    BevelKind = bkSoft
+    BevelOuter = bvNone
+    Caption = '0,00'
+    Color = clBlue
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -21
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentBackground = False
+    ParentFont = False
+    TabOrder = 13
+  end
+  object sPanel13: TsPanel
+    Left = 593
+    Top = 409
+    Width = 164
+    Height = 33
+    Alignment = taRightJustify
+    BevelInner = bvLowered
+    BevelKind = bkSoft
+    BevelOuter = bvNone
+    Caption = '0,00'
+    Color = clBlue
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -21
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentBackground = False
+    ParentFont = False
+    TabOrder = 14
+  end
+end

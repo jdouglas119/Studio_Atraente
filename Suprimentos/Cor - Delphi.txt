@@ -1,0 +1,6 @@
+cor verde com caractere branco - delphi
+$00CCCC00
+
+
+cor branco com caractere preto - delphi
+clWhite

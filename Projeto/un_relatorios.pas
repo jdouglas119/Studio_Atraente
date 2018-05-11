@@ -1,0 +1,66 @@
+{ ***************************************************
+  * Elaborado para: Studio Atraente                 *
+  * Modulo     : Formulario de Relatórios           *
+  * Analista   : João Douglas                       *
+  * Elaboração : João Douglas                       *
+  * Ult Alt.   : 13/04/2017                         *
+  *************************************************** }
+
+unit un_relatorios;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, frxClass, frxDBSet;
+
+type
+  Tfrm_relatorios = class(TForm)
+    rel_cli_dados: TfrxReport;
+    rel_cad_atend: TfrxReport;
+    rel_serv_cli: TfrxReport;
+    tabela_servicos: TfrxReport;
+    rel_cartaocred: TfrxReport;
+    rel_aniversario: TfrxReport;
+    rel_movcaixa: TfrxReport;
+    rel_comissoes: TfrxReport;
+    rel_valor_atendentes: TfrxReport;
+    rel_comanda_vendas: TfrxReport;
+    rel_comandas: TfrxReport;
+    rel_entradasest: TfrxReport;
+    rel_retiradas: TfrxReport;
+    rel_agenda: TfrxReport;
+    frx_usuarios: TfrxDBDataset;
+    frx_movcaixa: TfrxDBDataset;
+    frx_cli_dados: TfrxDBDataset;
+    frx_mov_comandas: TfrxDBDataset;
+    frx_atend_dados: TfrxDBDataset;
+    frx_comanda_vendas: TfrxDBDataset;
+    frx_movest: TfrxDBDataset;
+    frx_movestitens: TfrxDBDataset;
+    frx_mov_servico: TfrxDBDataset;
+    frx_Retiradas: TfrxDBDataset;
+    frx_vendas_itens: TfrxDBDataset;
+    frx_rel_cartaocred: TfrxDBDataset;
+    frx_agenda: TfrxDBDataset;
+    rel_fornecedores: TfrxReport;
+    rel_formapgto: TfrxReport;
+    frx_fornec: TfrxDBDataset;
+    frx_formapgto: TfrxDBDataset;
+    rel_aposte: TfrxReport;
+    frx_aposte: TfrxDBDataset;
+    frx_mov_caixa: TfrxDBDataset;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_relatorios: Tfrm_relatorios;
+
+implementation
+
+{$R *.dfm}
+
+end.

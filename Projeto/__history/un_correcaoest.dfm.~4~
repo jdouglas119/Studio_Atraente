@@ -1,0 +1,392 @@
+object frm_correcaoest: Tfrm_correcaoest
+  Left = 402
+  Top = 136
+  BorderStyle = bsToolWindow
+  Caption = 'Corre'#231#227'o de Estoque - Studio Atraente - vers'#227'o 1.0'
+  ClientHeight = 446
+  ClientWidth = 608
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  KeyPreview = True
+  OldCreateOrder = False
+  Position = poDesigned
+  OnKeyPress = FormKeyPress
+  OnShow = FormShow
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Label1: TLabel
+    Left = 112
+    Top = 44
+    Width = 56
+    Height = 13
+    Caption = 'COD_PROD'
+    FocusControl = id_cod
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label2: TLabel
+    Left = 257
+    Top = 44
+    Width = 57
+    Height = 13
+    Caption = 'NOM_PROD'
+    FocusControl = nom_prod
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label3: TLabel
+    Left = 112
+    Top = 85
+    Width = 59
+    Height = 13
+    Caption = 'QUANT_EST'
+    FocusControl = quant
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label4: TLabel
+    Left = 211
+    Top = 85
+    Width = 27
+    Height = 13
+    Caption = 'DATA'
+    FocusControl = data
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label5: TLabel
+    Left = 113
+    Top = 4
+    Width = 68
+    Height = 13
+    Caption = 'ID_REGISTRO'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object SpeedButton1: TSpeedButton
+    Left = 205
+    Top = 47
+    Width = 43
+    Height = 34
+    Caption = '...'
+    Glyph.Data = {
+      76010000424D7601000000000000760000002800000020000000100000000100
+      04000000000000010000130B0000130B00001000000000000000000000000000
+      800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+      FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333333333
+      33033333333333333F7F3333333333333000333333333333F777333333333333
+      000333333333333F777333333333333000333333333333F77733333333333300
+      033333333FFF3F777333333700073B703333333F7773F77733333307777700B3
+      33333377333777733333307F8F8F7033333337F333F337F3333377F8F9F8F773
+      3333373337F3373F3333078F898F870333337F33F7FFF37F333307F99999F703
+      33337F377777337F3333078F898F8703333373F337F33373333377F8F9F8F773
+      333337F3373337F33333307F8F8F70333333373FF333F7333333330777770333
+      333333773FF77333333333370007333333333333777333333333}
+    NumGlyphs = 2
+    OnClick = SpeedButton1Click
+  end
+  object grava_mais: TSpeedButton
+    Left = 387
+    Top = 6
+    Width = 42
+    Height = 35
+    Hint = 'Corre'#231#227'o para mais'
+    Caption = '+'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -19
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    ParentShowHint = False
+    ShowHint = True
+    OnClick = grava_maisClick
+  end
+  object grava_menos: TSpeedButton
+    Left = 434
+    Top = 6
+    Width = 42
+    Height = 35
+    Hint = 'Corre'#231#227'o para menos'
+    Caption = '-'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -19
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    ParentShowHint = False
+    ShowHint = True
+    OnClick = grava_menosClick
+  end
+  object novo: TsButton
+    Left = 8
+    Top = 8
+    Width = 75
+    Height = 25
+    Caption = 'Incluir'
+    TabOrder = 3
+    OnClick = novoClick
+  end
+  object cancelar: TsButton
+    Left = 8
+    Top = 37
+    Width = 75
+    Height = 25
+    Caption = 'Cancelar'
+    TabOrder = 4
+    OnClick = cancelarClick
+  end
+  object sair: TsButton
+    Left = 8
+    Top = 96
+    Width = 75
+    Height = 25
+    Caption = 'Sair'
+    TabOrder = 5
+    OnClick = sairClick
+  end
+  object grid_correcao: TDBGrid
+    Left = 8
+    Top = 163
+    Width = 593
+    Height = 275
+    Color = 15138815
+    DataSource = dt_studio.ds_correcaoest
+    DrawingStyle = gdsClassic
+    ReadOnly = True
+    TabOrder = 6
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -11
+    TitleFont.Name = 'Tahoma'
+    TitleFont.Style = []
+    OnDrawColumnCell = grid_correcaoDrawColumnCell
+    Columns = <
+      item
+        Expanded = False
+        FieldName = 'ID_REGISTRO'
+        Width = 48
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'COD_PROD'
+        Width = 61
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'NOM_PROD'
+        Width = 235
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'QUANT_EST'
+        Width = 68
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'SITUACAO'
+        Width = 27
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'DATA'
+        Visible = True
+      end>
+  end
+  object id_cod: TDBEdit
+    Left = 112
+    Top = 59
+    Width = 89
+    Height = 21
+    BevelInner = bvLowered
+    BevelOuter = bvSpace
+    DataField = 'COD_PROD'
+    DataSource = dt_studio.ds_correcaoest
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    ReadOnly = True
+    TabOrder = 1
+    OnExit = id_codExit
+  end
+  object nom_prod: TDBEdit
+    Left = 253
+    Top = 59
+    Width = 291
+    Height = 21
+    BevelInner = bvLowered
+    BevelOuter = bvSpace
+    Color = 14671839
+    DataField = 'NOM_PROD'
+    DataSource = dt_studio.ds_correcaoest
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    ReadOnly = True
+    TabOrder = 7
+  end
+  object quant: TDBEdit
+    Left = 112
+    Top = 101
+    Width = 89
+    Height = 21
+    BevelInner = bvLowered
+    BevelOuter = bvSpace
+    DataField = 'QUANT_EST'
+    DataSource = dt_studio.ds_correcaoest
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    ReadOnly = True
+    TabOrder = 2
+    OnExit = quantExit
+  end
+  object data: TDBEdit
+    Left = 211
+    Top = 101
+    Width = 118
+    Height = 21
+    BevelInner = bvLowered
+    BevelOuter = bvSpace
+    DataField = 'DATA'
+    DataSource = dt_studio.ds_correcaoest
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    ReadOnly = True
+    TabOrder = 8
+  end
+  object nav_correcao: TDBNavigator
+    Left = 10
+    Top = 132
+    Width = 164
+    Height = 25
+    DataSource = dt_studio.ds_correcaoest
+    VisibleButtons = [nbFirst, nbPrior, nbNext, nbLast]
+    TabOrder = 9
+  end
+  object dbradio1: TDBRadioGroup
+    Left = 343
+    Top = 90
+    Width = 201
+    Height = 59
+    Columns = 2
+    DataField = 'SITUACAO'
+    DataSource = dt_studio.ds_correcaoest
+    Items.Strings = (
+      'Para Mais'
+      'Para Menos')
+    ReadOnly = True
+    TabOrder = 10
+    Values.Strings = (
+      '+'
+      '-')
+  end
+  object id_reg: TDBEdit
+    Left = 112
+    Top = 19
+    Width = 89
+    Height = 21
+    BevelInner = bvLowered
+    BevelOuter = bvSpace
+    DataField = 'ID_REGISTRO'
+    DataSource = dt_studio.ds_correcaoest
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    ReadOnly = True
+    TabOrder = 0
+  end
+  object query_prod: TADOQuery
+    Connection = dt_studio.Conexao
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'SELECT * FROM CAD_TIPO')
+    Left = 331
+    Top = 337
+    object query_prodNOME_TIPO: TStringField
+      FieldName = 'NOME_TIPO'
+      Size = 50
+    end
+    object query_prodDT_CAD: TDateTimeField
+      FieldName = 'DT_CAD'
+    end
+    object query_prodPERC_SERVICO: TBCDField
+      FieldName = 'PERC_SERVICO'
+      Precision = 18
+      Size = 0
+    end
+    object query_prodVR_SERVICO: TBCDField
+      FieldName = 'VR_SERVICO'
+      Precision = 18
+      Size = 0
+    end
+    object query_prodSITUACAO: TStringField
+      FieldName = 'SITUACAO'
+      Size = 10
+    end
+    object query_prodID_TIPO: TAutoIncField
+      FieldName = 'ID_TIPO'
+      ReadOnly = True
+    end
+    object query_prodCUSTO: TFloatField
+      FieldName = 'CUSTO'
+    end
+    object query_prodTIPO: TStringField
+      FieldName = 'TIPO'
+      FixedChar = True
+      Size = 15
+    end
+    object query_prodESTOQUE: TBCDField
+      FieldName = 'ESTOQUE'
+      Precision = 18
+      Size = 0
+    end
+  end
+end

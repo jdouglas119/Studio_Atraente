@@ -1,0 +1,153 @@
+object frm_msg: Tfrm_msg
+  Left = 240
+  Top = 141
+  Caption = 'Mensagem'
+  ClientHeight = 216
+  ClientWidth = 645
+  Color = clWhite
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poScreenCenter
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Panel1: TPanel
+    Left = 5
+    Top = 4
+    Width = 636
+    Height = 209
+    BevelInner = bvRaised
+    BevelKind = bkSoft
+    BevelOuter = bvNone
+    Color = 4194304
+    ParentBackground = False
+    TabOrder = 0
+    object Label2: TLabel
+      Left = 3
+      Top = 44
+      Width = 633
+      Height = 19
+      Caption = 
+        'CLIENTE  J'#193'  ATINGIU O N'#218'MERO M'#193'XIMO  DE  VISITAS  PARA  DESCONT' +
+        'O'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -16
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object Label3: TLabel
+      Left = 3
+      Top = 72
+      Width = 629
+      Height = 38
+      Caption = 
+        'ESSE SERVI'#199'O IR'#193' GERAR UM DESCONTO DE 5% EM TODOS OS SERVI'#199'OS '#13#10 +
+        'REALIZADOS.'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -16
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object Label4: TLabel
+      Left = 3
+      Top = 117
+      Width = 630
+      Height = 38
+      Caption = 
+        'O CICLO DE  VISITAS  IR'#193'  ZERAR  PARA  O INICIO DE UM NOVO CICLO' +
+        ' DE '#13#10'VISITAS.'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -16
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object Label1: TLabel
+      Left = 3
+      Top = 8
+      Width = 109
+      Height = 19
+      Caption = 'ATEN'#199#195'O ! '
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -16
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object BitBtn1: TBitBtn
+      Left = 263
+      Top = 164
+      Width = 95
+      Height = 33
+      Kind = bkOK
+      NumGlyphs = 2
+      TabOrder = 0
+      OnClick = BitBtn1Click
+    end
+    object sPanel1: TsPanel
+      Left = 408
+      Top = 144
+      Width = 185
+      Height = 41
+      Caption = 'sPanel1'
+      TabOrder = 1
+      object sWebLabel1: TsWebLabel
+        Left = 40
+        Top = 17
+        Width = 33
+        Height = 13
+        Caption = 'TESTE'
+        ParentFont = False
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        HoverFont.Charset = DEFAULT_CHARSET
+        HoverFont.Color = clWindowText
+        HoverFont.Height = -11
+        HoverFont.Name = 'Tahoma'
+        HoverFont.Style = []
+      end
+    end
+  end
+  object sSkinManager1: TsSkinManager
+    InternalSkins = <>
+    SkinDirectory = 'c:\Skins'
+    SkinInfo = 'N/A'
+    ThirdParty.ThirdEdits = ' '
+    ThirdParty.ThirdButtons = 'TButton'
+    ThirdParty.ThirdBitBtns = ' '
+    ThirdParty.ThirdCheckBoxes = ' '
+    ThirdParty.ThirdGroupBoxes = ' '
+    ThirdParty.ThirdListViews = ' '
+    ThirdParty.ThirdPanels = ' '
+    ThirdParty.ThirdGrids = ' '
+    ThirdParty.ThirdTreeViews = ' '
+    ThirdParty.ThirdComboBoxes = ' '
+    ThirdParty.ThirdWWEdits = ' '
+    ThirdParty.ThirdVirtualTrees = ' '
+    ThirdParty.ThirdGridEh = ' '
+    ThirdParty.ThirdPageControl = ' '
+    ThirdParty.ThirdTabControl = ' '
+    ThirdParty.ThirdToolBar = ' '
+    ThirdParty.ThirdStatusBar = ' '
+    ThirdParty.ThirdSpeedButton = ' '
+    ThirdParty.ThirdScrollControl = ' '
+    ThirdParty.ThirdUpDown = ' '
+    ThirdParty.ThirdScrollBar = ' '
+    ThirdParty.ThirdStaticText = ' '
+    ThirdParty.ThirdNativePaint = ' '
+    Left = 189
+    Top = 156
+  end
+end

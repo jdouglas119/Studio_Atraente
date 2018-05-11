@@ -1,0 +1,205 @@
+{ ***************************************************
+  * Elaborado para: Studio Atraente                 *
+  * Modulo     : Resumo dos Serviços                *
+  * Analista   : João Douglas                       *
+  * Elaboração : João Douglas                       *
+  * Ult Alt.   : 10/04/2017                         *
+  *************************************************** }
+
+unit un_resumo;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Buttons, Vcl.StdCtrls, Vcl.Grids,
+  Vcl.DBGrids, Vcl.ExtCtrls, sButton, Vcl.DBCtrls, Data.DB, Data.Win.ADODB;
+
+type
+  Tfrm_resumo = class(TForm)
+    DBGrid1: TDBGrid;
+    DBGrid2: TDBGrid;
+    Label1: TLabel;
+    Label2: TLabel;
+    Edit1: TEdit;
+    Label3: TLabel;
+    radio: TRadioGroup;
+    Label13: TLabel;
+    Panel6: TPanel;
+    Label14: TLabel;
+    Label19: TLabel;
+    Panel5: TPanel;
+    Label20: TLabel;
+    Label23: TLabel;
+    Panel4: TPanel;
+    Label24: TLabel;
+    Label21: TLabel;
+    Label22: TLabel;
+    sButton1: TsButton;
+    sButton2: TsButton;
+    DBNavigator1: TDBNavigator;
+    Panel1: TPanel;
+    procedure FormShow(Sender: TObject);
+    procedure DBGrid1CellClick(Column: TColumn);
+    procedure radioClick(Sender: TObject);
+    procedure FormKeyPress(Sender: TObject; var Key: Char);
+    procedure sButton1Click(Sender: TObject);
+    procedure sButton2Click(Sender: TObject);
+    procedure DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect;
+      DataCol: Integer; Column: TColumn; State: TGridDrawState);
+    procedure DBGrid2DrawColumnCell(Sender: TObject; const Rect: TRect;
+      DataCol: Integer; Column: TColumn; State: TGridDrawState);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_resumo: Tfrm_resumo;
+
+implementation
+
+uses un_dtstudio;
+
+{$R *.dfm}
+
+procedure Tfrm_resumo.DBGrid1CellClick(Column: TColumn);
+var
+  totalgeral: Currency;
+  subtotal: Currency;
+  desconto: Currency;
+  quantlinhas : integer;
+begin
+//Informando valores na tela
+     totalgeral := 0;
+     desconto := 0;
+     subtotal := 0;
+     quantlinhas := 0;
+     dt_studio.qry_comandas.DisableControls;
+     ShowScrollBar(DBGrid1.Handle,SB_HORZ,true); //Mostrar a barra Horizontal
+   try
+     while not dt_studio.qry_comandas.eof do
+     begin
+        dt_studio.qry_comandas.open;
+        subtotal := subtotal + dt_studio.qry_comandas.FieldByName('TOT_ITEM').AsCurrency;
+        totalgeral := totalgeral + dt_studio.qry_comandas.FieldByName('TOT_SERV').AsCurrency;
+        desconto := desconto + dt_studio.qry_comandas.FieldByName('DESCONTO').AsCurrency;
+        quantlinhas := dbgrid2.DataSource.DataSet.RecordCount;
+        dt_studio.qry_comandas.next;
+     end;
+     dt_studio.qry_comandas.EnableControls;
+     Label20.Caption := FormatFloat('#,###,###,##0.00', subtotal);
+     Label22.Caption := FormatFloat('#,###,###,##0.00', totalgeral);
+     Label24.Caption := FormatFloat('#,###,###,##0.00', desconto);
+     Label14.Caption := FormatFloat('#,0', quantlinhas);
+   finally
+   end;
+end;
+
+procedure Tfrm_resumo.DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect;
+  DataCol: Integer; Column: TColumn; State: TGridDrawState);
+begin//Informando o tipo de situação da comanda
+    if dt_studio.qry_clientesSITUACAO.asstring = 'FINALIZADO' then
+       dbgrid1.Canvas.Font.Color := clRed;
+    If odd(dt_studio.qry_clientes.RecNo) then  //Deixando o dbgrid zebrado
+       begin
+          dbgrid1.Canvas.Brush.Color:= clBlack;
+          dbgrid1.Canvas.Brush.Color:= $00FFF5EC;
+       end
+       else
+       begin
+          dbgrid1.Canvas.Brush.Color:= clBlack;
+          dbgrid1.Canvas.Brush.Color:= clWhite;
+       end;
+       dbgrid1.Canvas.FillRect(Rect);
+       dbgrid1.DefaultDrawDataCell(Rect, dbgrid1.columns[DataCol].Field, State);
+end;
+
+procedure Tfrm_resumo.DBGrid2DrawColumnCell(Sender: TObject; const Rect: TRect;
+  DataCol: Integer; Column: TColumn; State: TGridDrawState);
+begin
+    If odd(dt_studio.qry_comandas.RecNo) then  //Deixando o dbgrid zebrado
+       begin
+          dbgrid2.Canvas.Brush.Color:= clBlack;
+          dbgrid2.Canvas.Brush.Color:= $00FFF5EC;
+       end
+       else
+       begin
+          dbgrid2.Canvas.Brush.Color:= clBlack;
+          dbgrid2.Canvas.Brush.Color:= clWhite;
+       end;
+       dbgrid2.Canvas.FillRect(Rect);
+       dbgrid2.DefaultDrawDataCell(Rect, dbgrid2.columns[DataCol].Field, State);
+end;
+
+procedure Tfrm_resumo.FormKeyPress(Sender: TObject; var Key: Char);
+begin
+  // usando a tecla [ENTER] para entrar com os dados
+  If Key = #13 Then
+    Selectnext(ActiveControl, true, true);
+end;
+
+procedure Tfrm_resumo.FormShow(Sender: TObject);
+begin
+   dt_studio.qry_clientes.Open;
+   dt_studio.qry_comandas.Open;
+end;
+
+procedure Tfrm_resumo.radioClick(Sender: TObject);
+begin
+   edit1.SetFocus;
+end;
+
+procedure Tfrm_resumo.sButton1Click(Sender: TObject);
+var
+   Sql: string;
+   totalgeral: Currency;
+   subtotal: Currency;
+   desconto: Currency;
+   quantlinhas: Integer;
+begin
+   dt_studio.qry_clientes.close;
+   dt_studio.qry_clientes.Sql.Clear;
+   dt_studio.qry_clientes.Sql.Add('select * from CAB_SERV');
+   if (radio.ItemIndex = 0) then
+   Sql := 'where ID_SERV like ' + QuotedStr('%' + Edit1.text + '%')
+   else if (radio.ItemIndex = 1) then
+   Sql := 'where NOM_CLI like ' + QuotedStr('%' + Edit1.text + '%');
+   dt_studio.qry_comandas.EnableControls;
+   dt_studio.qry_clientes.Sql.Add(Sql);
+   dt_studio.qry_clientes.Sql.Add('order by ID_SERV');
+   dt_studio.qry_clientes.open;
+//Totalizando os valores
+   totalgeral := 0;
+   quantlinhas := 0;
+   desconto := 0;
+   subtotal := 0;
+   dt_studio.qry_comandas.first;
+   dt_studio.qry_comandas.DisableControls;
+   try
+     while not dt_studio.qry_comandas.eof do
+     begin
+        subtotal := subtotal + dt_studio.qry_comandas.FieldByName('TOT_ITEM').AsCurrency;
+        totalgeral := totalgeral + dt_studio.qry_comandas.FieldByName('TOT_SERV').AsCurrency;
+        desconto := desconto + dt_studio.qry_comandas.FieldByName('DESCONTO').AsCurrency;
+        quantlinhas := dbgrid2.DataSource.DataSet.RecordCount;
+        dt_studio.qry_comandas.next;
+     end;
+     dt_studio.qry_comandas.EnableControls;
+     Label20.Caption := FormatFloat('#,###,###,##0.00', subtotal);
+     Label22.Caption := FormatFloat('#,###,###,##0.00', totalgeral);
+     Label24.Caption := FormatFloat('#,###,###,##0.00', desconto);
+     Label14.Caption := FormatFloat('#,0', quantlinhas);
+   finally
+   end;
+end;
+
+procedure Tfrm_resumo.sButton2Click(Sender: TObject);
+begin
+   dt_studio.qry_clientes.close;
+   dt_studio.qry_comandas.close;
+   close;
+end;
+
+end.

@@ -1,0 +1,56 @@
+object frm_insdata: Tfrm_insdata
+  Left = 639
+  Top = 490
+  BorderStyle = bsToolWindow
+  Caption = 
+    'Inserir Data Campo em Branco nas Comandas - Studio Atraente - ve' +
+    'rs'#227'o: 1.0'
+  ClientHeight = 68
+  ClientWidth = 225
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  KeyPreview = True
+  OldCreateOrder = False
+  Position = poDesigned
+  OnKeyPress = FormKeyPress
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Label1: TLabel
+    Left = 14
+    Top = 8
+    Width = 84
+    Height = 16
+    Caption = 'Digite a Data'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object data: TMaskEdit
+    Left = 18
+    Top = 30
+    Width = 78
+    Height = 21
+    EditMask = '99/99/9999'
+    MaxLength = 10
+    TabOrder = 0
+    Text = '  /  /    '
+    OnExit = dataExit
+  end
+  object BitBtn1: TBitBtn
+    Left = 128
+    Top = 28
+    Width = 75
+    Height = 25
+    Kind = bkOK
+    NumGlyphs = 2
+    TabOrder = 1
+    OnClick = BitBtn1Click
+  end
+end

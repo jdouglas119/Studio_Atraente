@@ -1,0 +1,168 @@
+object frm_comp_totais: Tfrm_comp_totais
+  Left = 402
+  Top = 290
+  BorderStyle = bsToolWindow
+  Caption = 'Comparativo dos Meses - Studio Atraente - vers'#227'o: 1.0'
+  ClientHeight = 126
+  ClientWidth = 647
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  KeyPreview = True
+  OldCreateOrder = False
+  Position = poDesigned
+  OnClose = FormClose
+  OnKeyPress = FormKeyPress
+  OnShow = FormShow
+  PixelsPerInch = 96
+  TextHeight = 13
+  object gravar: TsButton
+    Left = 275
+    Top = 8
+    Width = 88
+    Height = 25
+    Caption = 'OK'
+    TabOrder = 0
+    OnClick = gravarClick
+  end
+  object fechar: TsButton
+    Left = 551
+    Top = 8
+    Width = 88
+    Height = 25
+    Caption = 'Fechar'
+    TabOrder = 1
+    OnClick = fecharClick
+  end
+  object novo: TsButton
+    Left = 17
+    Top = 8
+    Width = 88
+    Height = 25
+    Caption = 'Incluir Vr. M'#234's'
+    TabOrder = 2
+    OnClick = novoClick
+  end
+  object editar: TsButton
+    Left = 111
+    Top = 8
+    Width = 88
+    Height = 25
+    Caption = 'Alterar Vr. M'#234's'
+    TabOrder = 3
+    OnClick = editarClick
+  end
+  object cancelar: TsButton
+    Left = 363
+    Top = 8
+    Width = 88
+    Height = 25
+    Caption = 'Cancelar'
+    TabOrder = 4
+    OnClick = cancelarClick
+  end
+  object DBGrid1: TDBGrid
+    Left = 8
+    Top = 39
+    Width = 631
+    Height = 79
+    Color = 15400959
+    DataSource = dt_studio.ds_comp_totais
+    DrawingStyle = gdsClassic
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -19
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    ReadOnly = True
+    TabOrder = 5
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -11
+    TitleFont.Name = 'Tahoma'
+    TitleFont.Style = []
+    Columns = <
+      item
+        Expanded = False
+        FieldName = 'TOT_JAN'
+        Width = 98
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'TOT_FEV'
+        Width = 105
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'TOT_MAR'
+        Width = 96
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'TOT_ABR'
+        Width = 106
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'TOT_MAI'
+        Width = 103
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'TOT_JUN'
+        Width = 106
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'TOT_JUL'
+        Width = 120
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'TOT_AGO'
+        Width = 112
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'TOT_SET'
+        Width = 109
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'TOT_OUT'
+        Width = 115
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'TOT_NOV'
+        Width = 106
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'TOT_DEZ'
+        Width = 113
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'TOT_ANO'
+        Width = 131
+        Visible = True
+      end>
+  end
+end

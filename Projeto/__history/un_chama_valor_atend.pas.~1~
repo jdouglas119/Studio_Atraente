@@ -1,0 +1,102 @@
+{ ***************************************************
+  * Elaborado para: Studio Atraente                 *
+  * Modulo     : Chame Rel Valor por Atend.         *
+  * Analista   : João Douglas                       *
+  * Elaboração : João Douglas                       *
+  * Ult Alt.   : 01/09/2016                         *
+  *************************************************** }
+
+unit un_chama_valor_atend;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, sButton, Vcl.Grids,
+  Vcl.DBGrids, Vcl.Buttons, sBitBtn, Vcl.Mask, RpCon, RpConDS, RpDefine, RpRave;
+
+type
+  Tfrm_rel_valor_atend = class(TForm)
+    DatIni: TMaskEdit;
+    DatFim: TMaskEdit;
+    Label2: TLabel;
+    Label1: TLabel;
+    Edit1: TEdit;
+    Label3: TLabel;
+    frm_chama_relcli: TsBitBtn;
+    DBGrid1: TDBGrid;
+    sButton1: TsButton;
+    SpeedButton1: TSpeedButton;
+    rv_relatend: TRvProject;
+    rvdata_atend: TRvDataSetConnection;
+    procedure sButton1Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure frm_chama_relcliClick(Sender: TObject);
+    procedure FormKeyPress(Sender: TObject; var Key: Char);
+    procedure SpeedButton1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_rel_valor_atend: Tfrm_rel_valor_atend;
+
+implementation
+
+uses un_dtstudio, un_relatorios;
+
+{$R *.dfm}
+
+procedure Tfrm_rel_valor_atend.FormKeyPress(Sender: TObject; var Key: Char);
+begin
+   If Key = #13 Then
+     Selectnext(ActiveControl, true, true);
+end;
+
+procedure Tfrm_rel_valor_atend.FormShow(Sender: TObject);
+begin
+   dt_studio.tb_comandas.open;
+   dt_studio.tb_cadatend.open;
+end;
+
+procedure Tfrm_rel_valor_atend.frm_chama_relcliClick(Sender: TObject);
+begin
+// Comandos para verificação de período e chamando o layout do relatório
+    dt_studio.tb_cadatend.close;
+    dt_studio.tb_cadatend.Sql.Clear;
+    dt_studio.tb_cadatend.Sql.Add('select * from CAD_FUNC');
+    dt_studio.tb_cadatend.Sql.Add('where NOM_FUNC like ' + QuotedStr('%' + Edit1.Text + '%'));
+    dt_studio.tb_cadatend.Sql.Add('order by NOM_FUNC');
+    dt_studio.tb_cadatend.open;
+end;
+
+procedure Tfrm_rel_valor_atend.sButton1Click(Sender: TObject);
+begin
+    dt_studio.tb_comandas.close;
+    dt_studio.tb_movservico.close;
+    dt_studio.tb_cadatend.close;
+    close;
+end;
+
+procedure Tfrm_rel_valor_atend.SpeedButton1Click(Sender: TObject);
+begin
+  {  dt_studio.tb_comandas.close;
+    dt_studio.tb_comanda.Filtered:=true;
+    dt_studio.tb_comandas.Sql.Add('select ATEND1, ATEND2, ATEND3, ATEND4, ATEND5 from CAD_COMANDAS');
+    dt_studio.tb_comandas.open;
+    dt_studio.tb_comanda.Filter:='ATEND1='#39+dt_studio.tb_cadatendNOM_FUNC.AsString+#39' And DATA_SERV >= '#39+DatIni.text+#39' And DATA_SERV <= '#39+DatFim.Text+#39;
+    if dt_studio.tb_comandas.RecordCount > 0 Then
+      begin
+         frm_rel_valor_atend.rv_relatend.SetParam('PERIODO' , Datini.Text + ' até ' + DatFim.Text);
+         frm_rel_valor_atend.rv_relatend.ProjectFile := '\\statraente\projeto_studio atraente\relatorios\rel_movatend.rav';
+         frm_rel_valor_atend.rv_relatend.Execute;
+      end
+      else
+      Showmessage('Não existe Movimento para esse Atendente !!!');
+      dt_studio.tb_comandas.close;
+      dt_studio.tb_comanda.Filtered:=false;}
+end;
+
+end.

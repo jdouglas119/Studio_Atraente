@@ -1,0 +1,30 @@
+unit un_rel_aposte;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, sButton, Vcl.Mask;
+
+type
+  Tfrm_rel_aposte = class(TForm)
+    Label1: TLabel;
+    DatIni: TMaskEdit;
+    Label2: TLabel;
+    DatFim: TMaskEdit;
+    sButton1: TsButton;
+    sButton2: TsButton;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_rel_aposte: Tfrm_rel_aposte;
+
+implementation
+
+{$R *.dfm}
+
+end.

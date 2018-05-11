@@ -1,0 +1,167 @@
+object frm_pesq_tipo: Tfrm_pesq_tipo
+  Left = 328
+  Top = 154
+  BorderStyle = bsToolWindow
+  Caption = 'Listagem dos Tipos de Servi'#231'os - Studio Atraente - vers'#227'o: 1.0'
+  ClientHeight = 400
+  ClientWidth = 786
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poDesigned
+  OnShow = FormShow
+  PixelsPerInch = 96
+  TextHeight = 13
+  object SpeedButton1: TSpeedButton
+    Left = 360
+    Top = 367
+    Width = 98
+    Height = 26
+    Caption = '&Fechar'
+    OnClick = SpeedButton1Click
+  end
+  object DBGrid1: TDBGrid
+    Left = 3
+    Top = 92
+    Width = 780
+    Height = 269
+    DataSource = dt_studio.ds_cadtiposerv
+    DrawingStyle = gdsClassic
+    FixedColor = 12713983
+    ReadOnly = True
+    TabOrder = 0
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -11
+    TitleFont.Name = 'Tahoma'
+    TitleFont.Style = []
+    OnCellClick = DBGrid1CellClick
+    OnDrawColumnCell = DBGrid1DrawColumnCell
+    Columns = <
+      item
+        Expanded = False
+        FieldName = 'TIPO'
+        Width = 34
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'SITUACAO'
+        Width = 32
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'ESTOQUE'
+        Width = 58
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'ID_TIPO'
+        Width = 51
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'DEPARTAMENTO'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'NOME_TIPO'
+        Width = 251
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'DT_CAD'
+        Width = 113
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'PERC_SERVICO'
+        Width = 87
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'VR_SERVICO'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'CUSTO'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'VR_VENDA'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'PERC_VENDA'
+        Visible = True
+      end>
+  end
+  object sPanel1: TsPanel
+    Left = 0
+    Top = 0
+    Width = 786
+    Height = 41
+    Align = alTop
+    Caption = 'CONSULTA OS TIPOS DE SERVI'#199'OS NO CADASTRO'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -19
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 1
+  end
+  object Edit1: TEdit
+    Left = 335
+    Top = 56
+    Width = 364
+    Height = 24
+    CharCase = ecUpperCase
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clMaroon
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 2
+    OnChange = Edit1Change
+  end
+  object sButton2: TsButton
+    Left = 705
+    Top = 51
+    Width = 73
+    Height = 29
+    Caption = 'Pesquisar'
+    TabOrder = 3
+    OnClick = sButton2Click
+  end
+  object radio: TRadioGroup
+    Left = 8
+    Top = 45
+    Width = 322
+    Height = 44
+    Caption = 'Tipo de Cadastro'
+    Columns = 3
+    ItemIndex = 0
+    Items.Strings = (
+      'Departamento'
+      'Tipo'
+      'Nome')
+    TabOrder = 4
+    OnClick = radioClick
+  end
+end

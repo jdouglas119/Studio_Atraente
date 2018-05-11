@@ -1,0 +1,75 @@
+object frm_consauto: Tfrm_consauto
+  Left = 438
+  Top = 231
+  BorderStyle = bsToolWindow
+  Caption = 
+    'Consulta Cadastro de Autorizadores - Studio Atraente - vers'#227'o: 1' +
+    '.0'
+  ClientHeight = 297
+  ClientWidth = 406
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poDesigned
+  OnShow = FormShow
+  PixelsPerInch = 96
+  TextHeight = 13
+  object SpeedButton1: TSpeedButton
+    Left = 144
+    Top = 263
+    Width = 89
+    Height = 28
+    Caption = 'Sair'
+    OnClick = SpeedButton1Click
+  end
+  object sPanel1: TsPanel
+    Left = 0
+    Top = 0
+    Width = 406
+    Height = 41
+    Align = alTop
+    Caption = 'CONSULTA AUTORIZADORES'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -19
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 0
+    ExplicitWidth = 519
+  end
+  object DBGrid1: TDBGrid
+    Left = 8
+    Top = 47
+    Width = 385
+    Height = 210
+    Color = clWhite
+    DataSource = dt_studio.ds_cadauto
+    DrawingStyle = gdsClassic
+    ReadOnly = True
+    TabOrder = 1
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -11
+    TitleFont.Name = 'Tahoma'
+    TitleFont.Style = []
+    OnCellClick = DBGrid1CellClick
+    Columns = <
+      item
+        Expanded = False
+        FieldName = 'COD_AUTORIZADOR'
+        Title.Caption = 'C'#211'DIGO'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'NOME_AUTORIZADOR'
+        Width = 278
+        Visible = True
+      end>
+  end
+end

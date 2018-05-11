@@ -1,0 +1,18 @@
+object frm_vendas_dpto: Tfrm_vendas_dpto
+  Left = 417
+  Top = 278
+  BorderStyle = bsToolWindow
+  Caption = 'Relat'#243'rio de Vendas por Depto. - Studio Atraente - vers'#227'o: 1.0'
+  ClientHeight = 216
+  ClientWidth = 505
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poDesigned
+  PixelsPerInch = 96
+  TextHeight = 13
+end

@@ -1,0 +1,109 @@
+unit un_aut_servico;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons;
+
+type
+  Tfrm_aut_servico = class(TForm)
+    Label1: TLabel;
+    login: TComboBox;
+    Label2: TLabel;
+    Edit1: TEdit;
+    BitBtn1: TBitBtn;
+    BitBtn2: TBitBtn;
+    procedure BitBtn1Click(Sender: TObject);
+    procedure BitBtn2Click(Sender: TObject);
+    procedure FormKeyPress(Sender: TObject; var Key: Char);
+    procedure FormShow(Sender: TObject);
+    procedure loginClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_aut_servico: Tfrm_aut_servico;
+
+implementation
+
+{$R *.dfm}
+
+uses un_dtstudio, un_orcamento, un_rec_caixa;
+
+procedure Tfrm_aut_servico.BitBtn1Click(Sender: TObject);
+begin
+   if (edit1.Text = 'BRAGA') and (login.Text = 'NEIDE') or (edit1.Text = 'STUDIO') and (login.Text = 'IARA') then
+      begin
+        frm_servico.id_cli.ReadOnly := false;
+        frm_servico.obs.ReadOnly := false;
+        frm_servico.es_novo.enabled := false;
+        frm_servico.es_editar.enabled := false;
+        frm_servico.es_excluir.enabled := false;
+        frm_servico.es_ok.enabled := true;
+        frm_servico.es_cancel.enabled := true;
+        frm_servico.sButton4.enabled := true;
+        frm_servico.sbutton4.setfocus;
+      end
+   else
+      begin
+        Showmessage('USUÁRIO E/OU SENHA INCORRETA!');
+        frm_servico.id_cli.ReadOnly := true;
+        frm_servico.obs.ReadOnly := true;
+        frm_servico.es_novo.enabled := true;
+        frm_servico.es_editar.enabled := true;
+        frm_servico.es_ok.enabled := false;
+        frm_servico.es_excluir.enabled := false;
+        frm_servico.es_cancel.enabled := false;
+        frm_servico.sButton4.enabled := true;
+        frm_servico.es_novo.setfocus;
+      end;
+      if edit1.Text <> '' then
+        begin
+          dt_studio.tb_movservico.Edit;
+          dt_studio.tb_movservicoAUTORIZADO.AsString := login.text;
+          edit1.SetFocus;
+        end
+      else
+      dt_studio.tb_movservicoAUTORIZADO.AsString := '';
+end;
+
+procedure Tfrm_aut_servico.BitBtn2Click(Sender: TObject);
+begin
+   frm_servico.es_alt_fim.Enabled := true;
+   frm_servico.es_novo.Enabled := true;
+   frm_servico.es_editar.Enabled := true;
+   frm_servico.es_excluir.Enabled := true;
+   frm_servico.es_ok.Enabled := false;
+   frm_servico.es_cancel.Enabled := false;
+   close;
+end;
+
+procedure Tfrm_aut_servico.FormKeyPress(Sender: TObject; var Key: Char);
+begin// Comandos para a tecla [ENTER]//
+   If Key = #13 Then
+     Selectnext(ActiveControl, true, true);
+end;
+
+procedure Tfrm_aut_servico.FormShow(Sender: TObject);
+begin
+   edit1.Text := '';
+   login.Text := '';
+end;
+
+procedure Tfrm_aut_servico.loginClick(Sender: TObject);
+begin
+   edit1.SetFocus;
+end;
+
+end.
+
+
+
+
+
+
+

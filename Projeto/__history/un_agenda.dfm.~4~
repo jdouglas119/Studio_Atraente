@@ -1,0 +1,434 @@
+object frm_agenda: Tfrm_agenda
+  Left = 349
+  Top = 169
+  BorderStyle = bsToolWindow
+  Caption = 'Cadastro de Agendamentos - Studio Atraente - vers'#227'o: 1.0'
+  ClientHeight = 434
+  ClientWidth = 683
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  KeyPreview = True
+  OldCreateOrder = False
+  Position = poDesigned
+  OnClose = FormClose
+  OnKeyDown = FormKeyDown
+  OnKeyPress = FormKeyPress
+  OnShow = FormShow
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Label1: TLabel
+    Left = 8
+    Top = 43
+    Width = 58
+    Height = 13
+    Caption = 'ID_AGENDA'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label2: TLabel
+    Left = 213
+    Top = 43
+    Width = 45
+    Height = 13
+    Caption = 'NOM_CLI'
+    FocusControl = nom_cli
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label3: TLabel
+    Left = 558
+    Top = 43
+    Width = 74
+    Height = 13
+    Caption = 'DATA_AGENDA'
+    FocusControl = data
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label4: TLabel
+    Left = 8
+    Top = 86
+    Width = 48
+    Height = 13
+    Caption = 'HORARIO'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label5: TLabel
+    Left = 304
+    Top = 86
+    Width = 73
+    Height = 13
+    Caption = 'OBSERVACOES'
+    FocusControl = memo
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label6: TLabel
+    Left = 98
+    Top = 86
+    Width = 58
+    Height = 13
+    Caption = 'ATENDENTE'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label7: TLabel
+    Left = 98
+    Top = 43
+    Width = 33
+    Height = 13
+    Caption = 'ID_CLI'
+    FocusControl = id_cli
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object sPanel1: TsPanel
+    Left = 4
+    Top = 2
+    Width = 673
+    Height = 35
+    BevelInner = bvLowered
+    TabOrder = 5
+    object novo: TsButton
+      Left = 3
+      Top = 4
+      Width = 88
+      Height = 27
+      Caption = 'Novo'
+      TabOrder = 0
+      OnClick = novoClick
+    end
+    object editar: TsButton
+      Left = 91
+      Top = 4
+      Width = 88
+      Height = 27
+      Caption = 'Editar'
+      TabOrder = 1
+      OnClick = editarClick
+    end
+    object excluir: TsButton
+      Left = 179
+      Top = 4
+      Width = 88
+      Height = 27
+      Caption = 'Excluir'
+      TabOrder = 2
+      OnClick = excluirClick
+    end
+    object sair: TsButton
+      Left = 583
+      Top = 4
+      Width = 88
+      Height = 27
+      Caption = 'Sair'
+      TabOrder = 3
+      OnClick = sairClick
+    end
+  end
+  object gravar: TsButton
+    Left = 495
+    Top = 382
+    Width = 88
+    Height = 27
+    Caption = 'OK'
+    TabOrder = 6
+    OnClick = gravarClick
+  end
+  object cancelar: TsButton
+    Left = 589
+    Top = 382
+    Width = 88
+    Height = 27
+    Caption = 'Cancelar'
+    TabOrder = 7
+    OnClick = cancelarClick
+  end
+  object StatusBar1: TStatusBar
+    Left = 0
+    Top = 415
+    Width = 683
+    Height = 19
+    Panels = <
+      item
+        Text = 
+          'F2 - Incluir  -  F3 - Alterar  -  F4 - Excluir  - F5 - Cancelar ' +
+          ' - F6 - Gravar  -  F9 - Sair'
+        Width = 50
+      end>
+  end
+  object nom_cli: TDBEdit
+    Left = 213
+    Top = 59
+    Width = 338
+    Height = 21
+    BevelInner = bvLowered
+    BevelOuter = bvNone
+    BevelKind = bkSoft
+    DataField = 'NOM_CLI'
+    DataSource = dt_studio.ds_agenda
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    ReadOnly = True
+    TabOrder = 9
+  end
+  object data: TDBEdit
+    Left = 556
+    Top = 59
+    Width = 121
+    Height = 21
+    BevelInner = bvLowered
+    BevelOuter = bvNone
+    BevelKind = bkSoft
+    DataField = 'DATA_AGENDA'
+    DataSource = dt_studio.ds_agenda
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    ReadOnly = True
+    TabOrder = 1
+  end
+  object memo: TDBMemo
+    Left = 304
+    Top = 101
+    Width = 373
+    Height = 63
+    BevelInner = bvLowered
+    BevelOuter = bvNone
+    BevelKind = bkSoft
+    DataField = 'OBSERVACOES'
+    DataSource = dt_studio.ds_agenda
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 10
+  end
+  object combo: TDBLookupComboBox
+    Left = 95
+    Top = 101
+    Width = 173
+    Height = 21
+    BevelInner = bvLowered
+    BevelOuter = bvNone
+    BevelKind = bkSoft
+    DataField = 'ATENDENTE'
+    DataSource = dt_studio.ds_agenda
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    KeyField = 'NOM_FUNC'
+    ListField = 'NOM_FUNC'
+    ListSource = dt_studio.ds_cadatend
+    ParentFont = False
+    ReadOnly = True
+    TabOrder = 3
+  end
+  object grid_agenda: TDBGrid
+    Left = 8
+    Top = 217
+    Width = 669
+    Height = 160
+    Color = 15138815
+    DataSource = dt_studio.ds_agenda
+    DrawingStyle = gdsClassic
+    ReadOnly = True
+    TabOrder = 11
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -11
+    TitleFont.Name = 'Tahoma'
+    TitleFont.Style = []
+    OnDrawColumnCell = grid_agendaDrawColumnCell
+    Columns = <
+      item
+        Expanded = False
+        FieldName = 'ID_AGENDA'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'ID_CLI'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'NOM_CLI'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'DATA_AGENDA'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'HORARIO'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'ATENDENTE'
+        Visible = True
+      end>
+  end
+  object id_agenda: TDBEdit
+    Left = 8
+    Top = 59
+    Width = 80
+    Height = 21
+    BevelInner = bvLowered
+    BevelOuter = bvNone
+    BevelKind = bkSoft
+    DataField = 'ID_AGENDA'
+    DataSource = dt_studio.ds_agenda
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    ReadOnly = True
+    TabOrder = 0
+  end
+  object id_cli: TDBEdit
+    Left = 94
+    Top = 59
+    Width = 65
+    Height = 21
+    BevelInner = bvLowered
+    BevelOuter = bvNone
+    BevelKind = bkSoft
+    DataField = 'ID_CLI'
+    DataSource = dt_studio.ds_agenda
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    ReadOnly = True
+    TabOrder = 4
+    OnExit = id_cliExit
+  end
+  object nav: TDBNavigator
+    Left = 8
+    Top = 133
+    Width = 136
+    Height = 25
+    DataSource = dt_studio.ds_agenda
+    VisibleButtons = [nbFirst, nbPrior, nbNext, nbLast]
+    TabOrder = 12
+  end
+  object sButton1: TsButton
+    Left = 162
+    Top = 52
+    Width = 48
+    Height = 28
+    Caption = '...'
+    TabOrder = 13
+    OnClick = sButton1Click
+  end
+  object horario: TDBEdit
+    Left = 8
+    Top = 101
+    Width = 80
+    Height = 21
+    BevelInner = bvLowered
+    BevelOuter = bvSpace
+    BevelKind = bkSoft
+    DataField = 'HORARIO'
+    DataSource = dt_studio.ds_agenda
+    ReadOnly = True
+    TabOrder = 2
+  end
+  object radio: TRadioGroup
+    Left = 8
+    Top = 164
+    Width = 290
+    Height = 44
+    Caption = 'Pesquisa por:'
+    Columns = 2
+    Items.Strings = (
+      'Hor'#225'rio'
+      'Nome Cliente')
+    TabOrder = 14
+    OnClick = radioClick
+  end
+  object Edit1: TEdit
+    Left = 304
+    Top = 171
+    Width = 277
+    Height = 27
+    BevelInner = bvLowered
+    BevelKind = bkSoft
+    BevelOuter = bvSpace
+    CharCase = ecUpperCase
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 15
+  end
+  object sButton13: TsButton
+    Left = 587
+    Top = 170
+    Width = 88
+    Height = 27
+    Caption = 'Pesquisar'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 16
+    OnClick = sButton13Click
+  end
+end

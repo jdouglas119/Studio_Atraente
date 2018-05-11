@@ -1,0 +1,103 @@
+{ ***************************************************
+  * Elaborado para: Studio Atraente                 *
+  * Modulo     : Formulario de Autorização Retiradas*
+  * Analista   : João Douglas                       *
+  * Elaboração : João Douglas                       *
+  * Ult Alt.   : 07/04/2017                         *
+  *************************************************** }
+
+unit un_aut_retiradas;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons,
+  Vcl.Imaging.jpeg, Vcl.ExtCtrls;
+
+type
+  Tfrm_aut_retiradas = class(TForm)
+    Image1: TImage;
+    Label1: TLabel;
+    login: TComboBox;
+    Label2: TLabel;
+    Edit1: TEdit;
+    BitBtn1: TBitBtn;
+    BitBtn2: TBitBtn;
+    procedure BitBtn2Click(Sender: TObject);
+    procedure FormKeyPress(Sender: TObject; var Key: Char);
+    procedure FormShow(Sender: TObject);
+    procedure BitBtn1Click(Sender: TObject);
+    procedure loginClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_aut_retiradas: Tfrm_aut_retiradas;
+
+implementation
+
+{$R *.dfm}
+
+uses un_dtstudio, un_retiradas;
+
+procedure Tfrm_aut_retiradas.BitBtn1Click(Sender: TObject);
+begin
+   if (edit1.Text = 'BRAGA') and (login.Text = 'NEIDE') or (edit1.Text = 'STUDIO') and (login.Text = 'IARA') then
+      begin
+        dt_studio.tb_retiradas.Edit;
+        frm_retiradas.pagamentos.ReadOnly := false;
+        frm_retiradas.retiradas.ReadOnly := false;
+        frm_retiradas.pagamentos.SetFocus;
+        frm_retiradas.gravar.enabled := true;
+        frm_retiradas.cancel.enabled := true;
+      end
+   else
+      begin
+         Showmessage('USUÁRIO E/OU SENHA INCORRETA!');
+         frm_retiradas.pagamentos.ReadOnly := true;
+         frm_retiradas.retiradas.ReadOnly := true;
+         frm_retiradas.pagamentos.SetFocus;
+         frm_retiradas.gravar.enabled := false;
+         frm_retiradas.cancel.enabled := false;
+         edit1.Setfocus;
+         edit1.Text:='';
+         exit;
+      end;
+      if edit1.Text <> '' then
+        begin
+          dt_studio.tb_retiradas.Edit;
+          dt_studio.tb_retiradasAUTORIZADO.AsString := login.text;
+          exit;
+        end
+      else
+      dt_studio.tb_retiradasAUTORIZADO.AsString := dt_studio.tb_retiradasAUTORIZADO.AsString;
+end;
+
+procedure Tfrm_aut_retiradas.BitBtn2Click(Sender: TObject);
+begin
+   close;
+end;
+
+procedure Tfrm_aut_retiradas.FormKeyPress(Sender: TObject; var Key: Char);
+begin // Comandos para a tecla [ENTER]//
+  If Key = #13 Then
+    Selectnext(ActiveControl, true, true);
+end;
+
+procedure Tfrm_aut_retiradas.FormShow(Sender: TObject);
+begin
+   edit1.Text := '';
+   login.Text := '';
+   login.SetFocus;
+end;
+
+procedure Tfrm_aut_retiradas.loginClick(Sender: TObject);
+begin
+   edit1.SetFocus;
+end;
+
+end.

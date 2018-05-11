@@ -1,0 +1,109 @@
+{ ***************************************************
+  * Elaborado para: Studio Atraente                 *
+  * Modulo     : Relatório de Aniversariantes       *
+  * Analista   : João Douglas                       *
+  * Elaboração : João Douglas                       *
+  * Ult Alt.   : 07/12/2016                         *
+  *************************************************** }
+
+unit un_chama_aniver;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, sButton, Vcl.Buttons,
+  sBitBtn, Vcl.Mask, Data.DB, Data.Win.ADODB;
+
+type
+  Tfrm_rel_aniver = class(TForm)
+    frm_chama_relcli: TsBitBtn;
+    sButton1: TsButton;
+    Label1: TLabel;
+    mes: TEdit;
+    Edit1: TEdit;
+    procedure sButton1Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure FormKeyPress(Sender: TObject; var Key: Char);
+    procedure frm_chama_relcliClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure mesExit(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_rel_aniver: Tfrm_rel_aniver;
+
+implementation
+
+{$R *.dfm}
+
+uses un_dtstudio, un_relatorios;
+
+procedure Tfrm_rel_aniver.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  dt_studio.tb_cadcli.close;
+end;
+
+procedure Tfrm_rel_aniver.FormKeyPress(Sender: TObject; var Key: Char);
+begin // Comandos para a tecla [ENTER]//
+  If Key = #13 Then
+    Selectnext(ActiveControl, true, true);
+end;
+
+procedure Tfrm_rel_aniver.FormShow(Sender: TObject);
+begin
+    dt_studio.tb_cadcli.Open;
+     mes.SetFocus;
+end;
+
+procedure Tfrm_rel_aniver.frm_chama_relcliClick(Sender: TObject);
+begin
+// Selecionando Registro na tabela
+    dt_studio.tb_cadcli.close;
+    dt_studio.tb_cadcli.sql.clear;
+    dt_studio.tb_cadcli.sql.add('SELECT * FROM CAD_CLI');
+    dt_studio.tb_cadcli.sql.add('WHERE MONTH(DT_ANI)= :Mes');
+    dt_studio.tb_cadcli.sql.add('ORDER BY NOM_CLI ASC');
+    dt_studio.tb_cadcli.Parameters.ParamByName('Mes').value := mes.Text;
+    dt_studio.tb_cadcli.open;
+//Mostra o Relatório.
+    If dt_studio.tb_cadcli.RecordCount > 0 then
+     begin
+        frm_relatorios.rel_aniversario.loadfromfile
+        ('\\statraente\projeto_studio atraente\relatorios\rel_cad_aniversario.fr3');
+        with frm_relatorios.rel_aniversario.Variables do
+           begin
+               Variables['mes'] := QuotedStr(mes.Text);
+               frm_relatorios.rel_aniversario.showreport();
+           end;
+           end
+           else
+           ShowMessage('NENHUM ANIVERSARIANTE CADASTRADO NO MÊS');
+           mes.setfocus;
+end;
+
+procedure Tfrm_rel_aniver.mesExit(Sender: TObject);
+begin
+   if mes.Text = '01' then
+      edit1.Text := 'JANEIRO';
+end;
+
+procedure Tfrm_rel_aniver.sButton1Click(Sender: TObject);
+begin
+   close;
+end;
+
+end.
+
+
+
+
+
+
+
+
+

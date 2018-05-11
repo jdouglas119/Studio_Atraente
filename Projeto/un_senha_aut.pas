@@ -1,0 +1,122 @@
+{ ***************************************************
+  * Elaborado para: Studio Atraente                 *
+  * Modulo     : Senha de Autorização               *
+  * Analista   : João Douglas                       *
+  * Elaboração : João Douglas                       *
+  * Ult Alt.   : 10/07/2017                         *
+  *************************************************** }
+
+unit un_senha_aut;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, Vcl.Mask,
+  Vcl.DBCtrls, sBitBtn, sButton, Vcl.Imaging.jpeg, Vcl.ExtCtrls;
+
+type
+  Tfrm_senha_aut = class(TForm)
+    Image1: TImage;
+    Label1: TLabel;
+    Label2: TLabel;
+    senha: TEdit;
+    BitBtn1: TBitBtn;
+    BitBtn2: TBitBtn;
+    nome: TEdit;
+    cod: TEdit;
+    Label3: TLabel;
+    SpeedButton1: TSpeedButton;
+    procedure FormShow(Sender: TObject);
+    procedure FormKeyPress(Sender: TObject; var Key: Char);
+    procedure BitBtn1Click(Sender: TObject);
+    procedure BitBtn2Click(Sender: TObject);
+    procedure loginClick(Sender: TObject);
+    procedure SpeedButton1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_senha_aut: Tfrm_senha_aut;
+
+implementation
+
+uses un_dtstudio, un_rec_caixa, un_consauto;
+
+{$R *.dfm}
+
+procedure Tfrm_senha_aut.BitBtn1Click(Sender: TObject);
+Var
+   sql : String; //Variável de entrada//
+begin//login do sistema
+   if senha.text <> dt_studio.tb_cadautoSENHA.asstring then
+      begin
+         showmessage('AUTORIZADOR NÃO CADASTRADO E/OU SENHA INVÁLIDA');
+      end
+   else
+   If (nome.Text <> '') and (senha.Text = dt_studio.tb_cadautosenha.AsString) Then
+     begin
+        sql := 'select * from cad_autorizador where autorizador = ' + QuotedStr(nome.Text);
+        sql := sql + ' and senha = ' + QuotedStr(senha.Text);
+        dt_studio.tb_cadauto.Active := True;
+        frm_senha_aut.hide;
+        frm_senha_aut.Close;
+        dt_studio.tb_rec_caixa.Edit;
+        frm_rec_caixa.rec_cartao_cred.ReadOnly := false;
+        frm_rec_caixa.rec_cartao_deb.ReadOnly := false;
+        frm_rec_caixa.deb_func.ReadOnly := false;
+        frm_rec_caixa.cheques.ReadOnly := false;
+        frm_rec_caixa.memo.ReadOnly := false;
+        frm_rec_caixa.dinheiro.ReadOnly := false;
+        frm_rec_caixa.combo.ReadOnly := false;
+        frm_rec_caixa.combo.SetFocus;
+        frm_rec_caixa.es_ok.enabled := false;
+        frm_rec_caixa.es_novo.enabled := false;
+        frm_rec_caixa.es_altera.enabled := false;
+        frm_rec_caixa.sbutton2.enabled := true;
+        frm_rec_caixa.cancelar.enabled := true;
+     end;
+     if nome.Text <> '' then
+       begin
+          dt_studio.tb_rec_caixa.Edit;
+          dt_studio.tb_rec_caixaAUTORIZADO.AsString := nome.text;
+          exit;
+       end
+       else
+       dt_studio.tb_rec_caixaAUTORIZADO.AsString := dt_studio.tb_rec_caixaAUTORIZADO.AsString;
+end;
+
+procedure Tfrm_senha_aut.BitBtn2Click(Sender: TObject);
+begin
+   close;
+end;
+
+procedure Tfrm_senha_aut.FormKeyPress(Sender: TObject; var Key: Char);
+begin // Comandos para a tecla [ENTER]//
+  If Key = #13 Then
+    Selectnext(ActiveControl, true, true);
+end;
+
+procedure Tfrm_senha_aut.FormShow(Sender: TObject);
+begin
+   cod.Text := '';
+   nome.Text := '';
+   senha.Text := '';
+end;
+
+procedure Tfrm_senha_aut.loginClick(Sender: TObject);
+begin
+   senha.SetFocus;
+end;
+
+procedure Tfrm_senha_aut.SpeedButton1Click(Sender: TObject);
+begin
+  frm_consauto.cod := 5;
+  senha.SetFocus;
+  frm_consauto.showmodal;
+end;
+
+end.

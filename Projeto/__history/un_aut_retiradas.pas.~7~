@@ -1,0 +1,114 @@
+{ ***************************************************
+  * Elaborado para: Studio Atraente                 *
+  * Modulo     : Formulario de Autorização Retiradas*
+  * Analista   : João Douglas                       *
+  * Elaboração : João Douglas                       *
+  * Ult Alt.   : 07/04/2017                         *
+  *************************************************** }
+
+unit un_aut_retiradas;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons,
+  Vcl.Imaging.jpeg, Vcl.ExtCtrls;
+
+type
+  Tfrm_aut_retiradas = class(TForm)
+    Image1: TImage;
+    Label1: TLabel;
+    Label2: TLabel;
+    senha: TEdit;
+    BitBtn1: TBitBtn;
+    BitBtn2: TBitBtn;
+    nome: TEdit;
+    cod: TEdit;
+    Label3: TLabel;
+    SpeedButton1: TSpeedButton;
+    procedure BitBtn2Click(Sender: TObject);
+    procedure FormKeyPress(Sender: TObject; var Key: Char);
+    procedure FormShow(Sender: TObject);
+    procedure BitBtn1Click(Sender: TObject);
+    procedure loginClick(Sender: TObject);
+    procedure SpeedButton1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_aut_retiradas: Tfrm_aut_retiradas;
+
+implementation
+
+{$R *.dfm}
+
+uses un_dtstudio, un_retiradas, un_consauto;
+
+procedure Tfrm_aut_retiradas.BitBtn1Click(Sender: TObject);
+Var
+   sql : String; //Variável de entrada//
+begin//login do sistema
+   if senha.text <> dt_studio.tb_cadautoSENHA.asstring then
+      begin
+         showmessage('AUTORIZADOR NÃO CADASTRADO E/OU SENHA INVÁLIDA');
+      end
+   else
+   If (nome.Text <> '') and (senha.Text = dt_studio.tb_cadautosenha.AsString) Then
+     begin
+        sql := 'select * from cad_autorizador where autorizador = ' + QuotedStr(nome.Text);
+        sql := sql + ' and senha = ' + QuotedStr(senha.Text);
+        dt_studio.tb_cadauto.Active := True;
+        frm_aut_retiradas.hide;
+        frm_aut_retiradas.Close;
+        dt_studio.tb_retiradas.Edit;
+        frm_retiradas.pagamentos.ReadOnly := false;
+        frm_retiradas.retiradas.ReadOnly := false;
+        frm_retiradas.pagamentos.SetFocus;
+        frm_retiradas.gravar.enabled := true;
+        frm_retiradas.cancel.enabled := true;
+     end;
+     if nome.Text <> '' then
+       begin
+          dt_studio.tb_retiradas.Edit;
+          dt_studio.tb_retiradasAUTORIZADO.AsString := nome.text;
+          exit;
+       end
+       else
+       dt_studio.tb_comandasAUTORIZADO.AsString := dt_studio.tb_comandasAUTORIZADO.AsString;
+end;
+
+procedure Tfrm_aut_retiradas.BitBtn2Click(Sender: TObject);
+begin
+   close;
+end;
+
+procedure Tfrm_aut_retiradas.FormKeyPress(Sender: TObject; var Key: Char);
+begin // Comandos para a tecla [ENTER]//
+  If Key = #13 Then
+    Selectnext(ActiveControl, true, true);
+end;
+
+procedure Tfrm_aut_retiradas.FormShow(Sender: TObject);
+begin
+   nome.Text := '';
+   cod.Text := '';
+   senha.text := '';
+end;
+
+procedure Tfrm_aut_retiradas.loginClick(Sender: TObject);
+begin
+   senha.SetFocus;
+end;
+
+procedure Tfrm_aut_retiradas.SpeedButton1Click(Sender: TObject);
+begin
+  frm_consauto.cod := 3;
+  senha.SetFocus;
+  frm_consauto.showmodal;
+end;
+
+end.

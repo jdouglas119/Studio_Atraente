@@ -1,0 +1,63 @@
+{ ***************************************************
+  * Elaborado para: Studio Atraente                 *
+  * Modulo     : Inserir Data em Branco na Comanda  *
+  * Analista   : João Douglas                       *
+  * Elaboração : João Douglas                       *
+  * Ult Alt.   : 14/08/2017                         *
+  *************************************************** }
+
+unit un_inserirdata;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Mask, Vcl.Buttons;
+
+type
+  Tfrm_insdata = class(TForm)
+    Label1: TLabel;
+    data: TMaskEdit;
+    BitBtn1: TBitBtn;
+    procedure dataExit(Sender: TObject);
+    procedure FormKeyPress(Sender: TObject; var Key: Char);
+    procedure BitBtn1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_insdata: Tfrm_insdata;
+
+implementation
+
+{$R *.dfm}
+
+uses un_dtstudio;
+
+procedure Tfrm_insdata.BitBtn1Click(Sender: TObject);
+begin
+  dt_studio.tb_comandas.edit;
+  if dt_studio.tb_comandasDATA_SERV.asstring = '' then
+    begin
+       //dt_studio.tb_comandasDATA_SERV.asstring := frm_insdata.data.Text;
+       dt_studio.tb_comandasDATA_SERV.asstring := dt_studio.tb_movservicoDATA_SERV.asstring;
+       dt_studio.tb_comandas.post;
+    end;
+    frm_insdata.Close;
+end;
+
+procedure Tfrm_insdata.dataExit(Sender: TObject);
+begin
+   bitbtn1.SetFocus;
+end;
+
+procedure Tfrm_insdata.FormKeyPress(Sender: TObject; var Key: Char);
+begin
+  If Key = #13 Then
+    Selectnext(ActiveControl, true, true);
+end;
+
+end.

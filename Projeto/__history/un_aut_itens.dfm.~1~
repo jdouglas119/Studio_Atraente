@@ -1,0 +1,93 @@
+object frm_aut_itens: Tfrm_aut_itens
+  Left = 535
+  Top = 346
+  BorderStyle = bsToolWindow
+  Caption = 'Senha de Autoriza'#231#227'o'
+  ClientHeight = 129
+  ClientWidth = 193
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  KeyPreview = True
+  OldCreateOrder = False
+  Position = poDesigned
+  OnKeyPress = FormKeyPress
+  OnShow = FormShow
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Label1: TLabel
+    Left = 8
+    Top = 8
+    Width = 46
+    Height = 13
+    Caption = 'USU'#193'RIO'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label2: TLabel
+    Left = 8
+    Top = 56
+    Width = 33
+    Height = 13
+    Caption = 'SENHA'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object login: TComboBox
+    Left = 8
+    Top = 23
+    Width = 179
+    Height = 21
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 0
+    OnClick = loginClick
+    Items.Strings = (
+      'NEIDE'
+      'IARA')
+  end
+  object Edit1: TEdit
+    Left = 8
+    Top = 72
+    Width = 179
+    Height = 21
+    PasswordChar = '*'
+    TabOrder = 1
+  end
+  object BitBtn1: TBitBtn
+    Left = 22
+    Top = 99
+    Width = 75
+    Height = 25
+    Kind = bkOK
+    NumGlyphs = 2
+    TabOrder = 2
+    OnClick = BitBtn1Click
+  end
+  object BitBtn2: TBitBtn
+    Left = 103
+    Top = 99
+    Width = 75
+    Height = 25
+    Caption = 'Cancelar'
+    Kind = bkCancel
+    NumGlyphs = 2
+    TabOrder = 3
+    OnClick = BitBtn2Click
+  end
+end

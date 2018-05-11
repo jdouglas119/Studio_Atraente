@@ -1,0 +1,112 @@
+object frm_abertura: Tfrm_abertura
+  Left = 427
+  Top = 278
+  BorderStyle = bsToolWindow
+  Caption = 'Abertura do Caixa - Studio Atraente - vers'#227'o: 1.0'
+  ClientHeight = 103
+  ClientWidth = 396
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  KeyPreview = True
+  OldCreateOrder = False
+  Position = poScreenCenter
+  OnClose = FormClose
+  OnKeyPress = FormKeyPress
+  OnShow = FormShow
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Label1: TLabel
+    Left = 117
+    Top = 8
+    Width = 70
+    Height = 13
+    Caption = 'ID_ABERTURA'
+    FocusControl = id_abre
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label2: TLabel
+    Left = 224
+    Top = 8
+    Width = 50
+    Height = 13
+    Caption = 'DT_CAIXA'
+    FocusControl = data_abre
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label3: TLabel
+    Left = 224
+    Top = 51
+    Width = 77
+    Height = 13
+    Caption = 'VALOR_INICIAL'
+    FocusControl = vr_abertura
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object id_abre: TDBEdit
+    Left = 116
+    Top = 24
+    Width = 92
+    Height = 21
+    DataField = 'ID_ABERTURA'
+    DataSource = dt_studio.ds_abertura
+    ReadOnly = True
+    TabOrder = 0
+  end
+  object data_abre: TDBEdit
+    Left = 224
+    Top = 24
+    Width = 165
+    Height = 21
+    DataField = 'DT_CAIXA'
+    DataSource = dt_studio.ds_abertura
+    ReadOnly = True
+    TabOrder = 1
+  end
+  object vr_abertura: TDBEdit
+    Left = 223
+    Top = 66
+    Width = 165
+    Height = 21
+    DataField = 'VALOR_INI'
+    DataSource = dt_studio.ds_abertura
+    ReadOnly = True
+    TabOrder = 2
+  end
+  object novo: TsButton
+    Left = 17
+    Top = 10
+    Width = 75
+    Height = 25
+    Caption = 'Incluir'
+    TabOrder = 3
+    OnClick = novoClick
+  end
+  object gravar: TsButton
+    Left = 17
+    Top = 37
+    Width = 75
+    Height = 25
+    Caption = 'OK'
+    TabOrder = 4
+    OnClick = gravarClick
+  end
+end

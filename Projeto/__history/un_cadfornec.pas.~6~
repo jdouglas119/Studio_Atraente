@@ -1,0 +1,652 @@
+{ ***************************************************
+  * Elaborado para: Studio Atraente                 *
+  * Modulo     : Cadastro de Fornecedores           *
+  * Analista   : João Douglas                       *
+  * Elaboração : João Douglas                       *
+  * Ult Alt.   : 09/12/2016                         *
+  *************************************************** }
+
+unit un_cadfornec;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.DBCtrls,
+  sButton, sPanel, Vcl.ComCtrls, Vcl.Grids, Vcl.DBGrids, Vcl.Mask;
+
+type
+  Tfrm_cadfornec = class(TForm)
+    sPanel1: TsPanel;
+    novo: TsButton;
+    editar: TsButton;
+    excluir: TsButton;
+    nav_fornec: TDBNavigator;
+    sair: TsButton;
+    dbradio1: TDBRadioGroup;
+    Label1: TLabel;
+    Label2: TLabel;
+    nom_fornec: TDBEdit;
+    Label3: TLabel;
+    data: TDBEdit;
+    Label4: TLabel;
+    end_fornec: TDBEdit;
+    Label5: TLabel;
+    num_fornec: TDBEdit;
+    Label6: TLabel;
+    complemento: TDBEdit;
+    Label7: TLabel;
+    Label8: TLabel;
+    Label9: TLabel;
+    Label10: TLabel;
+    telefone: TDBEdit;
+    Label11: TLabel;
+    celular: TDBEdit;
+    Label12: TLabel;
+    email: TDBEdit;
+    combo_uf: TDBLookupComboBox;
+    grid_fornec: TDBGrid;
+    Edit1: TEdit;
+    radio1: TRadioGroup;
+    sButton1: TsButton;
+    Label17: TLabel;
+    Panel1: TPanel;
+    Label18: TLabel;
+    Panel2: TPanel;
+    gravar: TsButton;
+    cancelar: TsButton;
+    StatusBar1: TStatusBar;
+    bairro: TDBEdit;
+    cidade: TDBEdit;
+    Label13: TLabel;
+    cep: TDBEdit;
+    id_cod: TDBEdit;
+    Label27: TLabel;
+    Label28: TLabel;
+    Label19: TLabel;
+    Label14: TLabel;
+    Label15: TLabel;
+    Label16: TLabel;
+    Label20: TLabel;
+    Label21: TLabel;
+    Label22: TLabel;
+    Label23: TLabel;
+    cnpj: TDBEdit;
+    procedure novoClick(Sender: TObject);
+    procedure editarClick(Sender: TObject);
+    procedure excluirClick(Sender: TObject);
+    procedure gravarClick(Sender: TObject);
+    procedure cancelarClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure sairClick(Sender: TObject);
+    procedure sButton1Click(Sender: TObject);
+    procedure FormKeyPress(Sender: TObject; var Key: Char);
+    procedure radio1Click(Sender: TObject);
+    procedure grid_fornecDrawColumnCell(Sender: TObject; const Rect: TRect;
+      DataCol: Integer; Column: TColumn; State: TGridDrawState);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure cnpjExit(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_cadfornec: Tfrm_cadfornec;
+
+implementation
+
+uses un_dtstudio;
+
+{$R *.dfm}
+
+procedure Tfrm_cadfornec.cancelarClick(Sender: TObject);
+begin
+   If Application.Messagebox('Confirma Cancelamento de Fornecedores? ',
+   'Confirmação', mb_Iconquestion + Mb_OkCancel + Mb_DefButton1) = IdOk then
+   else
+   exit;
+   id_cod.ReadOnly := true;
+   nom_fornec.ReadOnly := true;
+   data.ReadOnly := true;
+   end_fornec.ReadOnly := true;
+   num_fornec.ReadOnly := true;
+   cnpj.ReadOnly := true;
+   bairro.ReadOnly := true;
+   complemento.ReadOnly := true;
+   cep.ReadOnly := true;
+   cidade.ReadOnly := true;
+   combo_uf.ReadOnly := true;
+   telefone.ReadOnly := true;
+   celular.ReadOnly := true;
+   email.ReadOnly := true;
+   dbradio1.ReadOnly := true;
+   grid_fornec.ReadOnly := true;
+   nav_fornec.Enabled := true;
+   novo.Enabled := true;
+   editar.Enabled := true;
+   excluir.Enabled := true;
+   cancelar.Enabled := false;
+   gravar.Enabled := false;
+   sair.Enabled := true;
+   dt_studio.tb_cadfornec.cancel;
+   cnpj.setfocus;
+end;
+
+procedure Tfrm_cadfornec.cnpjExit(Sender: TObject);
+function ValidaCNPJ(CNPJ: string): Boolean;
+var
+  i, digito1, digito2, cont: integer;
+begin
+  //Deleta a mascara do CPF caso tenha
+  Delete(CNPJ, AnsiPos('.', CNPJ), 1);
+  Delete(CNPJ, AnsiPos('.', CNPJ), 1);
+  Delete(CNPJ, AnsiPos('/', CNPJ), 1);
+  Delete(CNPJ, AnsiPos('-', CNPJ), 1);
+  if (Length(CNPJ) <> 14) then //Verifica se o mesmo possui 14 digitos exatos
+    Result := False
+  else if (CNPJ = '00000000000000') then //Verifica se todos os digitos são 0
+    Result := False
+  else
+  begin
+    digito1 := 0;
+    digito2 := 0;
+    cont := 2;
+    try //Caso ocorra algum erro não previsto retorna False
+      for i := 12 downto 1 do
+      begin
+        if cont = 10 then
+        cont := 2;
+        digito1 := digito1 + (StrToInt(CNPJ[i]) * cont);
+        digito2 := digito2 + (StrToInt(CNPJ[i + 1]) * cont);
+        cont := cont + 1;
+      end;
+      digito2 := digito2 + (StrToInt(CNPJ[1]) * 6);
+      if (digito1 mod 11) < 2 then
+          digito1 := 0
+      else
+          digito1 := 11 - (digito1 mod 11);
+      if (digito2 mod 11) < 2 then
+          digito2 := 0
+      else
+          digito2 := 11 - (digito2 mod 11);
+      if (digito1 <> StrToInt(CNPJ[13])) or (digito2 <> StrToInt(CNPJ[14])) then
+          Result := False
+      else
+      Result := True;
+    except
+    Result := False;
+    end;
+  end;
+end;
+begin
+   If dt_studio.tb_cadfornecCNPJ_FORNEC.Text<>'' Then
+   If ValidaCnpj(dt_studio.tb_cadfornecCNPJ_FORNEC.text)=False Then
+   begin
+     MessageDlg('CNPJ informado Inválido!',mtError, [mbOk],0);
+     cnpj.setfocus;
+   end;
+   with dt_studio.qry_verificaCnpj do
+         begin
+         	  close;
+          	SQL.Clear;
+          	SQL.Text('SELECT CNPJ_FORNEC FROM CAD_FORNEC WHERE CNPJ_FORNEC = ' + QuotedStr(cnpj.Text));
+          	Open;
+         end;
+         if dt_studio.qry_verificaCnpj.RecordCount > 0 then
+            begin
+              	ShowMessage('Fornecedor com esse CNPJ já Existe na Base de Dados!');
+                cnpj.SetFocus;
+            end
+            else
+            nom_fornec.setfocus;
+end;
+
+procedure Tfrm_cadfornec.editarClick(Sender: TObject);
+begin
+   If Application.Messagebox('Confirma Alteração de Fornecedores? ',
+   'Confirmação', mb_Iconquestion + Mb_OkCancel + Mb_DefButton1) = IdOk then
+   else
+   exit;
+   id_cod.ReadOnly := false;
+   nom_fornec.ReadOnly := false;
+   data.ReadOnly := true;
+   end_fornec.ReadOnly := false;
+   num_fornec.ReadOnly := false;
+   bairro.ReadOnly := false;
+   cnpj.ReadOnly := false;
+   complemento.ReadOnly := false;
+   cidade.ReadOnly := false;
+   cep.ReadOnly := false;
+   combo_uf.ReadOnly := false;
+   telefone.ReadOnly := false;
+   celular.ReadOnly := false;
+   email.ReadOnly := false;
+   dbradio1.ReadOnly := false;
+   grid_fornec.ReadOnly := false;
+   nav_fornec.Enabled := false;
+   novo.Enabled := false;
+   editar.Enabled := false;
+   excluir.Enabled := false;
+   cancelar.Enabled := true;
+   gravar.Enabled := true;
+   sair.Enabled := false;
+   dt_studio.tb_cadfornec.edit;
+   cnpj.setfocus;
+end;
+
+procedure Tfrm_cadfornec.excluirClick(Sender: TObject);
+begin // Comandos para excluir registros na tabela//
+  If dt_studio.tb_cadfornec.RecordCount <> 0 then
+    If Application.Messagebox('Confirma Exclusão?', 'Confirmar',
+      mb_Iconquestion + MB_YesNo + Mb_DefButton1) = IdYes Then
+    begin
+      dt_studio.tb_cadfornec.Delete;
+      id_cod.setfocus;
+    end;
+  If dt_studio.tb_cadfornec.RecordCount = 0 then
+    showmessage('Nao Existe Registro para Excluir');
+end;
+
+procedure Tfrm_cadfornec.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+   Case Key of
+        VK_F2: //Comando para teclas de atalho//
+        begin
+           If Application.Messagebox('Confirma Inclusão de Fornecedores? ',
+           'Confirmação', mb_Iconquestion + Mb_OkCancel + Mb_DefButton1) = IdOk then
+           else
+           exit;
+           id_cod.ReadOnly := false;
+           nom_fornec.ReadOnly := false;
+           data.ReadOnly := true;
+           end_fornec.ReadOnly := false;
+           num_fornec.ReadOnly := false;
+           bairro.ReadOnly := false;
+           complemento.ReadOnly := false;
+           cidade.ReadOnly := false;
+           cnpj.ReadOnly := false;
+           cep.ReadOnly := false;
+           combo_uf.ReadOnly := false;
+           telefone.ReadOnly := false;
+           celular.ReadOnly := false;
+           email.ReadOnly := false;
+           dbradio1.ReadOnly := false;
+           grid_fornec.ReadOnly := false;
+           novo.Enabled := false;
+           editar.Enabled := false;
+           excluir.Enabled := false;
+           cancelar.Enabled := true;
+           gravar.Enabled := true;
+           sair.Enabled := false;
+           dt_studio.tb_cadfornec.Append;
+           dt_studio.tb_cadfornecDATA_CAD.asstring := DateTimetoStr(now());
+           dbradio1.ItemIndex := -0;
+           cnpj.setfocus;
+        end;
+   end;
+   Case Key of
+        VK_F3: //Comando para teclas de atalho//
+        begin
+           If Application.Messagebox('Confirma Alteração de Fornecedores? ',
+           'Confirmação', mb_Iconquestion + Mb_OkCancel + Mb_DefButton1) = IdOk then
+           else
+           exit;
+           id_cod.ReadOnly := false;
+           nom_fornec.ReadOnly := false;
+           data.ReadOnly := true;
+           end_fornec.ReadOnly := false;
+           num_fornec.ReadOnly := false;
+           bairro.ReadOnly := false;
+           complemento.ReadOnly := false;
+           cidade.ReadOnly := false;
+           cnpj.ReadOnly := false;
+           cep.ReadOnly := false;
+           combo_uf.ReadOnly := false;
+           telefone.ReadOnly := false;
+           celular.ReadOnly := false;
+           email.ReadOnly := false;
+           dbradio1.ReadOnly := false;
+           grid_fornec.ReadOnly := false;
+           novo.Enabled := false;
+           editar.Enabled := false;
+           excluir.Enabled := false;
+           cancelar.Enabled := true;
+           gravar.Enabled := true;
+           sair.Enabled := false;
+           dt_studio.tb_cadfornec.edit;
+           cnpj.setfocus;
+        end;
+   end;
+   Case Key of
+        VK_F4: //Comando para teclas de atalho//
+        begin
+           If dt_studio.tb_cadfornec.RecordCount <> 0 then
+           If Application.Messagebox('Confirma Exclusão?', 'Confirmar',
+           mb_Iconquestion + MB_YesNo + Mb_DefButton1) = IdYes Then
+           begin
+             dt_studio.tb_cadfornec.Delete;
+             id_cod.setfocus;
+           end;
+           If dt_studio.tb_cadfornec.RecordCount = 0 then
+           showmessage('Nao Existe Registro para Excluir');
+        end;
+   end;
+   Case Key of
+        VK_F5: //Comando para teclas de atalho//
+        begin
+           If Application.Messagebox('Confirma Gravação de Fornecedores? ',
+           'Confirmação', mb_Iconquestion + Mb_OkCancel + Mb_DefButton1) = IdOk then
+           else
+           exit;
+           id_cod.ReadOnly := true;
+           nom_fornec.ReadOnly := true;
+           data.ReadOnly := true;
+           end_fornec.ReadOnly := true;
+           num_fornec.ReadOnly := true;
+           bairro.ReadOnly := true;
+           complemento.ReadOnly := true;
+           cep.ReadOnly := true;
+           cidade.ReadOnly := true;
+           cnpj.ReadOnly := true;
+           combo_uf.ReadOnly := true;
+           telefone.ReadOnly := true;
+           celular.ReadOnly := true;
+           email.ReadOnly := true;
+           dbradio1.ReadOnly := true;
+           grid_fornec.ReadOnly := true;
+           novo.Enabled := true;
+           editar.Enabled := true;
+           excluir.Enabled := true;
+           cancelar.Enabled := false;
+           gravar.Enabled := false;
+           sair.Enabled := true;
+           dt_studio.tb_cadfornec.cancel;
+           cnpj.setfocus;
+        end;
+   end;
+   Case Key of
+        VK_F6: //Comando para teclas de atalho//
+     begin
+           If Application.Messagebox('Confirma Gravação de Fornecedores? ',
+           'Confirmação', mb_Iconquestion + Mb_OkCancel + Mb_DefButton1) = IdOk then
+           else
+          exit;
+          if dt_studio.tb_cadfornecNOM_FORNEC.AsString = '' then
+        begin
+           Application.MessageBox('CAMPO FORNECEDOR NÃO PODE SER VAZIO','AVISO',MB_ICONINFORMATION);
+           nom_fornec.SetFocus;
+           exit;
+        end
+        else
+        if dt_studio.tb_cadfornecEND_FORNEC.AsString = '' then
+        begin
+           Application.MessageBox('CAMPO ENDEREÇO NÃO PODE SER VAZIO','AVISO',MB_ICONINFORMATION);
+           end_fornec.SetFocus;
+           exit;
+        end
+        else
+        if dt_studio.tb_cadfornecNUM_END.AsString = '' then
+        begin
+           Application.MessageBox('CAMPO NÚMERO NÃO PODE SER VAZIO','AVISO',MB_ICONINFORMATION);
+           num_fornec.SetFocus;
+           exit;
+        end
+        else
+        if dt_studio.tb_cadfornecBAIRRO_FORNEC.AsString = '' then
+        begin
+           Application.MessageBox('CAMPO BAIRRO NÃO PODE SER VAZIO','AVISO',MB_ICONINFORMATION);
+           bairro.SetFocus;
+           exit;
+        end
+        else
+        if dt_studio.tb_cadfornecCEP_FORNEC.AsString = '' then
+        begin
+           Application.MessageBox('CAMPO CEP NÃO PODE SER VAZIO','AVISO',MB_ICONINFORMATION);
+           cep.SetFocus;
+           exit;
+        end
+        else
+        if dt_studio.tb_cadfornecCIDADE_FORNEC.AsString = '' then
+        begin
+           Application.MessageBox('CAMPO CIDADE NÃO PODE SER VAZIO','AVISO',MB_ICONINFORMATION);
+           cidade.SetFocus;
+           exit;
+        end
+        else
+        if dt_studio.tb_cadfornecUF_FORNEC.AsString = '' then
+        begin
+           Application.MessageBox('CAMPO ESTADO NÃO PODE SER VAZIO','AVISO',MB_ICONINFORMATION);
+           combo_uf.SetFocus;
+           exit;
+        end
+        else
+        dt_studio.tb_cadfornec.post;
+        id_cod.ReadOnly := true;
+        nom_fornec.ReadOnly := true;
+        data.ReadOnly := true;
+        end_fornec.ReadOnly := true;
+        num_fornec.ReadOnly := true;
+        bairro.ReadOnly := true;
+        complemento.ReadOnly := true;
+        cep.ReadOnly := true;
+        cidade.ReadOnly := true;
+        cnpj.ReadOnly := true;
+        combo_uf.ReadOnly := true;
+        telefone.ReadOnly := true;
+        celular.ReadOnly := true;
+        email.ReadOnly := true;
+        grid_fornec.ReadOnly := true;
+        novo.Enabled := true;
+        editar.Enabled := true;
+        excluir.Enabled := true;
+        cancelar.Enabled := false;
+        gravar.Enabled := false;
+        sair.Enabled := true;
+        cnpj.setfocus;
+     end;
+   end;
+   Case Key of
+        VK_F9: //Comando para teclas de atalho//
+        begin
+           dt_studio.tb_cadfornec.close;
+           dt_studio.tb_cadestado.close;
+           dt_studio.tb_situacao.close;
+           close;
+        end;
+   end;
+end;
+
+procedure Tfrm_cadfornec.FormKeyPress(Sender: TObject; var Key: Char);
+begin // Comandos para a tecla [ENTER]//
+  If Key = #13 Then
+    Selectnext(ActiveControl, true, true);
+end;
+
+procedure Tfrm_cadfornec.FormShow(Sender: TObject);
+begin // Abrindo as tabelas
+  cancelar.Enabled := false;
+  gravar.Enabled := false;
+  dt_studio.tb_cadfornec.open;
+  dt_studio.tb_cadestado.open;
+  dt_studio.tb_situacao.open;
+end;
+
+procedure Tfrm_cadfornec.gravarClick(Sender: TObject);
+begin
+   If Application.Messagebox('Confirma Gravação de Fornecedores? ',
+   'Confirmação', mb_Iconquestion + Mb_OkCancel + Mb_DefButton1) = IdOk then
+   else
+   exit;
+   if dt_studio.tb_cadfornecNOM_FORNEC.AsString = '' then
+   begin
+      Application.MessageBox('CAMPO FORNECEDOR NÃO PODE SER VAZIO','AVISO',MB_ICONINFORMATION);
+      nom_fornec.SetFocus;
+      exit;
+   end
+   else
+   if dt_studio.tb_cadfornecEND_FORNEC.AsString = '' then
+   begin
+      Application.MessageBox('CAMPO ENDEREÇO NÃO PODE SER VAZIO','AVISO',MB_ICONINFORMATION);
+      end_fornec.SetFocus;
+      exit;
+   end
+   else
+   if dt_studio.tb_cadfornecNUM_END.AsString = '' then
+   begin
+      Application.MessageBox('CAMPO NÚMERO NÃO PODE SER VAZIO','AVISO',MB_ICONINFORMATION);
+      num_fornec.SetFocus;
+      exit;
+   end
+   else
+   if dt_studio.tb_cadfornecBAIRRO_FORNEC.AsString = '' then
+   begin
+      Application.MessageBox('CAMPO BAIRRO NÃO PODE SER VAZIO','AVISO',MB_ICONINFORMATION);
+      bairro.SetFocus;
+      exit;
+   end
+   else
+   if dt_studio.tb_cadfornecCEP_FORNEC.AsString = '' then
+   begin
+      Application.MessageBox('CAMPO CEP NÃO PODE SER VAZIO','AVISO',MB_ICONINFORMATION);
+      cep.SetFocus;
+      exit;
+   end
+   else
+   if dt_studio.tb_cadfornecCIDADE_FORNEC.AsString = '' then
+   begin
+      Application.MessageBox('CAMPO CIDADE NÃO PODE SER VAZIO','AVISO',MB_ICONINFORMATION);
+      cidade.SetFocus;
+      exit;
+   end
+   else
+   if dt_studio.tb_cadfornecUF_FORNEC.AsString = '' then
+   begin
+      Application.MessageBox('CAMPO ESTADO NÃO PODE SER VAZIO','AVISO',MB_ICONINFORMATION);
+      combo_uf.SetFocus;
+      exit;
+   end
+   else
+   dt_studio.tb_cadfornec.post;
+   id_cod.ReadOnly := true;
+   nom_fornec.ReadOnly := true;
+   data.ReadOnly := true;
+   end_fornec.ReadOnly := true;
+   num_fornec.ReadOnly := true;
+   cnpj.ReadOnly := true;
+   bairro.ReadOnly := true;
+   complemento.ReadOnly := true;
+   cep.ReadOnly := true;
+   cidade.ReadOnly := true;
+   combo_uf.ReadOnly := true;
+   telefone.ReadOnly := true;
+   celular.ReadOnly := true;
+   email.ReadOnly := true;
+   grid_fornec.ReadOnly := true;
+   nav_fornec.Enabled := true;
+   novo.Enabled := true;
+   editar.Enabled := true;
+   excluir.Enabled := true;
+   cancelar.Enabled := false;
+   gravar.Enabled := false;
+   sair.Enabled := true;
+   cnpj.setfocus;
+end;
+
+procedure Tfrm_cadfornec.grid_fornecDrawColumnCell(Sender: TObject;
+  const Rect: TRect; DataCol: Integer; Column: TColumn; State: TGridDrawState);
+begin
+    if dt_studio.tb_cadfornecsituacao.asstring = 'A' then
+    begin
+       grid_fornec.Canvas.Font.Color := clBlack;
+       grid_fornec.Canvas.Brush.Color := $00E6FFFF;
+    end
+    else
+    begin
+       grid_fornec.Canvas.Font.Color := clRed;
+       grid_fornec.Canvas.Brush.Color := $00E6FFFF;
+    end;
+    If odd(dt_studio.tb_cadfornec.RecNo) then
+       begin
+          grid_fornec.Canvas.Brush.Color:= clBlack;
+          grid_fornec.Canvas.Brush.Color:= $00FFF5EC;
+       end
+       else
+       begin
+          grid_fornec.Canvas.Brush.Color:= clBlack;
+          grid_fornec.Canvas.Brush.Color:= clWhite;
+       end;
+       grid_fornec.Canvas.FillRect(Rect);
+       grid_fornec.DefaultDrawDataCell(Rect, Column.Field, State);
+end;
+
+procedure Tfrm_cadfornec.novoClick(Sender: TObject);
+begin // Inserindo registros na tabela
+   If Application.Messagebox('Confirma Inclusão de Fornecedores? ',
+   'Confirmação', mb_Iconquestion + Mb_OkCancel + Mb_DefButton1) = IdOk then
+   else
+   exit;
+   id_cod.ReadOnly := false;
+   nom_fornec.ReadOnly := false;
+   data.ReadOnly := true;
+   end_fornec.ReadOnly := false;
+   num_fornec.ReadOnly := false;
+   bairro.ReadOnly := false;
+   complemento.ReadOnly := false;
+   cidade.ReadOnly := false;
+   cnpj.ReadOnly := false;
+   cep.ReadOnly := false;
+   combo_uf.ReadOnly := false;
+   telefone.ReadOnly := false;
+   celular.ReadOnly := false;
+   email.ReadOnly := false;
+   dbradio1.ReadOnly := false;
+   grid_fornec.ReadOnly := false;
+   nav_fornec.Enabled := false;
+   novo.Enabled := false;
+   editar.Enabled := false;
+   excluir.Enabled := false;
+   cancelar.Enabled := true;
+   gravar.Enabled := true;
+   sair.Enabled := false;
+   dt_studio.tb_cadfornec.Append;
+   dt_studio.tb_cadfornecDATA_CAD.asstring := DateTimetoStr(now());
+   dbradio1.ItemIndex := -0;
+   cnpj.setfocus;
+end;
+
+procedure Tfrm_cadfornec.radio1Click(Sender: TObject);
+begin
+  Edit1.setfocus;
+end;
+
+procedure Tfrm_cadfornec.sairClick(Sender: TObject);
+begin
+  dt_studio.tb_cadfornec.close;
+  dt_studio.tb_cadestado.close;
+  dt_studio.tb_situacao.close;
+  close;
+end;
+
+procedure Tfrm_cadfornec.sButton1Click(Sender: TObject);
+var
+  Sql: string; // Pesquisando registros na tabela
+begin
+  dt_studio.tb_cadfornec.close;
+  dt_studio.tb_cadfornec.Sql.Clear;
+  dt_studio.tb_cadfornec.Sql.Add('select * from CAD_FORNEC');
+
+  if (radio1.ItemIndex = 0) then
+    Sql := 'where CNPJ_FORNEC like ' + QuotedStr('%' + Edit1.Text + '%')
+  else if (radio1.ItemIndex = 1) then
+    Sql := 'where NOM_FORNEC like ' + QuotedStr('%' + Edit1.Text + '%');
+
+  dt_studio.tb_cadfornec.Sql.Add(Sql);
+  dt_studio.tb_cadfornec.Sql.Add('order by NOM_FORNEC');
+  dt_studio.tb_cadfornec.open;
+end;
+
+end.

@@ -1,0 +1,427 @@
+{ ***************************************************
+  * Elaborado para: Studio Atraente                 *
+  * Modulo     : Movimento do Caixa                 *
+  * Analista   : João Douglas                       *
+  * Elaboração : João Douglas                       *
+  * Ult Alt.   : 20/01/2017                         *
+  *************************************************** }
+
+unit un_movcaixa;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.ExtCtrls, Vcl.DBCtrls,
+  Vcl.Buttons, Vcl.StdCtrls, sButton, Vcl.Grids, Vcl.DBGrids, Vcl.Mask, acPNG,
+  Vcl.Samples.Gauges;
+
+type
+  Tfrm_movcaixa = class(TForm)
+    GroupBox4: TGroupBox;
+    es_novo: TsButton;
+    es_ok: TsButton;
+    es_sair: TsButton;
+    nav_caixa: TDBNavigator;
+    Panel1: TPanel;
+    StatusBar1: TStatusBar;
+    Label2: TLabel;
+    data: TDBEdit;
+    Label3: TLabel;
+    saldo_ant: TDBEdit;
+    DBGrid1: TDBGrid;
+    fecha: TsButton;
+    progres: TGauge;
+    cancel: TsButton;
+    Panel2: TPanel;
+    Image1: TImage;
+    Image4: TImage;
+    pagamentos: TDBEdit;
+    Label7: TLabel;
+    cartao_cred: TDBEdit;
+    Label4: TLabel;
+    Image2: TImage;
+    Image5: TImage;
+    retiradas: TDBEdit;
+    Label8: TLabel;
+    cartao_deb: TDBEdit;
+    Label5: TLabel;
+    Image3: TImage;
+    Image6: TImage;
+    saldo_atual: TDBEdit;
+    Label9: TLabel;
+    dinheiro: TDBEdit;
+    Label6: TLabel;
+    sButton1: TsButton;
+    Label1: TLabel;
+    usuario: TDBEdit;
+    Label10: TLabel;
+    aposte: TDBEdit;
+    Image7: TImage;
+    Label11: TLabel;
+    deb_func: TDBEdit;
+    Label12: TLabel;
+    cheques: TDBEdit;
+    Image8: TImage;
+    Image9: TImage;
+    Panel3: TPanel;
+    Label13: TLabel;
+    Label14: TLabel;
+    Label15: TLabel;
+    Label16: TLabel;
+    Label17: TLabel;
+    Label18: TLabel;
+    Label19: TLabel;
+    Label20: TLabel;
+    Label21: TLabel;
+    Label22: TLabel;
+    usuario2: TDBEdit;
+    Label23: TLabel;
+    Panel4: TPanel;
+    DBText1: TDBText;
+    Label24: TLabel;
+    Label25: TLabel;
+    DBText2: TDBText;
+    DBText3: TDBText;
+    Label26: TLabel;
+    DBText4: TDBText;
+    Label27: TLabel;
+    Label28: TLabel;
+    DBText5: TDBText;
+    Label29: TLabel;
+    DBText6: TDBText;
+    Label30: TLabel;
+    DBText7: TDBText;
+    Label31: TLabel;
+    DBText8: TDBText;
+    DBText9: TDBText;
+    Label32: TLabel;
+    procedure FormShow(Sender: TObject);
+    procedure es_sairClick(Sender: TObject);
+    procedure es_novoClick(Sender: TObject);
+    procedure es_okClick(Sender: TObject);
+    procedure FormKeyPress(Sender: TObject; var Key: Char);
+    procedure fechaClick(Sender: TObject);
+    procedure cancelClick(Sender: TObject);
+    procedure sButton1Click(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure Panel3Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_movcaixa: Tfrm_movcaixa;
+
+implementation
+
+uses un_dtstudio, un_principal, un_aposte, un_rec_caixa, un_retiradas;
+
+{$R *.dfm}
+
+procedure Tfrm_movcaixa.cancelClick(Sender: TObject);
+begin //Cancelando a digitação na tabela
+   If Application.Messagebox('Confirma Cancelamento da Abertura do Caixa? ',
+   'Confirmação', mb_Iconquestion + Mb_OkCancel + Mb_DefButton1) = IdOk then
+   else
+   exit;
+   data.Readonly := true;
+   nav_caixa.Enabled := true;
+   es_novo.Enabled := true;
+   fecha.Enabled := false;
+   es_ok.Enabled := false;
+   cancel.Enabled := false;
+   es_sair.Enabled := true;
+   dt_studio.tb_movcaixa.cancel;
+end;
+
+procedure Tfrm_movcaixa.es_novoClick(Sender: TObject);
+begin
+// inluindo registros na base de dados
+   dt_studio.tb_movcaixa.edit;
+   if dt_studio.tb_movcaixaDT_CAIXA.asstring = DateToSTr(Date) then //Informação da Abertura do caixa
+   begin
+     showmessage('ABERTURA DO CAIXA JÁ REALIZADO NESSE DIA!');
+     exit;
+   end
+   else
+   data.Readonly := true;
+   saldo_ant.Readonly := false;
+   nav_caixa.Enabled := false;
+   es_novo.Enabled := false;
+   fecha.Enabled := true;
+   es_ok.Enabled := true;
+   cancel.Enabled := true;
+   es_sair.Enabled := false;
+   dt_studio.tb_movcaixaDT_CAIXA.asstring := DateToSTr(Date);
+   frm_rec_caixa.data_pesq.text := DateToSTr(Date);
+   dt_studio.tb_movcaixa.edit;
+   dt_studio.tb_movcaixaSALDO_ANT.value := 0.00;
+   dt_studio.tb_movcaixaREC_CARTAO_CRED.value := 0.00;
+   dt_studio.tb_movcaixaREC_CARTAO_DEB.value := 0.00;
+   dt_studio.tb_movcaixaREC_DINHEIRO.value := 0.00;
+   dt_studio.tb_movcaixaPAGAMENTOS.value := 0.00;
+   dt_studio.tb_movcaixaRETIRADAS.value := 0.00;
+   dt_studio.tb_movcaixaSALDO_ATUAL.value := 0.00;
+   dt_studio.tb_movcaixaAPOSTE.value := 0.00;
+   dt_studio.tb_movcaixaDEB_FUNCIONARIO.value := 0.00;
+   dt_studio.tb_movcaixaCHEQUES.value := 0.00;
+   dt_studio.tb_fecha_caixa.Last;
+   dt_studio.tb_movcaixaSALDO_ANT.value := dt_studio.tb_fecha_caixaSALDO_ATUAL.value;
+   saldo_ant.SetFocus;
+   usuario.Text := dt_studio.tb_usuarios.FieldByName('NOM_APELIDO').AsString;
+end;
+
+procedure Tfrm_movcaixa.es_okClick(Sender: TObject);
+begin //Gravando a abertura do caixa
+   If Application.Messagebox('Confirma Abertura do Caixa? ', 'Confirmação',
+   mb_Iconquestion + Mb_OkCancel + Mb_DefButton1) = IdOk then
+   else
+   exit;
+   data.Readonly := true;
+   nav_caixa.Enabled := true;
+   es_novo.Enabled := false;
+   fecha.Enabled := true;
+   es_ok.Enabled := false;
+   cancel.Enabled := false;
+   es_sair.Enabled := true;
+   dt_studio.tb_movcaixaSALDO_ATUAL.value := dt_studio.tb_movcaixaSALDO_ANT.value;
+   dt_studio.tb_movcaixa.post;
+end;
+
+procedure Tfrm_movcaixa.es_sairClick(Sender: TObject);
+begin //Fechando as Tabelas
+  dt_studio.tb_movcaixa.close;
+  dt_studio.tb_fecha_caixa.close;
+  dt_studio.tb_aposte.close;
+  dt_studio.tb_retiradas.close;
+  dt_studio.tb_rec_caixa.close;
+  close;
+end;
+
+procedure Tfrm_movcaixa.fechaClick(Sender: TObject);
+var
+  codigo: integer;
+  a: integer;
+  i: integer;
+  NomeCampo: String;
+begin // Exortando movimentos do caixa
+   dt_studio.tb_movcaixa.Edit;
+   usuario2.Text := dt_studio.tb_usuarios.FieldByName('NOM_APELIDO').AsString;
+   es_novo.Enabled := true;
+   fecha.Enabled := false;
+   If Application.Messagebox('Confirma Fechamento do Caixa? ', 'Confirmação',
+      mb_Iconquestion + Mb_OkCancel + Mb_DefButton2) = IdOk then
+   else
+   exit;
+   dt_studio.tb_movcaixa.Open;
+   progres.MaxValue := dt_studio.tb_movcaixa.RecordCount;
+   dt_studio.tb_movcaixa.First;
+   While Not dt_studio.tb_movcaixa.Eof Do
+     begin
+         progres.Progress := progres.Progress + 1;
+         dt_studio.tb_fecha_caixa.Append;
+         For i := 0 To dt_studio.tb_movcaixa.FieldCount - 1 Do
+         begin
+            NomeCampo := dt_studio.tb_movcaixa.Fields[i].FieldName;
+            dt_studio.tb_fecha_caixa.FieldbyName(NomeCampo).value :=
+            dt_studio.tb_movcaixa.FieldbyName(NomeCampo).value;
+         end;
+         dt_studio.tb_fecha_caixa.post;
+         dt_studio.tb_movcaixa.Next;
+     end;
+     showmessage('FECHAMENTO REALIZADO COM SUCESSO!');
+     dt_studio.tb_movcaixa.First;
+     While Not dt_studio.tb_movcaixa.Eof Do
+     dt_studio.tb_movcaixa.Delete;
+     dt_studio.tb_totais.Delete;
+end;
+
+procedure Tfrm_movcaixa.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+var
+codigo: integer;
+a: integer;
+i: integer;
+NomeCampo: String;
+begin
+   Case Key of
+        VK_F2: //Comando para teclas de atalho
+        begin  //Inluindo registros na base de dados
+           if dt_studio.tb_movcaixaDT_CAIXA.asstring = DateToSTr(Date) then
+           begin
+              showmessage('ABERTURA DO CAIXA JÁ REALIZADO NESSE DIA!');
+              exit;
+           end
+           else
+           data.Readonly := true;
+           saldo_ant.Readonly := false;
+           es_novo.Enabled := false;
+           fecha.Enabled := true;
+           es_ok.Enabled := true;
+           cancel.Enabled := true;
+           es_sair.Enabled := false;
+           dt_studio.tb_movcaixa.Append;
+           dt_studio.tb_movcaixaDT_CAIXA.asstring := DateToSTr(Date);
+           dt_studio.tb_movcaixa.edit;
+           dt_studio.tb_movcaixaSALDO_ANT.value := dt_studio.tb_fecha_caixaSALDO_ATUAL.value;
+           dt_studio.tb_movcaixaSALDO_ANT.value := 0.00;
+           dt_studio.tb_movcaixaREC_CARTAO_CRED.value := 0.00;
+           dt_studio.tb_movcaixaREC_CARTAO_DEB.value := 0.00;
+           dt_studio.tb_movcaixaREC_DINHEIRO.value := 0.00;
+           dt_studio.tb_movcaixaPAGAMENTOS.value := 0.00;
+           dt_studio.tb_movcaixaRETIRADAS.value := 0.00;
+           dt_studio.tb_movcaixaSALDO_ATUAL.value := 0.00;
+           dt_studio.tb_movcaixaDEB_FUNCIONARIO.value := 0.00;
+           dt_studio.tb_movcaixaCHEQUES.value := 0.00;
+           dt_studio.tb_fecha_caixa.Last;
+           dt_studio.tb_movcaixaSALDO_ANT.value := dt_studio.tb_fecha_caixaSALDO_ATUAL.value;
+           saldo_ant.SetFocus;
+        end;
+   end;
+   Case Key of
+        VK_F3: //Comando para teclas de atalho//
+      begin // Exortando movimentos do caixa
+         dt_studio.tb_movcaixa.Edit;
+         usuario2.Text := dt_studio.tb_usuarios.FieldByName('NOM_APELIDO').AsString;
+         es_novo.Enabled := true;
+         fecha.Enabled := false;
+         If Application.Messagebox('Confirma Fechamento do Caixa? ', 'Confirmação',
+         mb_Iconquestion + Mb_OkCancel + Mb_DefButton2) = IdOk then
+         else
+         exit;
+         dt_studio.tb_movcaixa.Open;
+         progres.MaxValue := dt_studio.tb_movcaixa.RecordCount;
+        dt_studio.tb_movcaixa.First;
+        While Not dt_studio.tb_movcaixa.Eof Do
+           begin
+              progres.Progress := progres.Progress + 1;
+              dt_studio.tb_fecha_caixa.Append;
+              For i := 0 To dt_studio.tb_movcaixa.FieldCount - 1 Do
+              begin
+                 NomeCampo := dt_studio.tb_movcaixa.Fields[i].FieldName;
+                 dt_studio.tb_fecha_caixa.FieldbyName(NomeCampo).value :=
+                 dt_studio.tb_movcaixa.FieldbyName(NomeCampo).value;
+              end;
+              dt_studio.tb_fecha_caixa.post;
+              dt_studio.tb_movcaixa.Next;
+           end;
+           showmessage('FECHAMENTO REALIZADO COM SUCESSO!');
+           dt_studio.tb_movcaixa.First;
+           While Not dt_studio.tb_movcaixa.Eof Do
+           dt_studio.tb_movcaixa.Delete;
+           dt_studio.tb_totais.Delete;
+   end;
+end;
+   Case Key of
+        VK_F5: //Comando para teclas de atalho//
+        begin
+           If Application.Messagebox('Confirma Cancelamento da Abertura do Caixa? ',
+           'Confirmação', mb_Iconquestion + Mb_OkCancel + Mb_DefButton1) = IdOk then
+           else
+           exit;
+           //id_caixa.Readonly := true;
+           data.Readonly := true;
+           es_novo.Enabled := true;
+           fecha.Enabled := false;
+           es_ok.Enabled := false;
+           cancel.Enabled := false;
+           es_sair.Enabled := true;
+           dt_studio.tb_movcaixa.cancel;
+        end;
+   end;
+   Case Key of
+        VK_F6: //Comando para teclas de atalho//
+        begin
+           If Application.Messagebox('Confirma Abertura do Caixa? ', 'Confirmação',
+           mb_Iconquestion + Mb_OkCancel + Mb_DefButton1) = IdOk then
+           else
+           exit;
+           data.Readonly := true;
+           es_novo.Enabled := false;
+           fecha.Enabled := true;
+           es_ok.Enabled := false;
+           cancel.Enabled := false;
+           es_sair.Enabled := true;
+           dt_studio.tb_movcaixaSALDO_ATUAL.value := dt_studio.tb_movcaixaSALDO_ANT.value;
+           dt_studio.tb_movcaixa.post;
+        end;
+   end;
+   Case Key of
+        VK_F9: //Comando para teclas de atalho
+        begin  //Fechando as Tabelas
+           dt_studio.tb_movcaixa.close;
+           dt_studio.tb_fecha_caixa.close;
+           dt_studio.tb_retiradas.close;
+           close;
+        end;
+   end;
+   Case Key of
+        VK_F4: //Comando para teclas de atalho
+        begin //Chamando a tela de aposte
+           frm_aposte.ShowModal;
+        end;
+   end;
+end;
+
+procedure Tfrm_movcaixa.FormKeyPress(Sender: TObject; var Key: Char);
+begin // Comandos para a tecla [ENTER]//
+   If Key = #13 Then
+     Selectnext(ActiveControl, true, true);
+end;
+
+procedure Tfrm_movcaixa.FormShow(Sender: TObject);
+begin //Abrindo as Tabelas e atuzalizando valores do caixa
+   sbutton1.Enabled := false;
+   dt_studio.tb_movcaixa.Open;
+   dt_studio.tb_fecha_caixa.Open;
+   dt_studio.tb_totais.Open;
+   dt_studio.tb_aposte.Open;
+   dt_studio.tb_rec_caixa.Open;
+   dt_studio.tb_retiradas.Open;
+   es_ok.Enabled := false;
+   cancel.Enabled := false;
+   dt_studio.tb_movcaixa.Edit;
+   dt_studio.tb_totais.Edit;
+   dt_studio.tb_movcaixaSALDO_ATUAL.value := dt_studio.tb_movcaixaSALDO_ANT.value;
+   dt_studio.tb_movcaixaSALDO_ATUAL.value := dt_studio.tb_movcaixaSALDO_ATUAL.value + dt_studio.tb_movcaixaREC_DINHEIRO.value +
+   dt_studio.tb_movcaixaAPOSTE.value - dt_studio.tb_movcaixaPAGAMENTOS.value - dt_studio.tb_movcaixaRETIRADAS.value;
+   if dt_studio.tb_movcaixaDT_CAIXA.asstring = '' then
+       begin
+          es_novo.Enabled := true;
+          fecha.Enabled := false;
+       end
+     else
+     if dt_studio.tb_movcaixaDT_CAIXA.asstring <> '' then
+       begin
+          es_novo.Enabled := false;
+          fecha.Enabled := true;
+       end;
+end;
+
+procedure Tfrm_movcaixa.Panel3Click(Sender: TObject);
+begin
+   sbutton1.Enabled := true;
+end;
+
+procedure Tfrm_movcaixa.sButton1Click(Sender: TObject);
+begin//Comandos para atualização do caixa no botão
+    dt_studio.tb_movcaixa.edit;
+    dt_studio.tb_movcaixaSALDO_ATUAL.value := dt_studio.tb_movcaixaSALDO_ANT.value;
+    dt_studio.tb_movcaixaSALDO_ATUAL.value := dt_studio.tb_movcaixaSALDO_ATUAL.value + dt_studio.tb_movcaixaREC_DINHEIRO.value +
+    dt_studio.tb_movcaixaAPOSTE.value - dt_studio.tb_movcaixaPAGAMENTOS.value - dt_studio.tb_movcaixaRETIRADAS.value;
+    dt_studio.tb_movcaixaPAGAMENTOS.Value := dt_studio.tb_totaisTOT_PAGAMENTO.Value;
+    dt_studio.tb_movcaixaAPOSTE.Value := dt_studio.tb_totaisTOT_APOSTE.Value;
+    dt_studio.tb_movcaixaRETIRADAS.Value := dt_studio.tb_totaisTOT_RETIRADAS.Value;
+    dt_studio.tb_movcaixaREC_CARTAO_CRED.Value := dt_studio.tb_totaisTOT_CARTAO_CRED.Value;
+    dt_studio.tb_movcaixaREC_CARTAO_DEB.Value := dt_studio.tb_totaisTOT_CARTAO_DEB.Value;
+    dt_studio.tb_movcaixaREC_DINHEIRO.Value := dt_studio.tb_totaisTOT_DINHEIRO.Value;
+    dt_studio.tb_movcaixaCHEQUES.Value := dt_studio.tb_totaisTOT_CHEQUES.Value;
+    dt_studio.tb_movcaixaDEB_FUNCIONARIO.Value := dt_studio.tb_totaisTOT_DEB_FUNC.Value;
+    dt_studio.tb_movcaixa.post;
+end;
+
+end.

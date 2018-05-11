@@ -1,0 +1,678 @@
+{ ***************************************************
+  * Elaborado para: Studio Atraente                 *
+  * Modulo     : Recebimento do Caixa               *
+  * Analista   : João Douglas                       *
+  * Elaboração : João Douglas                       *
+  * Ult Alt.   : 13/02/2017                         *
+  *************************************************** }
+
+unit un_rec_caixa;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.DBCtrls, Vcl.StdCtrls,
+  sButton, Vcl.ComCtrls, Vcl.Grids, Vcl.DBGrids, Vcl.Mask, acPNG, Data.DB,
+  Data.Win.ADODB, Vcl.Buttons, RxToolEdit, sLabel;
+
+type
+  Tfrm_rec_caixa = class(TForm)
+    GroupBox4: TGroupBox;
+    es_novo: TsButton;
+    es_ok: TsButton;
+    es_sair: TsButton;
+    nav_rec: TDBNavigator;
+    Label1: TLabel;
+    Label2: TLabel;
+    data: TDBEdit;
+    Label3: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
+    DBGrid1: TDBGrid;
+    Image1: TImage;
+    Image2: TImage;
+    Image3: TImage;
+    cancelar: TsButton;
+    Panel1: TPanel;
+    rec_cartao_cred: TDBEdit;
+    rec_cartao_deb: TDBEdit;
+    dinheiro: TDBEdit;
+    Label9: TLabel;
+    combo: TDBLookupComboBox;
+    id_caixa_rec: TDBEdit;
+    Label10: TLabel;
+    Usuario: TDBEdit;
+    DBGrid2: TDBGrid;
+    sButton1: TsButton;
+    Edit1: TEdit;
+    radio: TRadioGroup;
+    SpeedButton1: TSpeedButton;
+    data_pesq: TDateEdit;
+    es_altera: TsButton;
+    Panel2: TPanel;
+    Label6: TLabel;
+    Label7: TLabel;
+    Label12: TLabel;
+    total_cred: TDBEdit;
+    total_deb: TDBEdit;
+    total_din: TDBEdit;
+    total_func: TDBEdit;
+    total_cheq: TDBEdit;
+    Label13: TLabel;
+    Label14: TLabel;
+    Label15: TLabel;
+    cheques: TDBEdit;
+    Label16: TLabel;
+    deb_func: TDBEdit;
+    Image4: TImage;
+    Image5: TImage;
+    Label8: TLabel;
+    memo: TDBMemo;
+    Label11: TLabel;
+    DBText1: TDBText;
+    sLabel2: TsLabel;
+    sLabel1: TsLabel;
+    Panel3: TPanel;
+    Label17: TLabel;
+    Edit2: TEdit;
+    Edit3: TEdit;
+    Edit4: TEdit;
+    Label18: TLabel;
+    Label19: TLabel;
+    Label20: TLabel;
+    Edit5: TEdit;
+    Label21: TLabel;
+    sButton2: TsButton;
+    procedure FormShow(Sender: TObject);
+    procedure es_sairClick(Sender: TObject);
+    procedure es_novoClick(Sender: TObject);
+    procedure es_okClick(Sender: TObject);
+    procedure FormKeyPress(Sender: TObject; var Key: Char);
+    procedure cancelarClick(Sender: TObject);
+    procedure sButton1Click(Sender: TObject);
+    procedure radioClick(Sender: TObject);
+    procedure DBGrid2DrawColumnCell(Sender: TObject; const Rect: TRect;
+      DataCol: Integer; Column: TColumn; State: TGridDrawState);
+    procedure Edit1Exit(Sender: TObject);
+    procedure DBGrid2CellClick(Column: TColumn);
+    procedure DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect;
+      DataCol: Integer; Column: TColumn; State: TGridDrawState);
+    procedure SpeedButton1Click(Sender: TObject);
+    procedure comboClick(Sender: TObject);
+    procedure DBGrid1CellClick(Column: TColumn);
+    procedure es_alteraClick(Sender: TObject);
+    procedure DBGrid2KeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure Edit2Exit(Sender: TObject);
+    procedure sButton2Click(Sender: TObject);
+    procedure chequesExit(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_rec_caixa: Tfrm_rec_caixa;
+
+implementation
+
+uses un_dtstudio, un_retiradas, un_principal, un_orcamento, un_senha_aut;
+
+{$R *.dfm}
+
+procedure Tfrm_rec_caixa.chequesExit(Sender: TObject);
+begin
+   sbutton2.SetFocus;
+end;
+
+procedure Tfrm_rec_caixa.comboClick(Sender: TObject);
+begin
+   if (combo.Text = 'CARTAO VISA CREDITO') or (combo.Text = 'CARTAO MASTER CREDITO') or (combo.Text = 'CARTAO ELO CREDITO')
+   or (combo.Text = 'CARTAO HIPERCARD CREDITO') or (combo.Text = 'CARTAO AMEX CREDITO') or
+      (combo.Text = 'CARTAO DINERS CREDITO') then
+      begin
+         rec_cartao_cred.setfocus;
+      end
+      else
+   if (combo.Text = 'CARTAO VISA DEBITO') or (combo.Text = 'CARTAO MASTER DEBITO') then
+      begin
+         rec_cartao_deb.setfocus;
+      end
+      else
+   if combo.Text = 'DINHEIRO' then
+      begin
+         dinheiro.setfocus;
+      end
+   else
+   if combo.Text = 'DEBITO FUNCIONARIO' then
+      begin
+         deb_func.setfocus;
+      end
+   else
+   if combo.Text = 'CHEQUE' then
+      begin
+         cheques.setfocus;
+      end;
+ end;
+
+procedure Tfrm_rec_caixa.DBGrid1CellClick(Column: TColumn);
+begin
+  rec_cartao_cred.Visible := true;
+  rec_cartao_deb.Visible := true;
+  dinheiro.Visible := true;
+end;
+
+procedure Tfrm_rec_caixa.DBGrid1DrawColumnCell(Sender: TObject;
+  const Rect: TRect; DataCol: Integer; Column: TColumn; State: TGridDrawState);
+begin  //Deixando o dbgrid zebrado
+   If odd(dt_studio.tb_rec_caixa.RecNo) then
+       begin
+          dbgrid1.Canvas.Font.Color:= clBlack;
+          dbgrid1.Canvas.Brush.Color:= $00FFF5EC;
+       end
+       else
+       begin
+          dbgrid1.Canvas.Font.Color:= clBlack;
+          dbgrid1.Canvas.Brush.Color:= clWhite;
+       end;
+       dbgrid1.Canvas.FillRect(Rect);
+       dbgrid1.DefaultDrawDataCell(Rect, dbgrid1.columns[DataCol].Field, State);
+end;
+
+procedure Tfrm_rec_caixa.DBGrid2CellClick(Column: TColumn);
+var
+totalgeral : currency;
+begin //Mostrando o valor dos serviços na tela
+   totalgeral := 0;
+   dt_studio.tb_comandas.DisableControls;
+   dt_studio.tb_comandas.open;
+  try
+    while not dt_studio.tb_comandas.eof do
+      begin
+         totalgeral := totalgeral + dt_studio.tb_comandas.FieldByName('TOT_SERV').AsCurrency;
+         dt_studio.tb_comandas.next;
+      end;
+      dt_studio.tb_comandas.EnableControls;
+      slabel2.Caption := FormatFloat('#,###,###,##0.00', totalgeral);
+  finally
+  end;
+end;
+
+procedure Tfrm_rec_caixa.DBGrid2DrawColumnCell(Sender: TObject;
+  const Rect: TRect; DataCol: Integer; Column: TColumn; State: TGridDrawState);
+begin //Definindo a situação de acordo com a baixa da comanda
+   if dt_studio.tb_movservicoSITUACAO.AsString = 'FINALIZADO' then
+   Dbgrid2.Canvas.Font.Color := clRed;
+   If odd(dt_studio.tb_movservico.RecNo) then
+      begin
+         dbgrid1.Canvas.Font.Color:= clBlack;
+         dbgrid1.Canvas.Brush.Color:= $00FFF5EC;
+      end
+   else
+       begin
+          dbgrid1.Canvas.Font.Color:= clBlack;
+          dbgrid1.Canvas.Brush.Color:= clWhite;
+       end;
+       DBgrid2.Canvas.FillRect(Rect);
+       DBgrid2.DefaultDrawDataCell(Rect, DBgrid2.columns[DataCol].Field, State);
+end;
+
+procedure Tfrm_rec_caixa.DBGrid2KeyUp(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+var
+totalgeral : currency;
+begin
+//Mostrando o valor dos serviços na tela
+   totalgeral := 0;
+   dt_studio.tb_comandas.DisableControls;
+   dt_studio.tb_comandas.open;
+  try
+    while not dt_studio.tb_comandas.eof do
+      begin
+         totalgeral := totalgeral + dt_studio.tb_comandas.FieldByName('TOT_SERV').AsCurrency;
+         dt_studio.tb_comandas.next;
+      end;
+      dt_studio.tb_comandas.EnableControls;
+      slabel2.Caption := FormatFloat('#,###,###,##0.00', totalgeral);
+  finally
+  end;
+end;
+
+procedure Tfrm_rec_caixa.Edit1Exit(Sender: TObject);
+begin //Focando no botão
+   sbutton1.SetFocus;
+end;
+
+procedure Tfrm_rec_caixa.Edit2Exit(Sender: TObject);
+begin//Comandos para consulta de comandas
+   dt_studio.tb_movservico.Edit;
+   dt_studio.tb_rec_caixa.Edit;
+   if edit2.Text = '' then
+     begin
+        combo.ReadOnly := true;
+        rec_cartao_cred.ReadOnly := true;
+        rec_cartao_deb.ReadOnly := true;
+        dinheiro.ReadOnly := true;
+        cheques.ReadOnly := true;
+        deb_func.ReadOnly := true;
+        combo.SetFocus;
+     end;
+   If edit2.text <> dt_studio.tb_movservicoID_SERV.AsString then
+      begin
+         Showmessage('COMANDA SELECIONADA NÃO É VÁLIDA'#13'FAVOR SELECIONAR A COMANDA QUE DESEJA FINALIZAR NO GRID DE SERVIÇOS AO LADO!');
+         edit3.SetFocus;
+         exit;
+      end
+   else
+   If edit2.Text = dt_studio.tb_movservicoID_SERV.AsString then
+      begin
+         edit3.Text := frm_servico.data.Text;
+         edit4.Text := frm_servico.nom_cli.Text;
+         edit5.Text := slabel2.Caption;
+         combo.ReadOnly := false;
+         rec_cartao_cred.ReadOnly := false;
+         rec_cartao_deb.ReadOnly := false;
+         dinheiro.ReadOnly := false;
+         cheques.ReadOnly := false;
+         deb_func.ReadOnly := false;
+         combo.SetFocus;
+      end;
+end;
+
+procedure Tfrm_rec_caixa.es_novoClick(Sender: TObject);
+begin// Verificando a situação da abertura do caixa e inluindo registros na base de dados//
+   if dt_studio.tb_movcaixaDT_CAIXA.asstring = '' then
+     begin
+        showmessage('ATENÇÃO! ABERTURA DO CAIXA AINDA NÃO FOI REALIZADA...!');
+        exit;
+     end
+   else
+   if dt_studio.tb_movcaixaDT_CAIXA.asstring <> DatetoStr(Date) then
+     begin
+        showmessage('ATENÇÃO! O CAIXA DO DIA ANTERIOR AINDA NÃO FOI FECHADO...!');
+        exit;
+     end
+  else
+// inserindo dados na tabela de itens
+  if dt_studio.tb_movservicoSITUACAO.Value = 'FINALIZADO' then
+      begin
+         showmessage('SERVIÇO JÁ FINALIZADO !!');
+         exit;
+      end
+  else
+  If Application.Messagebox('Confirma Lançamento de Recebimentos do Caixa? ', 'Confirmação',
+  mb_Iconquestion + Mb_OkCancel + Mb_DefButton1) = IdOk then
+  else
+  exit;
+  id_caixa_rec.Readonly := false;
+  data.Readonly := true;
+  rec_cartao_cred.Readonly := false;
+  rec_cartao_deb.Readonly := false;
+  deb_func.Readonly := false;
+  cheques.Readonly := false;
+  combo.Readonly := false;
+  memo.ReadOnly := false;
+  dinheiro.Readonly := false;
+  nav_rec.Enabled := false;
+  es_novo.Enabled := false;
+  cancelar.Enabled := true;
+  es_ok.Enabled := true;
+  es_altera.Enabled := false;
+  sbutton2.Enabled := false;
+  es_sair.Enabled := false;
+  dt_studio.tb_rec_caixa.Append;
+  dt_studio.tb_rec_caixaDATA_REC.AsString := DateToSTr(Date);
+  dt_studio.tb_rec_caixaREC_CARTAO_CRED.Value := 0.00;
+  dt_studio.tb_rec_caixaREC_CARTAO_DEB.Value := 0.00;
+  dt_studio.tb_rec_caixaREC_DINHEIRO.Value := 0.00;
+  dt_studio.tb_rec_caixaDEB_FUNCIONARIO.Value := 0.00;
+  dt_studio.tb_rec_caixaCHEQUES.Value := 0.00;
+  edit2.SetFocus;
+  panel1.Caption := 'CAIXA EM OPERAÇÃO';
+  usuario.Text := frm_principal.UserControl1.CurrentUser.UserLogin;
+  edit2.Text := '';
+  edit3.Text := '';
+  edit4.Text := '';
+  edit5.Text := '';
+end;
+
+procedure Tfrm_rec_caixa.es_okClick(Sender: TObject);
+var
+  vr_cred : currency;
+  vr_deb : currency;
+  vr_din : currency;
+  vr_deb_func : Currency;
+  vr_cheques : Currency;
+begin
+// Gravar registros na base de dados//
+  If Application.Messagebox('Confirma Recebimento? ', 'Confirmação',
+  mb_Iconquestion + Mb_OkCancel + Mb_DefButton1) = IdOk then
+  else
+  exit;
+  id_caixa_rec.Readonly := true;
+  data.Readonly := true;
+  rec_cartao_cred.Readonly := true;
+  rec_cartao_deb.Readonly := true;
+  deb_func.Readonly := true;
+  cheques.Readonly := true;
+  combo.Readonly := true;
+  dinheiro.Readonly := true;
+  nav_rec.Enabled := true;
+  es_novo.Enabled := true;
+  cancelar.Enabled := false;
+  es_ok.Enabled := false;
+  es_altera.Enabled := true;
+  sbutton2.Enabled := false;
+  es_sair.Enabled := true;
+  dt_studio.tb_rec_caixa.post;
+// Gravar valores de recebimentos no caixa
+  dt_studio.tb_movcaixa.edit;
+  dt_studio.tb_rec_caixa.edit;
+  dt_studio.tb_totais.edit;
+  dt_studio.tb_movcaixaREC_CARTAO_CRED.Value := dt_studio.tb_movcaixaREC_CARTAO_CRED.Value + dt_studio.tb_rec_caixaREC_CARTAO_CRED.Value;
+  dt_studio.tb_movcaixaREC_CARTAO_DEB.Value := dt_studio.tb_movcaixaREC_CARTAO_DEB.Value + dt_studio.tb_rec_caixaREC_CARTAO_DEB.Value;
+  dt_studio.tb_movcaixaREC_DINHEIRO.Value := dt_studio.tb_movcaixaREC_DINHEIRO.Value + dt_studio.tb_rec_caixaREC_DINHEIRO.Value;
+  dt_studio.tb_movcaixaDEB_FUNCIONARIO.Value := dt_studio.tb_movcaixaDEB_FUNCIONARIO.Value + dt_studio.tb_rec_caixaDEB_FUNCIONARIO.Value;
+  dt_studio.tb_movcaixaCHEQUES.Value := dt_studio.tb_movcaixaCHEQUES.Value + dt_studio.tb_rec_caixaCHEQUES.Value;
+  dt_studio.tb_movcaixa.post;
+  panel1.Caption := 'CAIXA LIVRE';
+  vr_cred := 0;
+  vr_deb := 0;
+  vr_din := 0;
+  vr_deb_func := 0;
+  vr_cheques := 0;
+  dt_studio.tb_rec_caixa.first;
+  dt_studio.tb_rec_caixa.DisableControls;
+  try
+    while not dt_studio.tb_rec_caixa.eof do
+      begin
+         vr_cred := vr_cred + dt_studio.tb_rec_caixa.FieldByName('REC_CARTAO_CRED').AsCurrency;
+         vr_deb := vr_deb + dt_studio.tb_rec_caixa.FieldByName('REC_CARTAO_DEB').AsCurrency;
+         vr_din := vr_din + dt_studio.tb_rec_caixa.FieldByName('REC_DINHEIRO').AsCurrency;
+         vr_deb_func := vr_deb_func + dt_studio.tb_rec_caixa.FieldByName('DEB_FUNCIONARIO').AsCurrency;
+         vr_cheques := vr_cheques + dt_studio.tb_rec_caixa.FieldByName('CHEQUES').AsCurrency;
+         dt_studio.tb_rec_caixa.next;
+      end;
+      dt_studio.tb_totaisDATA.asstring := DatetoStr(Date);
+      dt_studio.tb_rec_caixa.EnableControls;
+      total_cred.text := FormatFloat('#.###.##0.00',vr_cred);
+      total_deb.text := FormatFloat('#.###.##0.00',vr_deb);
+      total_din.text := FormatFloat('#.###.##0.00',vr_din);
+      total_func.text := FormatFloat('#.###.##0.00',vr_deb_func);
+      total_cheq.text := FormatFloat('#.###.##0.00',vr_cheques);
+      dt_studio.tb_totais.Post;
+  finally
+  end;
+  dt_studio.tb_movservico.edit;
+  dt_studio.tb_rec_caixa.edit;
+  dt_studio.tb_movservicoSituacao.ASString:='FINALIZADO';
+  dt_studio.tb_rec_caixaComanda.ASString := dt_studio.tb_movservicoid_serv.ASString;
+  dt_studio.tb_movservico.post;
+  dt_studio.tb_rec_caixa.post;
+end;
+
+procedure Tfrm_rec_caixa.es_sairClick(Sender: TObject);
+begin //Fechando as tabelas
+   dt_studio.tb_rec_caixa.close;
+   dt_studio.tb_usuarios.close;
+   dt_studio.tb_formapag.close;
+   dt_studio.tb_totais.close;
+   close;
+end;
+
+procedure Tfrm_rec_caixa.FormKeyPress(Sender: TObject; var Key: Char);
+begin//Comandos para a tecla [ENTER]//
+  If Key = #13 Then
+    Selectnext(ActiveControl, true, true);
+end;
+
+procedure Tfrm_rec_caixa.FormShow(Sender: TObject);
+var
+  vr_cred : currency;
+  vr_deb : currency;
+  vr_din : currency;
+  deb_func : Currency;
+  cheques : Currency;
+begin//Abrindo as tabelas
+   data_pesq.text := DateToSTr(Date);
+   dt_studio.tb_rec_caixa.Open;
+   dt_studio.tb_usuarios.open;
+   dt_studio.tb_formapag.Open;
+   dt_studio.tb_movcaixa.Open;
+   dt_studio.tb_movservico.Open;
+   dt_studio.tb_totais.Open;
+   cancelar.Enabled := false;
+   edit2.Text := '';
+   edit3.Text := '';
+   edit4.Text := '';
+   edit5.Text := '';
+   es_ok.Enabled := false;
+   sbutton2.Enabled := false;
+   es_altera.Enabled := true;
+   dt_studio.tb_rec_caixa.close;
+   dt_studio.tb_rec_caixa.Filtered := False;
+   dt_studio.tb_rec_caixa.Open;
+   dt_studio.tb_rec_caixa.Filter := 'DATA_REC = ' + QuotedStr(data_pesq.Text);
+   dt_studio.tb_rec_caixa.Filtered := True;
+   dt_studio.tb_rec_caixa.locate('DATA_REC',data_pesq.text,[loCaseInsensitive, loPartialKey]);
+   dt_studio.tb_movcaixa.last;
+   vr_cred := 0;
+   vr_deb := 0;
+   vr_din := 0;
+   deb_func := 0;
+   cheques := 0;
+   dt_studio.tb_rec_caixa.first;
+   dt_studio.tb_rec_caixa.DisableControls;
+  try
+    while not dt_studio.tb_rec_caixa.eof do
+      begin
+         vr_cred := vr_cred + dt_studio.tb_rec_caixa.FieldByName('REC_CARTAO_CRED').AsCurrency;
+         vr_deb := vr_deb + dt_studio.tb_rec_caixa.FieldByName('REC_CARTAO_DEB').AsCurrency;
+         vr_din := vr_din + dt_studio.tb_rec_caixa.FieldByName('REC_DINHEIRO').AsCurrency;
+         deb_func := deb_func + dt_studio.tb_rec_caixa.FieldByName('DEB_FUNCIONARIO').AsCurrency;
+         cheques := cheques + dt_studio.tb_rec_caixa.FieldByName('CHEQUES').AsCurrency;
+         dt_studio.tb_rec_caixa.next;
+      end;
+      dt_studio.tb_rec_caixa.EnableControls;
+      total_cred.text := FormatFloat('#,###,###,##0.00',vr_cred);
+      total_deb.text := FormatFloat('#,###,###,##0.00',vr_deb);
+      total_din.text := FormatFloat('#,###,###,##0.00',vr_din);
+      total_func.text := FormatFloat('#,###,###,##0.00',deb_func);
+      total_cheq.text := FormatFloat('#,###,###,##0.00',cheques);
+  finally
+ end;
+end;
+
+procedure Tfrm_rec_caixa.radioClick(Sender: TObject);
+begin //Focando no edit
+   edit1.SetFocus;
+end;
+
+procedure Tfrm_rec_caixa.sButton1Click(Sender: TObject);
+var sql : string;
+totalgeral2 : currency;
+totalgeral: Currency;
+subtotal: Currency;
+desconto: Currency;
+quantlinhas : integer;
+begin //Pesquisando por codigo do serviço e pelo nome do cliente
+   dt_studio.tb_movservico.Sql.Clear;
+   dt_studio.tb_movservico.Sql.Add('select * from CAB_SERV');
+   if (radio.ItemIndex = 0) then
+   Sql := 'where ID_SERV like ' + QuotedStr('%' + Edit1.text + '%')
+   else
+   if (radio.ItemIndex = 1) then
+   Sql := 'where NOM_CLI like ' + QuotedStr('%' + Edit1.text + '%');
+   dt_studio.tb_movservico.Sql.Add(Sql);
+   dt_studio.tb_movservico.Sql.Add('order by ID_SERV');
+   dt_studio.tb_movservico.open;
+   ShowScrollBar(DBGrid2.Handle,SB_HORZ,true); //Mostrar a barra Horizontal
+//Totalizando valores
+   totalgeral := 0;
+   totalgeral2 := 0;
+   subtotal := 0;
+   desconto := 0;
+   quantlinhas := 0;
+   dt_studio.tb_comandas.DisableControls;
+  try
+    while not dt_studio.tb_comandas.eof do
+      begin
+         totalgeral := totalgeral + dt_studio.tb_comandas.FieldByName('TOT_SERV').AsCurrency;
+         subtotal := subtotal + dt_studio.tb_comandas.FieldByName('TOT_ITEM').AsCurrency;
+         totalgeral2 := totalgeral2 + dt_studio.tb_comandas.FieldByName('TOT_SERV').AsCurrency;
+         desconto := desconto + dt_studio.tb_comandas.FieldByName('DESCONTO').AsCurrency;
+         quantlinhas := dbgrid1.DataSource.DataSet.RecordCount;
+         dt_studio.tb_comandas.next;
+      end;
+      dt_studio.tb_comandas.EnableControls;
+      slabel2.Caption := FormatFloat('#,###,###,##0.00', totalgeral);
+      frm_servico.Label20.Caption := FormatFloat('#,###,###,##0.00', subtotal);
+      frm_servico.Label22.Caption := FormatFloat('#,###,###,##0.00', totalgeral2);
+      frm_servico.Label24.Caption := FormatFloat('#,###,###,##0.00', desconto);
+      frm_servico.Label14.Caption := FormatFloat('#,0', quantlinhas);
+  finally
+  end;
+end;
+
+procedure Tfrm_rec_caixa.sButton2Click(Sender: TObject);
+var
+  vr_cred : currency;
+  vr_deb : currency;
+  vr_din : currency;
+  vr_deb_func : Currency;
+  vr_cheques : Currency;
+begin
+// Gravar registros na base de dados//
+  If Application.Messagebox('Confirma Alterações? ', 'Confirmação',
+  mb_Iconquestion + Mb_OkCancel + Mb_DefButton1) = IdOk then
+  else
+  exit;
+  begin
+     id_caixa_rec.Readonly := true;
+     data.Readonly := true;
+     rec_cartao_cred.Readonly := true;
+     rec_cartao_deb.Readonly := true;
+     deb_func.Readonly := true;
+     cheques.Readonly := true;
+     combo.Readonly := true;
+     dinheiro.Readonly := true;
+     nav_rec.Enabled := true;
+     es_novo.Enabled := true;
+     cancelar.Enabled := false;
+     es_altera.Enabled := true;
+     es_ok.Enabled := false;
+     sbutton2.Enabled := false;
+     es_sair.Enabled := true;
+     dt_studio.tb_rec_caixa.post;
+     showmessage('ATUALIZE OS VALORES E CASO SE HOUVER ALTERAÇÕES NOS VALORES EM DINHEIRO'#13'CLICAR NO BOTÃO SALDO DO CAIXA PARA ATUALIZAR');
+     vr_cred := 0;
+     vr_deb := 0;
+     vr_din := 0;
+     vr_deb_func := 0;
+     vr_cheques := 0;
+     dt_studio.tb_rec_caixa.first;
+     dt_studio.tb_rec_caixa.DisableControls;
+    try
+      while not dt_studio.tb_rec_caixa.eof do
+        begin
+           vr_cred := vr_cred + dt_studio.tb_rec_caixa.FieldByName('REC_CARTAO_CRED').AsCurrency;
+           vr_deb := vr_deb + dt_studio.tb_rec_caixa.FieldByName('REC_CARTAO_DEB').AsCurrency;
+           vr_din := vr_din + dt_studio.tb_rec_caixa.FieldByName('REC_DINHEIRO').AsCurrency;
+           vr_deb_func := vr_deb_func + dt_studio.tb_rec_caixa.FieldByName('DEB_FUNCIONARIO').AsCurrency;
+           vr_cheques := vr_cheques + dt_studio.tb_rec_caixa.FieldByName('CHEQUES').AsCurrency;
+           dt_studio.tb_rec_caixa.next;
+        end;
+        dt_studio.tb_totais.edit;
+        dt_studio.tb_totaisDATA.asstring := DatetoStr(Date);
+        dt_studio.tb_rec_caixa.EnableControls;
+        total_cred.text := FormatFloat('#.###.##0.00',vr_cred);
+        total_deb.text := FormatFloat('#.###.##0.00',vr_deb);
+        total_din.text := FormatFloat('#.###.##0.00',vr_din);
+        total_func.text := FormatFloat('#.###.##0.00',vr_deb_func);
+        total_cheq.text := FormatFloat('#.###.##0.00',vr_cheques);
+        dt_studio.tb_totais.post;
+    finally
+    end;
+  end;
+end;
+
+procedure Tfrm_rec_caixa.es_alteraClick(Sender: TObject);
+begin
+   rec_cartao_cred.ReadOnly := true;
+   rec_cartao_deb.ReadOnly := true;
+   dinheiro.ReadOnly := true;
+   deb_func.Readonly := true;
+   cheques.Readonly := true;
+   frm_senha_aut.ShowModal;
+end;
+
+procedure Tfrm_rec_caixa.SpeedButton1Click(Sender: TObject);
+var
+  vr_cred : currency;
+  vr_deb : currency;
+  vr_din : currency;
+  deb_func : Currency;
+  cheques : Currency;
+begin //Filtrando por Data os Recebimentos
+    dt_studio.tb_rec_caixa.close;
+    dt_studio.tb_rec_caixa.Filtered := False;
+    dt_studio.tb_rec_caixa.Open;
+    dt_studio.tb_rec_caixa.Filter := 'DATA_REC = ' + QuotedStr(data_pesq.Text);
+    dt_studio.tb_rec_caixa.Filtered := True;
+    dt_studio.tb_rec_caixa.locate('DATA_REC',data_pesq.text,[loCaseInsensitive, loPartialKey]);
+    vr_cred := 0;
+    vr_deb := 0;
+    vr_din := 0;
+    deb_func := 0;
+    cheques := 0;
+    dt_studio.tb_rec_caixa.first;
+    dt_studio.tb_rec_caixa.DisableControls;
+   try
+     while not dt_studio.tb_rec_caixa.eof do
+       begin
+         vr_cred := vr_cred + dt_studio.tb_rec_caixa.FieldByName('REC_CARTAO_CRED').AsCurrency;
+         vr_deb := vr_deb + dt_studio.tb_rec_caixa.FieldByName('REC_CARTAO_DEB').AsCurrency;
+         vr_din := vr_din + dt_studio.tb_rec_caixa.FieldByName('REC_DINHEIRO').AsCurrency;
+         deb_func := deb_func + dt_studio.tb_rec_caixa.FieldByName('DEB_FUNCIONARIO').AsCurrency;
+         cheques := cheques + dt_studio.tb_rec_caixa.FieldByName('CHEQUES').AsCurrency;
+         dt_studio.tb_rec_caixa.next;
+       end;
+       dt_studio.tb_rec_caixa.EnableControls;
+       total_cred.text := FormatFloat('#,###,###,##0.00',vr_cred);
+       total_deb.text := FormatFloat('#,###,###,##0.00',vr_deb);
+       total_din.text := FormatFloat('#,###,###,##0.00',vr_din);
+       total_func.text := FormatFloat('#,###,###,##0.00',deb_func);
+       total_cheq.text := FormatFloat('#,###,###,##0.00',cheques);
+   finally
+  end;
+end;
+
+procedure Tfrm_rec_caixa.cancelarClick(Sender: TObject);
+begin
+// Cancelar registros na base de dados//
+  id_caixa_rec.Readonly := true;
+  data.Readonly := true;
+  rec_cartao_cred.Readonly := true;
+  deb_func.Readonly := true;
+  edit2.Text := '';
+  edit3.Text := '';
+  edit4.Text := '';
+  edit5.Text := '';
+  cheques.Readonly := true;
+  combo.Readonly := true;
+  rec_cartao_deb.Readonly := true;
+  dinheiro.Readonly := true;
+  nav_rec.Enabled := true;
+  es_novo.Enabled := true;
+  cancelar.Enabled := false;
+  es_ok.Enabled := false;
+  es_altera.Enabled := false;
+  alt_mod.Enabled := false;
+  es_sair.Enabled := true;
+  dt_studio.tb_rec_caixa.cancel;
+  panel1.Caption := 'CAIXA LIVRE';
+end;
+
+end.

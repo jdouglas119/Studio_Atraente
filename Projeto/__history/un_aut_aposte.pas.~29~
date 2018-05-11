@@ -1,0 +1,168 @@
+{ ***************************************************
+  * Elaborado para: Studio Atraente                 *
+  * Modulo     : Formulario de Autorização Aposte   *
+  * Analista   : João Douglas                       *
+  * Elaboração : João Douglas                       *
+  * Ult Alt.   : 07/04/2017                         *
+  *************************************************** }
+
+unit un_aut_aposte;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons,
+  Vcl.Imaging.jpeg, Vcl.ExtCtrls, Vcl.DBCtrls;
+
+type
+  Tfrm_aut_aposte = class(TForm)
+    Image1: TImage;
+    Label1: TLabel;
+    Label2: TLabel;
+    senha: TEdit;
+    BitBtn1: TBitBtn;
+    BitBtn2: TBitBtn;
+    nome: TEdit;
+    cod: TEdit;
+    Label3: TLabel;
+    SpeedButton1: TSpeedButton;
+    procedure BitBtn1Click(Sender: TObject);
+    procedure FormKeyPress(Sender: TObject; var Key: Char);
+    procedure FormShow(Sender: TObject);
+    procedure BitBtn2Click(Sender: TObject);
+    procedure loginClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure combo_nomeClick(Sender: TObject);
+    procedure SpeedButton1Click(Sender: TObject);
+  private
+    tentativas: Smallint;
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_aut_aposte: Tfrm_aut_aposte;
+
+implementation
+
+{$R *.dfm}
+
+uses un_dtstudio, un_aposte, un_rec_caixa, un_consauto;
+
+procedure Tfrm_aut_aposte.BitBtn1Click(Sender: TObject);
+Var
+   sql : String; //Variável de entrada//
+begin//login do sistema
+  If (nome.Text <> '') and (senha.Text = dt_studio.tb_cadautosenha.AsString) Then
+     begin
+        sql := 'select * from cad_autorizador where autorizador = ' + QuotedStr(nome.Text);
+        sql := sql + ' and senha = ' + QuotedStr(senha.Text);
+        dt_studio.tb_cadauto.Active := True;
+        frm_aut_aposte.hide;
+        frm_aut_aposte.Close;
+        dt_studio.tb_aposte.Edit;
+        frm_aposte.valor.ReadOnly := false;
+        frm_aposte.memo.ReadOnly := false;
+        frm_aposte.valor.SetFocus;
+        frm_aposte.gravar.enabled := true;
+        frm_aposte.cancelar.enabled := true;
+     end;
+     inc(tentativas); //tentativas de acesso ao sistema//
+     if tentativas < 3 then
+        begin
+            MessageDlg(Format('Tentativa %d de 3', [tentativas]), mtError, [mbOk], 0);
+        end
+     else
+         begin
+            MessageDlg(Format('%dª tentativa de acesso ao sistema.',
+            [tentativas]) + #13 + 'A aplicação será fechada você não tem acesso ao sistema!', mtError,[mbOk], 0);
+             ModalResult := mrCancel;
+             close;
+         end;
+         MessageDlg('Autorizador não cadastrado ou senha inválida', mtInformation, [mbOK], 0);
+         senha.Text := '';
+         if nome.Text <> '' then
+            begin
+               dt_studio.tb_aposte.Edit;
+               dt_studio.tb_aposteAUTORIZADO.AsString := nome.text;
+               exit;
+            end
+            else
+            dt_studio.tb_aposteAUTORIZADO.AsString := dt_studio.tb_aposteAUTORIZADO.AsString;
+
+
+{   if (edit1.Text = 'ROZA') and (login.Text = 'NEIDE') or (edit1.Text = 'STUDIO') and (login.Text = 'IARA') then
+      begin
+        dt_studio.tb_aposte.Edit;
+        frm_aposte.valor.ReadOnly := false;
+        frm_aposte.memo.ReadOnly := false;
+        frm_aposte.valor.SetFocus;
+        frm_aposte.gravar.enabled := true;
+        frm_aposte.cancelar.enabled := true;
+      end
+   else
+      begin
+         Showmessage('USUÁRIO E/OU SENHA INCORRETA!');
+         frm_aposte.valor.SetFocus;
+         frm_aposte.valor.ReadOnly := true;
+         frm_aposte.memo.ReadOnly := true;
+         frm_aposte.gravar.enabled := false;
+         frm_aposte.cancelar.enabled := false;
+         edit1.Setfocus;
+         edit1.Text:='';
+         exit;
+      end;
+      if edit1.Text <> '' then
+        begin
+          dt_studio.tb_aposte.Edit;
+          dt_studio.tb_aposteAUTORIZADO.AsString := login.text;
+          exit;
+        end
+      else
+      dt_studio.tb_aposteAUTORIZADO.AsString := dt_studio.tb_aposteAUTORIZADO.AsString;}
+end;
+
+procedure Tfrm_aut_aposte.BitBtn2Click(Sender: TObject);
+begin
+   close;
+end;
+
+procedure Tfrm_aut_aposte.combo_nomeClick(Sender: TObject);
+begin
+   senha.SetFocus;
+end;
+
+procedure Tfrm_aut_aposte.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+   dt_studio.tb_cadauto.close;
+   close;
+end;
+
+procedure Tfrm_aut_aposte.FormKeyPress(Sender: TObject; var Key: Char);
+begin
+// Comandos para a tecla [ENTER]//
+  If Key = #13 Then
+    Selectnext(ActiveControl, true, true);
+end;
+
+procedure Tfrm_aut_aposte.FormShow(Sender: TObject);
+begin
+   senha.Text := '';
+   dt_studio.tb_cadauto.Open;
+end;
+
+procedure Tfrm_aut_aposte.loginClick(Sender: TObject);
+begin
+   senha.SetFocus;
+end;
+
+procedure Tfrm_aut_aposte.SpeedButton1Click(Sender: TObject);
+begin
+  frm_consauto.cod := 1;
+  senha.SetFocus;
+  frm_consauto.showmodal;
+end;
+
+end.

@@ -1,0 +1,62 @@
+unit un_consusuario;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Grids, Vcl.DBGrids, Vcl.Buttons,
+  Vcl.ExtCtrls, sPanel;
+
+type
+  Tfrm_consusuario = class(TForm)
+    DBGrid1: TDBGrid;
+    SpeedButton1: TSpeedButton;
+    sPanel1: TsPanel;
+    procedure SpeedButton1Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure DBGrid1CellClick(Column: TColumn);
+  private
+    { Private declarations }
+  public
+   cod: integer;
+    { Public declarations }
+  end;
+
+var
+  frm_consusuario: Tfrm_consusuario;
+
+implementation
+
+uses un_dtstudio, U_Senha, un_mudausuario;
+
+{$R *.dfm}
+
+procedure Tfrm_consusuario.DBGrid1CellClick(Column: TColumn);
+begin// chamando a tela cadastro de serviços
+  Case cod Of
+    1:Begin
+        fm_senha.codigo.text := dt_studio.tb_cadusuID_USUARIO.asstring;
+        fm_senha.nome.text := dt_studio.tb_cadusuNOM_APELIDO.asstring;
+        fm_senha.editsenha.setfocus;
+      end;
+    2:Begin
+        frm_mudausu.codigo.text := dt_studio.tb_cadusuID_USUARIO.asstring;
+        frm_mudausu.nome.text := dt_studio.tb_cadusuNOM_APELIDO.asstring;
+        frm_mudausu.senha.setfocus;
+      end;
+  end;
+  frm_consusuario.Close;
+end;
+
+procedure Tfrm_consusuario.FormShow(Sender: TObject);
+begin
+   dt_studio.tb_cadusu.open;
+end;
+
+procedure Tfrm_consusuario.SpeedButton1Click(Sender: TObject);
+begin
+   dt_studio.tb_cadusu.Close;
+   close;
+end;
+
+end.
